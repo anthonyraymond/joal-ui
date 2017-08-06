@@ -3,6 +3,7 @@ import React from 'react';
 import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import type { Dispatch } from '../types';
 
 const Home = (props: { changePage: () => void }) => (
   <div>
@@ -12,7 +13,7 @@ const Home = (props: { changePage: () => void }) => (
   </div>
 );
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
   changePage: () => push('/about-us')
 }, dispatch);
 

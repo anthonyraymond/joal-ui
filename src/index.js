@@ -3,8 +3,11 @@ import ReactDOM from 'react-dom';
 import { configureStore, history } from './store/configureStore';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
+import { connectStomp } from './api';
 
 const store = configureStore();
+connectStomp(store);
+
 const rootEl = document.getElementById('root');
 
 let render = () => {
