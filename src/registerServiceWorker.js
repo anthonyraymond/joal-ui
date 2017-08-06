@@ -1,4 +1,4 @@
-/* eslint-disable compat/compat, promise/always-return, no-param-reassign */
+/* eslint-disable compat/compat, promise/always-return, no-param-reassign, promise/catch-or-return */
 
 // In production, we register a service worker to serve assets from local cache.
 

@@ -6,7 +6,12 @@ import { ConnectedRouter } from 'react-router-redux';
 import Home from './Home';
 import About from './About';
 
-const App = (props) => (
+type Props = {
+  store: {},
+  history: {}
+};
+
+const App = (props: Props) => (
   <Provider store={props.store}>
     <ConnectedRouter history={props.history}>
       <div>
