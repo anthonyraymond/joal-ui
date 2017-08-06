@@ -9,7 +9,7 @@
 [include]
 
 [libs]
-<PROJECT_ROOT>/flow-typed
+./flow-typed
 
 [lints]
 
