@@ -7,7 +7,7 @@ import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
 
 // TODO : check that Browser history works with election
-const history = createBrowserHistory()
+const history = createBrowserHistory();
 
 const configureStore = (initialState: {} | void) => {
   const middleware = [
@@ -24,27 +24,29 @@ const configureStore = (initialState: {} | void) => {
     ...routerActions
   };
 
-  let composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  /* eslint-disable no-underscore-dangle */
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
       // Options: http://zalmoxisus.github.io/redux-devtools-extension/API/Arguments.html
       actionCreators,
     })
     : compose;
+  /* eslint-enable no-underscore-dangle */
 
   const composedEnhancers = composeEnhancers(
     applyMiddleware(...middleware),
     ...enhancers
-  )
+  );
 
   const store = createStore(rootReducer, initialState, composedEnhancers);
 
   if (module.hot) {
     module.hot.accept('../reducers', () =>
-      store.replaceReducer(require('../reducers').default)
+      store.replaceReducer(require('../reducers').default) // eslint-disable-line global-require
     );
   }
 
   return store;
-}
+};
 
 export default { configureStore, history };

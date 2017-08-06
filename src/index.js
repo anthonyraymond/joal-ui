@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { configureStore, history } from './store/configureStore'
+import { configureStore, history } from './store/configureStore';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
@@ -9,11 +9,11 @@ const rootEl = document.getElementById('root');
 
 let render = () => {
   // Dynamically import our main App component, and render it
-  const App = require("./components/App").default;
+  const App = require('./components/App').default; // eslint-disable-line global-require
   ReactDOM.render(<App store={store} history={history} />, rootEl);
 };
 
-if(module.hot) {
+if (module.hot) {
   // Support hot reloading of components
   // and display an overlay for runtime errors
   const renderApp = render;
@@ -26,7 +26,7 @@ if(module.hot) {
 
   // Whenever the App component file or one of its dependencies
   // is changed, re-import the updated component and re-render it
-  module.hot.accept("./components/App", () => {
+  module.hot.accept('./components/App', () => {
     setTimeout(render);
   });
 }

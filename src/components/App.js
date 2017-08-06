@@ -1,10 +1,10 @@
 // @flow
 import React from 'react';
-import { Route, Link } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import { ConnectedRouter } from 'react-router-redux'
-import Home from './Home'
-import About from './About'
+import { Route, Link } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'react-router-redux';
+import Home from './Home';
+import About from './About';
 
 const App = (props) => (
   <Provider store={props.store}>
@@ -22,6 +22,6 @@ const App = (props) => (
       </div>
     </ConnectedRouter>
   </Provider>
-)
+);
 
 export default App;
