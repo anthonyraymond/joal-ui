@@ -10,6 +10,9 @@
 # flow
 flow-typed/npm/*
 
+# eslint
+.eslintcache
+
 # misc
 .DS_Store
 .env.local
