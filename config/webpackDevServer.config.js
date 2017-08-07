@@ -32,7 +32,7 @@ module.exports = function(proxy, allowedHost) {
     compress: true,
     // Silence WebpackDevServer's own logs since they're generally not useful.
     // It will still show compile warnings and errors with this setting.
-    clientLogLevel: 'none',
+    clientLogLevel: 'info',
     // By default WebpackDevServer serves physical files from current directory
     // in addition to all the virtual build products that it serves from memory.
     // This is confusing because those files won’t automatically be available in
@@ -61,7 +61,7 @@ module.exports = function(proxy, allowedHost) {
     publicPath: config.output.publicPath,
     // WebpackDevServer is noisy by default so we emit custom message instead
     // by listening to the compiler events with `compiler.plugin` calls above.
-    quiet: true,
+    quiet: false,
     // Reportedly, this avoids CPU overload on some systems.
     // https://github.com/facebookincubator/create-react-app/issues/293
     watchOptions: {
