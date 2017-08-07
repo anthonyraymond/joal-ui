@@ -1,32 +1,59 @@
 // @flow
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
-import Home from './Home';
-import About from './About';
+import { connect } from 'react-redux';
+import { Route } from 'react-router-dom';
+import DashboardPage from './DashBoard';
+import SettingsPage from './Settings';
+import Historypage from './EventHistory';
+import NavigationBar from './NavigationBar';
+import TorrentDropZone from './TorrentDropZone';
+import FullScreenOverlayFetchingIndicator from '../components/Generics/FetchingIndicator/FullScreenOverlayFetchingIndicator';
+import { uploadTorrent } from '../api';
+import type { StateType } from '../types';
 
 type Props = {
-  store: {},
-  history: {}
+  isGlobalFetching: boolean,
+  onDrop: () => void
 };
 
-const App = (props: Props) => (
-  <Provider store={props.store}>
-    <ConnectedRouter history={props.history}>
-      <div>
-        <header>
-          <Link to="/">Home</Link>
-          <Link to="/about-us">About</Link>
-        </header>
+type DropzoneFile = {
+  lastModified: number,
+  name: string,
+  size: number,
+  type: string
+};
 
-        <main>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/about-us" component={About} />
-        </main>
-      </div>
-    </ConnectedRouter>
-  </Provider>
-);
+const App = (props: Props) => {
+  const { isGlobalFetching, onDrop } = props;
+  return (
+    <div className="container-fluid">
+      <TorrentDropZone onDrop={onDrop}>
+        <div style={{ paddingTop: 20 }}>
+          <main>
+            <Route exact path="/history" component={Historypage} />
+            <Route exact path="/settings" component={SettingsPage} />
+            <Route exact path="/" component={DashboardPage} />
+          </main>
+          <div style={{ position: 'fixed', left: 0, right: 0, bottom: 0 }}>
+            <NavigationBar />
+          </div>
+          <FullScreenOverlayFetchingIndicator active={isGlobalFetching} />
+        </div>
+      </TorrentDropZone>
+    </div>
+  );
+};
 
-export default App;
+function mapStateToProps(state: StateType) {
+  const isGlobalFetching = !state.api.stomp.isConnected
+    || !state.api.stomp.isFullyInit
+    || state.api.client.isFetching;
+  return {
+    isGlobalFetching,
+    onDrop: (accepted: Array<DropzoneFile>/* , rejected: Array<DropzoneFile> */) => {
+      accepted.forEach(file => uploadTorrent(file));
+    }
+  };
+}
+
+export default connect(mapStateToProps)(App);

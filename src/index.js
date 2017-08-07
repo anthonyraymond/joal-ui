@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import { configureStore, history } from './store/configureStore';
-import './index.css';
+import './app.global.css';
 import registerServiceWorker from './registerServiceWorker';
 import { connectStomp } from './api';
 
@@ -14,8 +14,8 @@ const rootEl = document.getElementById('root');
 
 let render = () => {
   // Dynamically import our main App component, and render it
-  const App = require('./components/App').default; // eslint-disable-line global-require
-  ReactDOM.render(<App store={store} history={history} />, rootEl);
+  const Root = require('./components/Root').default; // eslint-disable-line global-require
+  ReactDOM.render(<Root store={store} history={history} />, rootEl);
 };
 
 if (module.hot) {
@@ -31,7 +31,7 @@ if (module.hot) {
 
   // Whenever the App component file or one of its dependencies
   // is changed, re-import the updated component and re-render it
-  module.hot.accept('./components/App', () => {
+  module.hot.accept('./components/Root', () => {
     setTimeout(render);
   });
 }

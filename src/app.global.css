@@ -1,0 +1,14 @@
+@import "~font-awesome/css/font-awesome.min.css";
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+body {
+  background-color: rgb(232, 232, 232);
+  color: #545454;
+  min-height: 100%;
+  padding-bottom: 56px; /* For navigation bottom to never to on top on another UI element */
+}
+
+/* Disable bootstrap overiding material-ui font-weight on labels */
+label {
+  font-weight: inherit;
+}

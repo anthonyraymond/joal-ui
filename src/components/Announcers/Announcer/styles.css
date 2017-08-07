@@ -1,0 +1,15 @@
+.statsContainer {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.uploadSpeedContainer {
+  bottom: 5px;
+  font-size: 18px;
+  position: absolute;
+  right: 15px;
+}
+
+.uploadSpeedContainer div, .uploadSpeedContainer i {
+  display: inline-block;
+}

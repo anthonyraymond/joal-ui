@@ -1,5 +1,4 @@
 // @flow
-import base64 from 'file-base64';
 import JOALStompClient from './JOALStompClient';
 import { sendStartToServer, sendStopToServer } from './client/client.actions';
 import { sendConfig } from './settings/settings.actions';
@@ -38,20 +37,20 @@ export const sendConfigToServer = (config: Config) => {
 type File = {
   lastModified: number,
   name: string,
-  path: string,
-  preview: string,
   size: number,
   type: string
 };
 export const uploadTorrent = (file: File) => {
-  base64.encode(file.path, (err, base64File) => {
-    if (err) {
-      console.error('b64 callback', err);
-    } else {
-      stompClient.send('/joal/torrents/upload', JSON.stringify({
-        fileName: file.name,
-        b64String: base64File
-      }));
-    }
-  });
+  // Attempt to read the file using Filereader API
+  const reader = new FileReader();
+  reader.onload = () => {
+    stompClient.send('/joal/torrents/upload', JSON.stringify({
+      fileName: file.name,
+      b64String: btoa(reader.result)
+    }));
+  };
+  reader.onabort = () => console.log('file reading was aborted');
+  reader.onerror = () => console.log('file reading has failed');
+
+  reader.readAsBinaryString(file);
 };
