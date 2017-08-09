@@ -39,6 +39,13 @@ class TorrentDropZone extends Component {
   render() {
     const { dropzoneActive } = this.state;
     const styles = {
+      dropzone: {
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+      },
       overlay: {
         zIndex: 16777270,
         position: 'fixed',
@@ -61,7 +68,7 @@ class TorrentDropZone extends Component {
       <Dropzone
         disableClick
         disablePreview
-        style={{}}
+        style={styles.dropzone}
         onDrop={this.onDrop.bind(this)}
         onDragEnter={this.onDragEnter.bind(this)}
         onDragLeave={this.onDragLeave.bind(this)}

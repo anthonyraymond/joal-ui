@@ -26,8 +26,8 @@ type DropzoneFile = {
 const App = (props: Props) => {
   const { isGlobalFetching, onDrop } = props;
   return (
-    <div className="container-fluid">
-      <TorrentDropZone onDrop={onDrop}>
+    <TorrentDropZone onDrop={onDrop}>
+      <div className="container-fluid">
         <div style={{ paddingTop: 20 }}>
           <main>
             <Route exact path="/history" component={Historypage} />
@@ -39,8 +39,8 @@ const App = (props: Props) => {
           </div>
           <FullScreenOverlayFetchingIndicator active={isGlobalFetching} />
         </div>
-      </TorrentDropZone>
-    </div>
+      </div>
+    </TorrentDropZone>
   );
 };
 
