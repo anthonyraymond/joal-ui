@@ -13,9 +13,6 @@ import type { ReduxStore, StompMessage } from './types';
 export default class JOALStompClient {
   constructor(reduxStore: ReduxStore, onDisconnectCallback: () => void) {
     this.reduxStore = reduxStore;
-    const guiConf = getGUIConfig();
-    this.url = `ws://${guiConf.host}:${guiConf.port}/${guiConf.pathPrefix}`;
-    this.secretToken = guiConf.secretToken;
     this.onDisconnectCallback = onDisconnectCallback;
     this.subscriptions = [];
     this.stompClient = {};
@@ -35,11 +32,14 @@ export default class JOALStompClient {
   }
 
   connect() {
+    const guiConf = getGUIConfig();
+    const url = `ws://${guiConf.host}:${guiConf.port}/${guiConf.pathPrefix}`;
+    const secretToken = guiConf.secretToken;
     this._dispatchOnConnect(); // eslint-disable-line no-underscore-dangle
-    this.stompClient = Webstomp.client(this.url, { debug: true });
+    this.stompClient = Webstomp.client(url, { debug: true });
 
     // TODO : replace X-Joal-Username with a random value
-    this.stompClient.connect({ 'X-Joal-Auth-Token': this.secretToken, 'X-Joal-Username': 'qdsd' }, (/* response */) => {
+    this.stompClient.connect({ 'X-Joal-Auth-Token': secretToken, 'X-Joal-Username': 'qdsd' }, (/* response */) => {
       this._dispatchHasConnected(); // eslint-disable-line no-underscore-dangle
 
       /* specific mapping that intentionally include the /joal prefix */
@@ -61,13 +61,7 @@ export default class JOALStompClient {
         this.subscriptions.push(subscribtion);
       });
     }, (error) => {
-      // Some time this event is called for non-disconnect events, in shuch case returns
-      if (error.constructor.name !== 'CloseEvent') {
-        // TODO : dispath err notif
-        console.log(error);
-        return;
-      }
-
+      console.log(error);
       // if we were already connected this is a connection drop.
       const isConnectionDropped = this.isConnected;
 

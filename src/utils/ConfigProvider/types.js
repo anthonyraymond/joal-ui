@@ -1,7 +1,7 @@
 // @flow
 export type GuiConfig = {
   host: string,
-  port: number,
+  port: string,
   pathPrefix: string,
   secretToken: string
 };

@@ -5,18 +5,22 @@ let cachedConf: GuiConfig;
 
 export const getConfig = () => {
   if (!cachedConf) {
-    // TODO: replace me with localstorage
-    cachedConf = {
-      host: 'localhost',
-      port: 5081,
-      pathPrefix: 'secret-endpoint-path',
-      secretToken: 'super-secret-token'
-    };
+    const localStorageConf = localStorage.getItem('guiConfig');
+    if (!localStorageConf) {
+      cachedConf = {
+        host: 'localhost',
+        port: '0',
+        pathPrefix: '',
+        secretToken: ''
+      };
+    } else {
+      cachedConf = JSON.parse(localStorageConf);
+    }
   }
-  return cachedConf || {};
+  return cachedConf;
 };
 
 export const saveConfig = (newConfig: GuiConfig) => {
-  // TODO : implement me
-  console.error('NOT IMPLEMENTED YET. Wont save new config', newConfig);
+  localStorage.setItem('guiConfig', JSON.stringify(newConfig));
+  cachedConf = newConfig;
 };
