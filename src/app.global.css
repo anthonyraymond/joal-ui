@@ -1,5 +1,6 @@
 @import "~font-awesome/css/font-awesome.min.css";
 @import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~typeface-roboto/index.css";
 
 body {
   background-color: rgb(232, 232, 232);
