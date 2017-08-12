@@ -2,20 +2,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
+import isElectron from 'is-electron';
 import Dashboard from './dashboard.component';
 import type { StateType } from '../../types';
 
 
 type Props = {
-  isStarted: boolean
+  isStarted: boolean,
+  shouldDisplayConfigChangerButton: boolean
 };
 
 const DashboardPage = (props: Props) => {
-  const { isStarted } = props;
+  const { isStarted, shouldDisplayConfigChangerButton } = props;
 
   return (
     <div>
-      <Dashboard isStarted={isStarted} />
+      <Dashboard
+        isStarted={isStarted}
+        shouldDisplayConfigChangerButton={shouldDisplayConfigChangerButton}
+      />
       <ReactTooltip place="top" type="dark" effect="float" />
     </div>
   );
@@ -24,7 +29,8 @@ const DashboardPage = (props: Props) => {
 
 function mapStateToProps(state: StateType) {
   return {
-    isStarted: state.api.client.isStarted
+    isStarted: state.api.client.isStarted,
+    shouldDisplayConfigChangerButton: !isElectron()
   };
 }
 

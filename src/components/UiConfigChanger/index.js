@@ -1,4 +1,4 @@
 // @flow
-import UiConfigChanger from './uiConfigChanger.component';
+import UiConfigChanger from './uiConfigChanger.container';
 
 export default UiConfigChanger;

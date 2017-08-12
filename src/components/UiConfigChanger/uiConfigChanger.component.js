@@ -1,34 +1,40 @@
-// @flow
 import React, { Component } from 'react';
-import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
-import { getGUIConfig, saveGUIConfig } from '../../utils/ConfigProvider';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+import Dialog from 'material-ui/Dialog';
+import type { GuiConfig } from '../../utils/ConfigProvider/types';
 
-/*
-type Props = {
-  enabled: boolean
-};
-*/
 
-// TODO : Use a Dialog instead of a plain component
 class UiConfigChanger extends Component {
+  props: {
+    config: GuiConfig,
+    saveNewConf: (config: GuiConfig) => void,
+    style?: {}
+  };
+  static defaultProps = {
+    style: {}
+  }
+
   constructor(props) {
     super(props);
-    const conf = getGUIConfig();
+    const { config } = props;
+
     this.state = {
-      host: conf.host,
-      hostErr: '',
-      port: conf.port,
-      portErr: '',
-      pathPrefix: conf.pathPrefix,
-      secretToken: conf.secretToken,
+      isModalVisible: false,
+      host: config.host,
+      port: config.port,
+      pathPrefix: config.pathPrefix,
+      secretToken: config.secretToken,
+      hostErr: config.host !== '' ? '' : 'Required field',
+      portErr: config.port !== '' ? '' : 'Required field',
+      pathPrefixErr: config.pathPrefix !== '' ? '' : 'Required field',
+      secretTokenErr: config.secretToken !== '' ? '' : 'Required field',
     };
   }
 
-  // TODO: move this to a reducer as for the localConfig ?
   handleHostChange(host: string) {
-    const hostErr = host === '' ? 'Host is required' : '';
+    const hostErr = host === '' ? 'Required field' : '';
     this.setState({ host, hostErr });
   }
   handlePortChange(port: string) {
@@ -43,76 +49,123 @@ class UiConfigChanger extends Component {
     this.setState({ port, portErr });
   }
   handlePathPrefixChange(pathPrefix: string) {
-    this.setState({ pathPrefix });
+    const pathPrefixErr = pathPrefix === '' ? 'Required field' : '';
+    this.setState({ pathPrefix, pathPrefixErr });
   }
   handleSecretTokenChange(secretToken: string) {
-    this.setState({ secretToken });
+    const secretTokenErr = secretToken === '' ? 'Required field' : '';
+    this.setState({ secretToken, secretTokenErr });
+  }
+  discardChangesAndClose() {
+    this.setState({ ...(this.props.config), isModalVisible: false });
   }
 
   saveConfig() {
-    console.log(this.state);
-    const { hostErr, portErr, ...rest } = this.state;
-    saveGUIConfig(rest);
+    const { host, port, pathPrefix, secretToken } = this.state;
+    if (this.hasError()) {
+      return;
+    }
+
+    this.props.saveNewConf({ host, port, pathPrefix, secretToken });
+    this.setState({ isModalVisible: false });
     // TODO : disconnect, then reconnect NOW! no waiting. otherwise user won't be able to disconnect from current instance
   }
 
+  hasError() {
+    const { host, port, pathPrefix, secretToken, hostErr, portErr, pathPrefixErr, secretTokenErr } = this.state;
+    if (!host || !port || !pathPrefix || !secretToken) {
+      return true;
+    }
+    if (hostErr || portErr || pathPrefixErr || secretTokenErr) {
+      return true;
+    }
+    return false;
+  }
+
   render() {
-    const { host, port, pathPrefix, secretToken } = this.state;
-    const { hostErr, portErr } = this.state;
+    const {
+      isModalVisible,
+      host, port, pathPrefix, secretToken,
+      hostErr, portErr, pathPrefixErr, secretTokenErr
+    } = this.state;
+    const modalActions = [
+      <FlatButton
+        label="Cancel"
+        onTouchTap={() => this.discardChangesAndClose()}
+      />,
+      <FlatButton
+        label="Save"
+        primary
+        disabled={this.hasError()}
+        onTouchTap={() => this.saveConfig()}
+      />,
+    ];
     return (
-      <Paper style={{ padding: 15 }} zDepth={3}>
-        <div>
-          <TextField
-            name="host"
-            floatingLabelText="Server address"
-            hintText="ip or hostname"
-            floatingLabelFixed
-            hintStyle={{ fontWeight: 300 }}
-            value={host}
-            errorText={hostErr}
-            onChange={(e) => this.handleHostChange(e.target.value)}
-          />
-        </div>
-        <div>
-          <TextField
-            name="port"
-            type="number"
-            floatingLabelText="Server port"
-            hintText="port"
-            floatingLabelFixed
-            hintStyle={{ fontWeight: 300 }}
-            value={port}
-            errorText={portErr}
-            onChange={(e) => this.handlePortChange(e.target.value)}
-          />
-        </div>
-        <div>
-          <TextField
-            name="path-prefix"
-            floatingLabelText="Path prefix"
-            hintText="Obfuscation path prefix"
-            floatingLabelFixed
-            hintStyle={{ fontWeight: 300 }}
-            value={pathPrefix}
-            onChange={(e) => this.handlePathPrefixChange(e.target.value)}
-          />
-        </div>
-        <div>
-          <TextField
-            name="secret-token"
-            floatingLabelText="Secret token"
-            hintText="A super secret token"
-            floatingLabelFixed
-            hintStyle={{ fontWeight: 300 }}
-            value={secretToken}
-            onChange={(e) => this.handleSecretTokenChange(e.target.value)}
-          />
-        </div>
-        <div className="text-right">
-          <FlatButton label="Close" />
-          <FlatButton label="Save" primary onTouchTap={() => this.saveConfig()} />
-        </div>
-      </Paper>
+      <div style={this.props.style}>
+        <RaisedButton
+          label="Change connection settings"
+          fullWidth
+          onTouchTap={() => this.setState({ isModalVisible: true })}
+        />
+        <Dialog
+          actions={modalActions}
+          title="Connection settings"
+          modal={false}
+          open={isModalVisible}
+          onRequestClose={() => this.discardChangesAndClose()}
+          autoScrollBodyContent
+        >
+          <div>
+            <TextField
+              name="host"
+              floatingLabelText="Server address"
+              hintText="ip or hostname"
+              floatingLabelFixed
+              hintStyle={{ fontWeight: 300 }}
+              value={host}
+              errorText={hostErr}
+              onChange={(e) => this.handleHostChange(e.target.value)}
+            />
+          </div>
+          <div>
+            <TextField
+              name="port"
+              type="number"
+              floatingLabelText="Server port"
+              hintText="port"
+              floatingLabelFixed
+              hintStyle={{ fontWeight: 300 }}
+              value={port}
+              errorText={portErr}
+              onChange={(e) => this.handlePortChange(e.target.value)}
+            />
+          </div>
+          <div>
+            <TextField
+              name="path-prefix"
+              floatingLabelText="Path prefix"
+              hintText="Obfuscation path prefix"
+              floatingLabelFixed
+              hintStyle={{ fontWeight: 300 }}
+              value={pathPrefix}
+              errorText={pathPrefixErr}
+              onChange={(e) => this.handlePathPrefixChange(e.target.value)}
+            />
+          </div>
+          <div>
+            <TextField
+              name="secret-token"
+              floatingLabelText="Secret token"
+              hintText="A super secret token"
+              floatingLabelFixed
+              hintStyle={{ fontWeight: 300 }}
+              value={secretToken}
+              errorText={secretTokenErr}
+              onChange={(e) => this.handleSecretTokenChange(e.target.value)}
+            />
+          </div>
+        </Dialog>
+      </div>
     );
   }
 }
