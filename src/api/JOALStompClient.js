@@ -12,6 +12,7 @@ import type { ReduxStore, StompMessage } from './types';
 
 export default class JOALStompClient {
   constructor(reduxStore: ReduxStore, onDisconnectCallback: () => void) {
+    this.reconnectTimeout = undefined;
     this.reduxStore = reduxStore;
     this.onDisconnectCallback = onDisconnectCallback;
     this.subscriptions = [];
@@ -73,7 +74,7 @@ export default class JOALStompClient {
         this._dispatchHasFailedToConnect(); // eslint-disable-line no-underscore-dangle
       }
       if (this.onDisconnectCallback) this.onDisconnectCallback();
-      this._reconnectAfterTimeout(); // eslint-disable-line no-underscore-dangle
+      this._reconnectAfterTimeout(8000); // eslint-disable-line no-underscore-dangle
     });
   }
 
@@ -105,12 +106,27 @@ export default class JOALStompClient {
     this.reduxStore.dispatch({ type: `@@api/listener/${type}`, payload });
   }
 
-  _reconnectAfterTimeout() {
+  _reconnectAfterTimeout(timeout: number) {
     this.subscriptions.forEach(sub => sub.unsubscribe()); // release resources
     this.subscriptions = [];
-    setTimeout(() => {
+    this.reconnectTimeout = setTimeout(() => {
       this.connect();
-    }, 8000);
+    }, timeout);
+  }
+
+  disconnect() {
+    if (this.isConnected) {
+      this.subscriptions.forEach(sub => sub.unsubscribe()); // release resources
+      this.subscriptions = [];
+      this.stompClient.disconnect();
+    }
+    this.isConnected = false;
+  }
+
+  disconnectAndReconnect() {
+    clearTimeout(this.reconnectTimeout);
+    this.disconnect();
+    this.connect();
   }
 
 }

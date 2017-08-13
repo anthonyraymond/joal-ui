@@ -68,7 +68,6 @@ class UiConfigChanger extends Component {
 
     this.props.saveNewConf({ host, port, pathPrefix, secretToken });
     this.setState({ isModalVisible: false });
-    // TODO : disconnect, then reconnect NOW! no waiting. otherwise user won't be able to disconnect from current instance
   }
 
   hasError() {

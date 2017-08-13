@@ -18,6 +18,10 @@ export const connectStomp = (appStore: ReduxStore) => {
   stompClient.connect();
 };
 
+export const disconnectAndReconnect = () => {
+  stompClient.disconnectAndReconnect();
+};
+
 
 export const sendStartSession = () => {
   store.dispatch(sendStartToServer());
