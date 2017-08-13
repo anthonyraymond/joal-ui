@@ -4,6 +4,7 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import { green500 } from 'material-ui/styles/colors';
+import AbsoluteOverlayFetchingIndicator from '../Generics/FetchingIndicator/AbsoluteOverlayFetchingIndicator';
 import UploadRateFields from './UploadRateFields';
 import ClientSelectField from './ClientSelectField';
 import type { Config } from './types';
@@ -12,12 +13,13 @@ import styles from './styles.css';
 type Props = {
   config: Config,
   availableClients: Array<string>,
+  isConnectedToWebSocket: boolean,
   onSettingsChange: () => void,
   onClickSave: () => void
 };
 
 const Settings = (props: Props) => {
-  const { onSettingsChange, onClickSave, availableClients, config } = props;
+  const { isConnectedToWebSocket, onSettingsChange, onClickSave, availableClients, config } = props;
 
   const valueHasChanged = (newValue) => onSettingsChange(Object.assign({},
     config,
@@ -26,6 +28,7 @@ const Settings = (props: Props) => {
 
   return (
     <Paper zDepth={2} className={styles.container}>
+      <AbsoluteOverlayFetchingIndicator active={!isConnectedToWebSocket} />
       <UploadRateFields
         minUploadRate={config.minUploadRate}
         maxUploadRate={config.maxUploadRate}

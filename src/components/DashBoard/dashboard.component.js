@@ -1,12 +1,15 @@
 // @flow
 import React from 'react';
+import ReactTooltip from 'react-tooltip';
 import ClientInfo from '../ClientInfo';
+import AbsoluteOverlayFetchingIndicator from '../Generics/FetchingIndicator/AbsoluteOverlayFetchingIndicator';
 import UiConfigChangerButton from '../UiConfigChanger';
 import Announcers from '../Announcers';
 import QueuedTorrents from '../QueuedTorrents';
 
 type Props = {
   isStarted: boolean,
+  isConnectedToWebSocket: boolean,
   shouldDisplayConfigChangerButton: boolean
 };
 
@@ -16,7 +19,10 @@ const Dashboard = (props: Props) => (
       {props.shouldDisplayConfigChangerButton &&
         <UiConfigChangerButton style={{ marginBottom: 6 }} />
       }
-      <ClientInfo />
+      <div style={{ position: 'relative' }}>
+        <AbsoluteOverlayFetchingIndicator active={!props.isConnectedToWebSocket} />
+        <ClientInfo />
+      </div>
     </div>
     {props.isStarted &&
       <div className="col-lg-9 col-md-8 col-xs-12">
@@ -30,6 +36,7 @@ const Dashboard = (props: Props) => (
         </div>
       </div>
     }
+    <ReactTooltip place="top" type="dark" effect="float" />
   </div>
 );
 

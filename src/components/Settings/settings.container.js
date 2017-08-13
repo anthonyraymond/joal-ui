@@ -10,7 +10,8 @@ function mapStateToProps(state: StateType) {
   return {
     // if local config is set it means the user has modified the config, so we show it
     config: state.app.config.localConfig || state.api.settings.config,
-    availableClients: state.api.settings.availableClients
+    availableClients: state.api.settings.availableClients,
+    isConnectedToWebSocket: state.api.stomp.isConnected
   };
 }
 
