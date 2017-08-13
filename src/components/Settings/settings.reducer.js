@@ -10,14 +10,13 @@ import type {
   Handler,
   Action
 } from '../../types';
-import type { Config } from './types';
+import type { LocalConfigState, Config } from './types';
 
 const initialState = {
   localConfig: undefined
 };
 
-// TODO: type this handler
-const handlers: Handler<{}> = {
+const handlers: Handler<LocalConfigState> = {
   [LOCAL_CONFIG_HAS_CHANGED](state, action: Action<Config>) {
     return update(state, {
       localConfig: { $set: action.config }

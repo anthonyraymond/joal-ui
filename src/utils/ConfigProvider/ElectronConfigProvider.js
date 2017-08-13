@@ -6,10 +6,19 @@ let cachedConf: GuiConfig;
 
 export const getConfig = () => {
   if (!cachedConf) {
-    // TODO : implement me
-    // cachedConf = require('electron').remote.getGlobal('sharedObject').guiConf;
+    const localStorageConf = localStorage.getItem('guiConfig');
+    if (!localStorageConf) {
+      cachedConf = {
+        host: 'localhost',
+        port: '0',
+        pathPrefix: '',
+        secretToken: ''
+      };
+    } else {
+      cachedConf = JSON.parse(localStorageConf);
+    }
   }
-  return cachedConf || {};
+  return cachedConf;
 };
 
 export const saveConfig = (newConfig: GuiConfig) => {

@@ -9,6 +9,11 @@ import {
 } from './stomp/stomp.actions';
 import type { ReduxStore, StompMessage } from './types';
 
+const uuidv4 = () => (
+  ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => // eslint-disable-line
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16) // eslint-disable-line
+  )
+);
 
 export default class JOALStompClient {
   constructor(reduxStore: ReduxStore, onDisconnectCallback: () => void) {
@@ -39,8 +44,7 @@ export default class JOALStompClient {
     this._dispatchOnConnect(); // eslint-disable-line no-underscore-dangle
     this.stompClient = Webstomp.client(url, { debug: true });
 
-    // TODO : replace X-Joal-Username with a random value
-    this.stompClient.connect({ 'X-Joal-Auth-Token': secretToken, 'X-Joal-Username': 'qdsd' }, (/* response */) => {
+    this.stompClient.connect({ 'X-Joal-Auth-Token': secretToken, 'X-Joal-Username': uuidv4() }, (/* response */) => {
       this._dispatchHasConnected(); // eslint-disable-line no-underscore-dangle
 
       /* specific mapping that intentionally include the /joal prefix */

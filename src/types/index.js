@@ -1,6 +1,6 @@
 // @flow
 import type { ApiState } from '../api/types';
-import type { Config } from '../api/settings/types';
+import type { LocalConfigState } from '../components/Settings/types';
 
 /* Redux */
 // eslint-disable-next-line flowtype/no-weak-types
@@ -15,9 +15,7 @@ export type Handler<T> = {
 
 /* App */
 export type AppStateType = {
-  config: {
-    localConfig?: Config
-  }
+  config: LocalConfigState
 };
 
 export type StateType = {
