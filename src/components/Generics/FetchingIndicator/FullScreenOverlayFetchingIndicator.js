@@ -11,7 +11,7 @@ const styles = {
     right: 0,
     minHeight: 40,
     backgroundColor: 'rgba(200, 200, 200, 0.63)',
-    zIndex: 9999
+    zIndex: 1400
   },
   progress: {
     top: '50%',
