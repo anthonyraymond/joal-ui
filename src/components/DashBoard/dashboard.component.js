@@ -14,7 +14,7 @@ const Dashboard = (props: Props) => (
   <div className="row">
     <div className="col-lg-3 col-md-4 col-xs-12">
       {props.shouldDisplayConfigChangerButton &&
-        <UiConfigChangerButton style={{ position: 'relative', zIndex: 99999, marginBottom: 6 }} />
+        <UiConfigChangerButton style={{ marginBottom: 6 }} />
       }
       <ClientInfo />
     </div>
