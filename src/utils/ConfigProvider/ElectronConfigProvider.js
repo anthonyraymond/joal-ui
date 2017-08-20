@@ -8,15 +8,10 @@ export const getConfig = () => {
   if (!cachedConf) {
     const localStorageConf = localStorage.getItem('guiConfig');
     if (!localStorageConf) {
-      cachedConf = {
-        host: 'localhost',
-        port: '0',
-        pathPrefix: '',
-        secretToken: ''
-      };
-    } else {
-      cachedConf = JSON.parse(localStorageConf);
+      throw new Error('Failed to get gui configuration from localStorage.');
     }
+
+    cachedConf = JSON.parse(localStorageConf);
   }
   return cachedConf;
 };
