@@ -8,11 +8,12 @@ const fixAnnouncerSpeed = (announcers) => {
   if (announcers.length < 2) {
     return announcers;
   }
+  const torrentCount = announcers.filter(an => an.currentSpeed > 0).length;
   return Object.assign([], announcers.map(an => {
     if (an.currentSpeed === 0) {
       return an;
     }
-    return update(an, { currentSpeed: { $set: an.currentSpeed / announcers.length } });
+    return update(an, { currentSpeed: { $set: an.currentSpeed / torrentCount } });
   }));
 };
 
