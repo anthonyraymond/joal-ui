@@ -6,6 +6,22 @@
   position: relative;
 }
 
+.inputsContainer {
+  margin-top: 15px;
+}
+
+.inputDescription {
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .buttonStyle {
   margin-top: 15px;
+}
+
+.unsavedConfigWrapper {
+  margin-top: 3px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
