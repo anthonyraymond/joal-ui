@@ -3,7 +3,8 @@ export type Config = {
   minUploadRate: number,
   maxUploadRate: number,
   simultaneousSeed: number,
-  client: string
+  client: string,
+  keepTorrentWithZeroLeechers: boolean
 };
 export type SettingsState = {
   isDirty: boolean,

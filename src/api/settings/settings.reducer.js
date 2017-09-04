@@ -26,7 +26,8 @@ const initialState = {
     minUploadRate: 0,
     maxUploadRate: 0,
     simultaneousSeed: 0,
-    client: ''
+    client: '',
+    keepTorrentWithZeroLeechers: false
   },
   availableClients: []
 };

@@ -3,6 +3,7 @@ import React from 'react';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import Checkbox from 'material-ui/Checkbox';
 import { green500 } from 'material-ui/styles/colors';
 import AbsoluteOverlayFetchingIndicator from '../Generics/FetchingIndicator/AbsoluteOverlayFetchingIndicator';
 import UploadRateFields from './UploadRateFields';
@@ -35,6 +36,13 @@ const Settings = (props: Props) => {
         onChange={(uploadRates) => valueHasChanged(uploadRates)}
       />
       <div>
+        <ClientSelectField
+          availableClients={availableClients}
+          selectedClient={config.client}
+          onChange={(client) => valueHasChanged(client)}
+        />
+      </div>
+      <div>
         <TextField
           floatingLabelText="Simultaneous seed"
           type="number"
@@ -47,10 +55,11 @@ const Settings = (props: Props) => {
           }}
         />
       </div>
-      <div>
-        <ClientSelectField
-          availableClients={availableClients}
-          selectedClient={config.client}
+      <div style={{ marginTop: 10 }}>
+        <Checkbox
+          label="Keep torrents active when reach zero peers (if false peerless torrent will be removed)."
+          checked={config.keepTorrentWithZeroLeechers}
+          onCheck={(e, checked) => valueHasChanged({ keepTorrentWithZeroLeechers: checked })}
           onChange={(client) => valueHasChanged(client)}
         />
       </div>
