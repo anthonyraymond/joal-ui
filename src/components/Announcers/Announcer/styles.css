@@ -13,3 +13,9 @@
 .uploadSpeedContainer div, .uploadSpeedContainer i {
   display: inline-block;
 }
+
+.deleteButton {
+  position: absolute;
+  right: 0;
+  top: 0;
+}

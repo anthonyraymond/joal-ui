@@ -58,3 +58,7 @@ export const uploadTorrent = (file: File) => {
 
   reader.readAsBinaryString(file);
 };
+
+export const deleteTorrent = (torrentInfoHash: string) => {
+  stompClient.send('/joal/torrents/delete', torrentInfoHash);
+};

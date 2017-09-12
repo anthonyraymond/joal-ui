@@ -2,7 +2,9 @@
 import update from 'immutability-helper';
 import { connect } from 'react-redux';
 import Announcers from './announcers.component';
+import { deleteTorrent } from '../../api';
 import type { StateType } from '../../types';
+
 
 const fixAnnouncerSpeed = (announcers) => {
   if (announcers.length < 2) {
@@ -23,4 +25,10 @@ function mapStateToProps(state: StateType) {
   };
 }
 
-export default connect(mapStateToProps)(Announcers);
+function mapDispatchToProps() {
+  return {
+    onClickDeleteTorrent: (infoHash) => deleteTorrent(infoHash)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Announcers);

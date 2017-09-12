@@ -2,6 +2,9 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
 import Subheader from 'material-ui/Subheader';
+import IconButton from 'material-ui/IconButton';
+import Deleteicon from 'material-ui/svg-icons/action/delete-forever';
+import { red500 } from 'material-ui/styles/colors';
 import filesize from 'filesize';
 import PeerStats from './Peers';
 import AnnounceProgressBar from './ProgressBar';
@@ -11,10 +14,12 @@ import styles from './styles.css';
 import type { Announcer as AnnouncerType } from '../types';
 
 type Props = {
-  announcer: AnnouncerType
+  announcer: AnnouncerType,
+  onClickDeleteTorrent: (infoHash: string) => void
 };
 
-const Announcer = ({ announcer }: Props) => {
+const Announcer = (props: Props) => {
+  const { announcer, onClickDeleteTorrent } = props;
   let nextAnnounceIn = announcer.interval;
   if (announcer.announceHistory.length > 0 && announcer.interval) {
     const lastAnnounceDate = Date.parse(
@@ -39,6 +44,15 @@ const Announcer = ({ announcer }: Props) => {
                 speedInBytesPerSeconds={announcer.currentSpeed}
               />
             </div>
+          </div>
+          <div className={styles.deleteButton}>
+            <IconButton
+              tooltip="Delete this torrent"
+              tooltipPosition="top-center"
+              onClick={() => onClickDeleteTorrent(announcer.id)}
+            >
+              <Deleteicon color={red500} />
+            </IconButton>
           </div>
           <AnnounceProgressBar
             isFetching={announcer.isFetching}

@@ -4,14 +4,15 @@ import Announcer from './Announcer';
 import type { Announcer as AnnouncerType } from './types';
 
 type Props = {
-  announcers: Array<AnnouncerType>
+  announcers: Array<AnnouncerType>,
+  onClickDeleteTorrent: (infoHash: string) => void
 };
 
-const Announcers = ({ announcers }: Props) => (
+const Announcers = ({ announcers, onClickDeleteTorrent }: Props) => (
   <div>
     {announcers.map((announcer) => (
       <div key={announcer.id}>
-        <Announcer announcer={announcer} />
+        <Announcer announcer={announcer} onClickDeleteTorrent={onClickDeleteTorrent} />
         <br />
       </div>
     ))}
