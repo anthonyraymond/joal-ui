@@ -79,7 +79,7 @@ const Settings = (props: Props) => {
           <Checkbox
             label={
               <div>
-                <div style={{ height: 16 }}>Keep seeding torrents event with no peers</div>
+                <div style={{ height: 16 }}>Keep seeding torrents even with no peers</div>
                 <div style={{ height: 13 }} className={styles.inputDescription}>If checked, when a torrent reach 0 peers it will seed at 0 kB/s.</div>
                 <div className={styles.inputDescription}>If unchecked, when a torrent reach 0 peers it will be removed.</div>
               </div>
