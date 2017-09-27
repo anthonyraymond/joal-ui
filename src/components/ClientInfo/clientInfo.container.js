@@ -10,7 +10,7 @@ const calculateGobalSpeed = (announcers) => {
   }
   return announcers.reduce((prevVal, announcer) => (
     prevVal + announcer.currentSpeed
-  ), 0) / announcers.length;
+  ), 0);
 };
 
 function mapStateToProps(state: StateType) {
