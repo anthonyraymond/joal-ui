@@ -22,11 +22,10 @@ export default class JOALStompClient {
     this.onDisconnectCallback = onDisconnectCallback;
     this.subscriptions = [];
     this.stompClient = {};
-    this.isConnected = false;
   }
 
   send(path: string, body: string = '', headers: {} = {}) {
-    if (!this.isConnected) {
+    if (!this.stompClient || !this.stompClient.connected) {
       console.error('You can not send message to JOAL when not connected through WebScoket.');
       return;
     }
@@ -66,9 +65,8 @@ export default class JOALStompClient {
         this.subscriptions.push(subscribtion);
       });
     }, (error) => {
-      console.log(error);
-      // if we were already connected this is a connection drop.
-      const isConnectionDropped = this.isConnected;
+      // if we had some subscriptions this is a connection drop.
+      const isConnectionDropped = this.subscriptions.length > 0;
 
       if (isConnectionDropped) {
         // connection dropped
@@ -91,17 +89,14 @@ export default class JOALStompClient {
   }
 
   _dispatchHasConnected() {
-    this.isConnected = true;
     this.reduxStore.dispatch(hasConnected());
   }
 
   _dispatchHasDropConnection() {
-    this.isConnected = false;
     this.reduxStore.dispatch(hasDropConnection());
   }
 
   _dispatchHasFailedToConnect() {
-    this.isConnected = false;
     this.reduxStore.dispatch(hasFailedToConnect());
   }
 
@@ -113,18 +108,21 @@ export default class JOALStompClient {
   _reconnectAfterTimeout(timeout: number) {
     this.subscriptions.forEach(sub => sub.unsubscribe()); // release resources
     this.subscriptions = [];
-    this.reconnectTimeout = setTimeout(() => {
-      this.connect();
-    }, timeout);
+    // the reconnectTimeout = undefined will ensure we don't cause memory leak.
+    if (this.reconnectTimeout === undefined) {
+      this.reconnectTimeout = setTimeout(() => {
+        this.connect();
+        this.reconnectTimeout = undefined;
+      }, timeout);
+    }
   }
 
   disconnect() {
-    if (this.isConnected) {
-      this.subscriptions.forEach(sub => sub.unsubscribe()); // release resources
-      this.subscriptions = [];
+    this.subscriptions.forEach(sub => sub.unsubscribe()); // release resources
+    this.subscriptions = [];
+    if (this.stompClient && this.stompClient.connected) {
       this.stompClient.disconnect();
     }
-    this.isConnected = false;
   }
 
   disconnectAndReconnect() {
