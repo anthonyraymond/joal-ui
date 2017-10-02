@@ -5,7 +5,8 @@ import {
   hasConnected,
   hasDropConnection,
   hasFailedToConnect,
-  initOver
+  initOver,
+  hasReceivedError
 } from './stomp/stomp.actions';
 import type { ReduxStore, StompMessage } from './types';
 
@@ -14,6 +15,12 @@ const uuidv4 = () => (
     (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16) // eslint-disable-line
   )
 );
+
+type Frame = {
+  command: string;
+  headers: {};
+  body: {} | string;
+}
 
 export default class JOALStompClient {
   constructor(reduxStore: ReduxStore, onDisconnectCallback: () => void) {
@@ -64,19 +71,23 @@ export default class JOALStompClient {
         }, { ack: 'client' });
         this.subscriptions.push(subscribtion);
       });
-    }, (error) => {
-      // if we had some subscriptions this is a connection drop.
-      const isConnectionDropped = this.subscriptions.length > 0;
+    }, (error: CloseEvent | Frame) => {
+      console.log('error message from websocket', error);
 
-      if (isConnectionDropped) {
-        // connection dropped
-        this._dispatchHasDropConnection(); // eslint-disable-line no-underscore-dangle
+      if (error instanceof CloseEvent) {
+        // if we had some subscriptions this is a connection drop.
+        const isConnectionDropped = this.subscriptions.length > 0;
+
+        if (isConnectionDropped) {
+          this._dispatchHasDropConnection(); // eslint-disable-line no-underscore-dangle
+        } else {
+          this._dispatchHasFailedToConnect(); // eslint-disable-line no-underscore-dangle
+        }
+        if (this.onDisconnectCallback) this.onDisconnectCallback();
+        this._reconnectAfterTimeout(8000); // eslint-disable-line no-underscore-dangle
       } else {
-        // Failed to connect / reconnect
-        this._dispatchHasFailedToConnect(); // eslint-disable-line no-underscore-dangle
+        this.reduxStore.dispatch(hasReceivedError(error.headers.message));
       }
-      if (this.onDisconnectCallback) this.onDisconnectCallback();
-      this._reconnectAfterTimeout(8000); // eslint-disable-line no-underscore-dangle
     });
   }
 
@@ -127,6 +138,7 @@ export default class JOALStompClient {
 
   disconnectAndReconnect() {
     clearTimeout(this.reconnectTimeout);
+    this.reconnectTimeout = undefined;
     this.disconnect();
     this.connect();
   }

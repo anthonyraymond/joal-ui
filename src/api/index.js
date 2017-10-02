@@ -13,7 +13,7 @@ export const connectStomp = (appStore: ReduxStore) => {
   stompClient = new JOALStompClient(store, () => {
     // On disconnect
 
-    // dispatch event to reset application state. (to clear interface)
+    // TODO: dispatch event to reset application state. (to clear interface)
   });
   stompClient.connect();
 };

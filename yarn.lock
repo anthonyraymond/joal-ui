@@ -7136,8 +7136,8 @@ websocket-extensions@>=0.1.1:
   resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.1.tgz#76899499c184b6ef754377c2dbb0cd6cb55d29e7"
 
 webstomp-client@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/webstomp-client/-/webstomp-client-1.0.6.tgz#9fe1627dd48823cda5f4ade9d34672ac33c837e0"
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/webstomp-client/-/webstomp-client-1.0.8.tgz#0c8bfb0cbe6339ff6b7fe321a5b5d91ad95fd1bb"
 
 whatwg-encoding@^1.0.1:
   version "1.0.1"

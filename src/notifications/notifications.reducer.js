@@ -7,7 +7,8 @@ import {
   INIT_OVER,
   HAS_CONNECTED,
   HAS_DROP_CONNECTION,
-  HAS_FAILED_TO_CONNECT
+  HAS_FAILED_TO_CONNECT,
+  RECEIVED_ERROR_MESSAGE
 } from '../api/stomp/stomp.actions';
 import { REMOVE_NOTIFICATION } from './notifications.actions';
 import type {
@@ -108,6 +109,17 @@ const handlers: Handler<NotificationState> = {
       id: uuidv4(),
       text: `${action.payload.fileName} was rejected by server: ${action.payload.error}`,
       time: 6000,
+      type: 'ERROR'
+    };
+    return update(state, {
+      notifs: { $push: [notif] }
+    });
+  },
+  [RECEIVED_ERROR_MESSAGE](state, action: Action<string>) {
+    const notif = {
+      id: uuidv4(),
+      text: action.message,
+      time: 8000,
       type: 'ERROR'
     };
     return update(state, {
