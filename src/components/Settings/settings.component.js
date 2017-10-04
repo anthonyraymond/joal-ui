@@ -94,7 +94,7 @@ const Settings = (props: Props) => {
         label="Save"
         backgroundColor={green500}
         className={styles.buttonStyle}
-        onTouchTap={() => onClickSave(config)}
+        onClick={() => onClickSave(config)}
       />
     </Paper>
   );

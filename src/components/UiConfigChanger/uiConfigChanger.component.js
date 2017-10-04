@@ -90,13 +90,13 @@ class UiConfigChanger extends Component {
     const modalActions = [
       <FlatButton
         label="Cancel"
-        onTouchTap={() => this.discardChangesAndClose()}
+        onClick={() => this.discardChangesAndClose()}
       />,
       <FlatButton
         label="Save"
         primary
         disabled={this.hasError()}
-        onTouchTap={() => this.saveConfig()}
+        onClick={() => this.saveConfig()}
       />,
     ];
     return (
@@ -104,7 +104,7 @@ class UiConfigChanger extends Component {
         <RaisedButton
           label="Change connection settings"
           fullWidth
-          onTouchTap={() => this.setState({ isModalVisible: true })}
+          onClick={() => this.setState({ isModalVisible: true })}
         />
         <Dialog
           actions={modalActions}

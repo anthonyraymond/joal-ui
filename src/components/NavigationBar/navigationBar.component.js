@@ -36,17 +36,17 @@ const NavigationBar = (props: Props) => {
         <BottomNavigationItem
           label="dashboard"
           icon={<DashboardIcon />}
-          onTouchTap={onClickDashboard}
+          onClick={onClickDashboard}
         />
         <BottomNavigationItem
           label="configuration"
           icon={<SettingsIcon />}
-          onTouchTap={onClickSettings}
+          onClick={onClickSettings}
         />
         <BottomNavigationItem
           label="history"
           icon={<LogsIcon />}
-          onTouchTap={onClickLogs}
+          onClick={onClickLogs}
         />
       </BottomNavigation>
     </Paper>

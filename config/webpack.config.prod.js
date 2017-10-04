@@ -191,6 +191,7 @@ module.exports = {
                 {
                   loader: require.resolve('css-loader'),
                   options: {
+                    hmr: false,
                     minimize: true,
                     sourceMap: true,
                   },
@@ -232,6 +233,7 @@ module.exports = {
                 {
                   loader: require.resolve('css-loader'),
                   options: {
+                    hmr: false,
                     importLoaders: 1,
                     modules: true,
                     minimize: true,

@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import { configureStore, history } from './store/configureStore';
 import './app.global.css';
 import registerServiceWorker from './registerServiceWorker';
 import { connectStomp } from './api';
 
-injectTapEventPlugin();
 const store = configureStore();
 connectStomp(store);
 

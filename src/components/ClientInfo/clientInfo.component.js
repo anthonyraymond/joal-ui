@@ -41,7 +41,7 @@ const ClientInfo = (props: Props) => {
         <RaisedButton
           fullWidth
           style={styles.startStopButton}
-          onTouchTap={isStarted ? onClickStop : onClickStart}
+          onClick={isStarted ? onClickStop : onClickStart}
           label={isStarted ? 'stop' : 'start'}
           buttonStyle={isStarted ? styles.colorStop : styles.colorStart}
           labelStyle={isStarted ? styles.colorStop : styles.colorStart}
