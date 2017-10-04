@@ -142,5 +142,4 @@ export default class JOALStompClient {
     this.disconnect();
     this.connect();
   }
-
 }

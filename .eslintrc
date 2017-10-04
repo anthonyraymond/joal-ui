@@ -30,14 +30,16 @@
     }],
     "react/jsx-no-bind": "off",
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
-    "react/prefer-stateless-function": "off"
+    "react/prefer-stateless-function": "off",
+    "jsx-a11y/href-no-hash": "off"
   },
   "plugins": [
     "flowtype",
     "import",
     "promise",
     "compat",
-    "react"
+    "react",
+    "jsx-a11y"
   ],
   "settings": {
     "import/resolver": {
