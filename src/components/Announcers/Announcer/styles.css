@@ -20,11 +20,11 @@
 
 .deleteButtonWrapper {
   position: absolute;
-  right: 0;
+  right: 5px;
   top: 0;
 }
 .deleteButton {
-  padding: 0px 5px 0px 0px!important;
+  padding: 0!important;
   height: 35px!important;
-  width: 35px!important;
+  width: 42px!important;
 }
