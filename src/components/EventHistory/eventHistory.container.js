@@ -5,7 +5,7 @@ import EventHistoryComponent from './eventHistory.component';
 
 function mapStateToProps(/* state: StateType */) {
   return {
-    events: ['Joal has started', 'torrent added', '...']
+    events: []
   };
 }
 
