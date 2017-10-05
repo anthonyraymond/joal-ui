@@ -33,7 +33,7 @@ const Announcer = (props: Props) => {
     <div className="row">
       <div className="col-xs-12">
         <Paper zDepth={2} style={{ position: 'relative' }}>
-          <Subheader>{announcer.name}{' '}{`(${filesize(announcer.size, { standard: 'iec' })})`}</Subheader>
+          <Subheader className={styles.torrentName}>{announcer.name}{' '}{`(${filesize(announcer.size, { standard: 'iec' })})`}</Subheader>
 
           <div className={styles.statsContainer}>
             <PeerStats leechers={announcer.leechers} seeders={announcer.seeders} />
@@ -45,8 +45,9 @@ const Announcer = (props: Props) => {
               />
             </div>
           </div>
-          <div className={styles.deleteButton}>
+          <div className={styles.deleteButtonWrapper}>
             <IconButton
+              className={styles.deleteButton}
               tooltip="Delete this torrent"
               tooltipPosition="top-center"
               onClick={() => onClickDeleteTorrent(announcer.id)}
