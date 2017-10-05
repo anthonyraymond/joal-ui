@@ -8,7 +8,7 @@ import Historypage from './EventHistory';
 import NavigationBar from './NavigationBar';
 import TorrentDropZone from './TorrentDropZone';
 // import FullScreenOverlayFetchingIndicator from '../components/Generics/FetchingIndicator/FullScreenOverlayFetchingIndicator';
-import { uploadTorrent } from '../api';
+import { uploadTorrents } from '../api';
 import type { StateType } from '../types';
 
 type Props = {
@@ -51,7 +51,7 @@ function mapStateToProps(state: StateType) {
   return {
     isGlobalFetching,
     onDrop: (accepted: Array<DropzoneFile>/* , rejected: Array<DropzoneFile> */) => {
-      accepted.forEach(file => uploadTorrent(file));
+      uploadTorrents(accepted);
     }
   };
 }

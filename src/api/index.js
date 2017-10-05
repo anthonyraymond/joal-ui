@@ -44,19 +44,33 @@ type File = {
   size: number,
   type: string
 };
-export const uploadTorrent = (file: File) => {
-  // Attempt to read the file using Filereader API
+export const uploadTorrents = (files: Array<File>) => {
   const reader = new FileReader();
-  reader.onload = () => {
-    stompClient.send('/joal/torrents/upload', JSON.stringify({
-      fileName: file.name,
-      b64String: btoa(reader.result)
-    }));
-  };
-  reader.onabort = () => console.log('file reading was aborted');
-  reader.onerror = () => console.log('file reading has failed');
 
-  reader.readAsBinaryString(file);
+  // Process files one by one (queue like) to reduce memory consuption when sender a lot of torrent files.
+  const processOne = () => {
+    const singleFile = files.pop();
+    if (singleFile === undefined) {
+      return;
+    }
+
+    ((file) => {
+      reader.onload = () => {
+        const b64Encoded = reader.result.replace(/data:.+?,/, '');
+        stompClient.send('/joal/torrents/upload', JSON.stringify({
+          fileName: file.name,
+          b64String: b64Encoded
+        }));
+        processOne();
+      };
+      reader.onabort = () => console.log(`file reading was aborted for [${file.name}]`);
+      reader.onerror = () => console.log(`file reading has failed for [${file.name}]`);
+
+      reader.readAsDataURL(file);
+    })(singleFile);
+  };
+
+  processOne();
 };
 
 export const deleteTorrent = (torrentInfoHash: string) => {
