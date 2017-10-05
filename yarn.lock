@@ -5939,9 +5939,9 @@ react-router@^4.1.1, react-router@^4.2.0:
     prop-types "^15.5.4"
     warning "^3.0.0"
 
-react-tooltip@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-3.3.0.tgz#51c08ae0221075e2c43d83cd47fc78466612df7d"
+react-tooltip@3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-3.3.1.tgz#c8eb0f64c3852e5aadb10b1569bcd469562b326d"
   dependencies:
     classnames "^2.2.0"
     prop-types "^15.5.8"
