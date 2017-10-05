@@ -61,7 +61,7 @@ export const uploadTorrents = (files: Array<File>) => {
           fileName: file.name,
           b64String: b64Encoded
         }));
-        processOne();
+        setTimeout(processOne, 1300);
       };
       reader.onabort = () => console.log(`file reading was aborted for [${file.name}]`);
       reader.onerror = () => console.log(`file reading has failed for [${file.name}]`);
