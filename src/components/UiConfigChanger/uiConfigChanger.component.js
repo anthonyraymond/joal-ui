@@ -3,11 +3,13 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
+import { red500 } from 'material-ui/styles/colors';
 import type { GuiConfig } from '../../utils/ConfigProvider/types';
 
 
 class UiConfigChanger extends Component {
   props: {
+    isConnected: boolean,
     config: GuiConfig,
     saveNewConf: (config: GuiConfig) => void,
     style?: {}
@@ -82,6 +84,7 @@ class UiConfigChanger extends Component {
   }
 
   render() {
+    const { isConnected } = this.props;
     const {
       isModalVisible,
       host, port, pathPrefix, secretToken,
@@ -105,6 +108,8 @@ class UiConfigChanger extends Component {
           label="Change connection settings"
           fullWidth
           onClick={() => this.setState({ isModalVisible: true })}
+          backgroundColor={isConnected ? 'inherit' : red500}
+          labelColor={isConnected ? 'inherit' : '#FFF'}
         />
         <Dialog
           actions={modalActions}

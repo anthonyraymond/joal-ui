@@ -5,8 +5,9 @@ import { getGUIConfig, saveGUIConfig } from '../../utils/ConfigProvider';
 import { disconnectAndReconnect } from '../../api';
 import type { GuiConfig } from '../../utils/ConfigProvider/types';
 
-function mapStateToProps() {
+function mapStateToProps(state) {
   return {
+    isConnected: state.api.stomp.isConnected,
     config: getGUIConfig(),
     saveNewConf: (config: GuiConfig) => {
       saveGUIConfig(config);
