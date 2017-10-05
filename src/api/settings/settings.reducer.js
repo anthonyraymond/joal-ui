@@ -4,7 +4,8 @@ import {
   CONFIG_HAS_CHANGED,
   INVALID_CONFIG,
   CONFIG_HAS_BEEN_LOADED,
-  CLIENT_FILES_DISCOVERED
+  CLIENT_FILES_DISCOVERED,
+  RESET_CONFIG
 } from './settings.actions';
 import createReducer from '../../reducers/createReducer';
 import type {
@@ -54,6 +55,9 @@ const handlers: Handler<SettingsState> = {
   },
   [CLIENT_FILES_DISCOVERED](state, action: Action<ClientFilesDiscoveredPayload>) {
     return update(state, { availableClients: { $set: action.payload.clients } });
+  },
+  [RESET_CONFIG]() {
+    return initialState;
   }
 };
 

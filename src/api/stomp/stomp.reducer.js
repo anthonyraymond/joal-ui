@@ -5,7 +5,8 @@ import {
   HAS_CONNECTED,
   HAS_FAILED_TO_CONNECT,
   HAS_DROP_CONNECTION,
-  INIT_OVER
+  INIT_OVER,
+  RESET_STOMP_STATE
 } from './stomp.actions';
 import createReducer from '../../reducers/createReducer';
 import type {
@@ -47,6 +48,9 @@ const handlers: Handler<StompState> = {
     return update(state, {
       isFullyInit: { $set: true }
     });
+  },
+  [RESET_STOMP_STATE]() {
+    return initialState;
   }
 };
 

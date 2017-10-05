@@ -5,7 +5,8 @@ import {
   ANNOUNCER_HAS_STOPPED,
   ANNOUNCER_WILL_ANNOUNCE,
   ANNOUNCER_HAS_ANNOUNCED,
-  ANNOUNCER_HAS_FAILED_TO_ANNOUNCE
+  ANNOUNCER_HAS_FAILED_TO_ANNOUNCE,
+  RESET_ANNOUNCER_STATE
 } from './announcers.actions';
 import createReducer from '../../reducers/createReducer';
 import type { AnnouncerState, AnnouncerPayload } from './types';
@@ -54,6 +55,9 @@ const handlers: Handler<AnnouncerState> = {
       }
       return an;
     });
+  },
+  [RESET_ANNOUNCER_STATE]() {
+    return initialState;
   }
 };
 

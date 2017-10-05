@@ -3,7 +3,8 @@ import update from 'immutability-helper';
 import {
   TORRENT_FILE_ADDED,
   TORRENT_FILE_DELETED,
-  FAILED_TO_ADD_TORRENT_FILE
+  FAILED_TO_ADD_TORRENT_FILE,
+  RESET_TORRENT_FILES_STATE
 } from './torrentFile.actions';
 import createReducer from '../../reducers/createReducer';
 import type {
@@ -29,6 +30,9 @@ const handlers: Handler<TorrentFilesState> = {
   [FAILED_TO_ADD_TORRENT_FILE](state) {
     // Do nothing, notifications reducer will handle it
     return state;
+  },
+  [RESET_TORRENT_FILES_STATE]() {
+    return initialState;
   }
 };
 

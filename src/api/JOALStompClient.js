@@ -134,6 +134,7 @@ export default class JOALStompClient {
     if (this.stompClient && this.stompClient.connected) {
       this.stompClient.disconnect();
     }
+    if (this.onDisconnectCallback) this.onDisconnectCallback();
   }
 
   disconnectAndReconnect() {
