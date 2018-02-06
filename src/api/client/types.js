@@ -1,5 +1,5 @@
 // @flow
-export type SeedSessionHasStartedPayload = {
+export type GlobalSeedStartedPayload = {
   client: string
 };
 
