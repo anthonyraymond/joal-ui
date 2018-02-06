@@ -1,15 +1,20 @@
 // @flow
 import update from 'immutability-helper';
 import {
-  ANNOUNCER_HAS_STARTED,
-  ANNOUNCER_HAS_STOPPED,
-  ANNOUNCER_WILL_ANNOUNCE,
-  ANNOUNCER_HAS_ANNOUNCED,
-  ANNOUNCER_HAS_FAILED_TO_ANNOUNCE,
+  FAILED_TO_ANNOUNCE,
+  SUCCESSFULLY_ANNOUNCE,
+  TOO_MANY_ANNOUNCES_FAILED,
+  WILL_ANNOUNCE,
   RESET_ANNOUNCER_STATE
 } from './announcers.actions';
 import createReducer from '../../reducers/createReducer';
-import type { AnnouncerState, AnnouncerPayload } from './types';
+import type {
+  AnnouncerState,
+  FailedToAnnouncePayload,
+  SuccessfullyAnnouncePayload,
+  TooManyAnnouncesFailedPayload,
+  WillAnnouncePayload
+} from './types';
 import type {
   Handler,
   Action
@@ -20,40 +25,61 @@ const initialState = [];
 
 
 const handlers: Handler<AnnouncerState> = {
-  [ANNOUNCER_HAS_STARTED](state, action: Action<AnnouncerPayload>) {
-    return update(state, { $push: [
-      // isFetching is true to prevent the loading bar to appear
-      Object.assign({}, { isFetching: true }, action.payload)
-    ] });
-  },
-  [ANNOUNCER_HAS_STOPPED](state, action: Action<AnnouncerPayload>) {
-    return state.filter(an => an.id !== action.payload.id);
-  },
-  [ANNOUNCER_WILL_ANNOUNCE](state, action: Action<AnnouncerPayload>) {
-    return state.map(an => {
-      if (an.id === action.payload.id) {
-        return Object.assign({}, an,
-          { isFetching: true },
-          update(action.payload, { interval: { $set: 0 } })
+  [FAILED_TO_ANNOUNCE](state, action: Action<FailedToAnnouncePayload>) {
+    if (!state.find(announcer => announcer.infoHash === action.payload.infoHash)) {
+      return update(state, { $push: [
+        Object.assign({}, { isFetching: false }, action.payload)
+      ] });
+    }
+    return state.map(announcer => {
+      if (announcer.infoHash === action.payload.infoHash) {
+        return Object.assign({}, announcer,
+          { isFetching: false },
+          action.payload
         );
       }
-      return an;
+      return announcer;
     });
   },
-  [ANNOUNCER_HAS_ANNOUNCED](state, action: Action<AnnouncerPayload>) {
-    return state.map(an => {
-      if (an.id === action.payload.id) {
-        return Object.assign({}, an, { isFetching: false }, action.payload);
+  [SUCCESSFULLY_ANNOUNCE](state, action: Action<SuccessfullyAnnouncePayload>) {
+    if (action.payload.requestEvent === 'STOPPED') {
+      return state.filter(announcer => announcer.infoHash !== action.payload.infoHash);
+    }
+
+    if (!state.find(announcer => announcer.infoHash === action.payload.infoHash)) {
+      return update(state, { $push: [
+        Object.assign({}, { isFetching: false }, action.payload)
+      ] });
+    }
+
+    return state.map(announcer => {
+      if (announcer.infoHash === action.payload.infoHash) {
+        return Object.assign({}, announcer,
+          { isFetching: false },
+          action.payload
+        );
       }
-      return an;
+      return announcer;
     });
   },
-  [ANNOUNCER_HAS_FAILED_TO_ANNOUNCE](state, action: Action<AnnouncerPayload>) {
-    return state.map(an => {
-      if (an.id === action.payload.id) {
-        return Object.assign({}, an, { isFetching: false }, action.payload);
+  [TOO_MANY_ANNOUNCES_FAILED](state, action: Action<TooManyAnnouncesFailedPayload>) {
+    return state.filter(announcer => announcer.infoHash !== action.payload.infoHash);
+  },
+  [WILL_ANNOUNCE](state, action: Action<WillAnnouncePayload>) {
+    if (!state.find(announcer => announcer.infoHash === action.payload.infoHash)) {
+      return update(state, { $push: [
+        Object.assign({}, { isFetching: true }, action.payload)
+      ] });
+    }
+
+    return state.map(announcer => {
+      if (announcer.infoHash === action.payload.infoHash) {
+        return Object.assign({}, announcer,
+          { isFetching: true },
+          action.payload
+        );
       }
-      return an;
+      return announcer;
     });
   },
   [RESET_ANNOUNCER_STATE]() {
