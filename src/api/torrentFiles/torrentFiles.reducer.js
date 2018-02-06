@@ -25,7 +25,7 @@ const handlers: Handler<TorrentFilesState> = {
     return update(state, { $push: [action.payload] });
   },
   [TORRENT_FILE_DELETED](state, action: Action<TorrentFilePayload>) {
-    return state.filter(tf => tf.id !== action.payload.id);
+    return state.filter(tf => tf.infoHash !== action.payload.infoHash);
   },
   [FAILED_TO_ADD_TORRENT_FILE](state) {
     // Do nothing, notifications reducer will handle it
