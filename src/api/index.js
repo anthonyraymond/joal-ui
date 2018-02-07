@@ -5,6 +5,7 @@ import { sendStartToServer, sendStopToServer, resetGlobalSeedState } from './cli
 import { sendConfig, resetConfig } from './settings/settings.actions';
 import { resetStompState } from './stomp/stomp.actions';
 import { resetTorrentFilesState } from './torrentFiles/torrentFile.actions';
+import { resetSpeedState } from './speed/speed.actions';
 import type { ReduxStore } from './types';
 import type { Config } from './settings/types';
 
@@ -21,6 +22,7 @@ export const connectStomp = (appStore: ReduxStore) => {
     store.dispatch(resetGlobalSeedState());
     store.dispatch(resetAnnouncerState());
     store.dispatch(resetTorrentFilesState());
+    store.dispatch(resetSpeedState());
   });
   stompClient.connect();
 };

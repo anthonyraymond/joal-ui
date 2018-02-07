@@ -64,7 +64,7 @@ export default class JOALStompClient {
       });
       this.subscriptions.push(replayableEvents);
 
-      ['/global', '/announce', '/config', '/torrents'].forEach(subscribesPath => {
+      ['/global', '/announce', '/config', '/torrents', '/speed'].forEach(subscribesPath => {
         const subscribtion = this.stompClient.subscribe(subscribesPath, (message) => {
           message.ack();
           this.onReceiveMessage(JSON.parse(message.body));
