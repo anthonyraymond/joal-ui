@@ -1,5 +1,4 @@
 // @flow
-import update from 'immutability-helper';
 import {
   SEEDING_SPEED_HAS_CHANGED,
   RESET_SPEED_STATE
@@ -20,7 +19,7 @@ const initialState = [];
 
 const handlers: Handler<SpeedState> = {
   [SEEDING_SPEED_HAS_CHANGED](state, action: Action<SeedingSpeedHasChangedPayload>) {
-    return update(state, { $push: [action.payload.speeds] });
+    return action.payload.speeds;
   },
   [RESET_SPEED_STATE]() {
     return initialState;

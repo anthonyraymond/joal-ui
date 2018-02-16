@@ -11,7 +11,7 @@ type Props = {
 const Announcers = ({ announcers, onClickDeleteTorrent }: Props) => (
   <div>
     {announcers.map((announcer) => (
-      <div key={announcer.id}>
+      <div key={announcer.infoHash}>
         <Announcer announcer={announcer} onClickDeleteTorrent={onClickDeleteTorrent} />
         <br />
       </div>

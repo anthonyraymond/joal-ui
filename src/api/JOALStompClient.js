@@ -48,21 +48,21 @@ export default class JOALStompClient {
     const url = `ws://${guiConf.host}:${guiConf.port}/${guiConf.pathPrefix}`;
     const secretToken = guiConf.secretToken;
     this._dispatchOnConnect(); // eslint-disable-line no-underscore-dangle
-    this.stompClient = Webstomp.client(url, { debug: false });
+    this.stompClient = Webstomp.client(url, { debug: true });
 
     this.stompClient.connect({ 'X-Joal-Auth-Token': secretToken, 'X-Joal-Username': uuidv4() }, (/* response */) => {
       this._dispatchHasConnected(); // eslint-disable-line no-underscore-dangle
 
       /* specific mapping that intentionally include the /joal prefix */
-      const replayableEvents = this.stompClient.subscribe('/joal/events/replay', (message) => {
+      this.stompClient.subscribe('/joal/initialize-me', (message) => {
         JSON.parse(message.body).forEach(msg => {
           this.onReceiveMessage(msg);
         });
         // We consider that the app is inited when the replayable events has been played.
         this._dispatchIsReady(); // eslint-disable-line no-underscore-dangle
         message.ack();
+        this.stompClient.unsubscribe('/initialize-me');
       });
-      this.subscriptions.push(replayableEvents);
 
       ['/global', '/announce', '/config', '/torrents', '/speed'].forEach(subscribesPath => {
         const subscribtion = this.stompClient.subscribe(subscribesPath, (message) => {
