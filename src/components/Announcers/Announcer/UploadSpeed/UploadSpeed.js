@@ -4,19 +4,22 @@ import filesize from 'filesize';
 import ReactTooltip from 'react-tooltip';
 
 type Props = {
-  id: string,
+  infoHash: string,
   speedInBytesPerSeconds: number
 };
 
+// The ReactTooltip does not support some special character, we need to create an infoHash with normal chars only
+const normalizeInfoHash = (infoHash: string) => btoa(infoHash);
+
 const UploadSpeed = (props: Props) => {
-  const { id, speedInBytesPerSeconds } = props;
+  const { infoHash, speedInBytesPerSeconds } = props;
 
   return (
     <div>
-      <span data-for={`upSpeed${id}`} data-tip="Current upload speed">
+      <span data-for={`upSpeed${normalizeInfoHash(infoHash)}`} data-tip="Current upload speed">
         {`${filesize(speedInBytesPerSeconds, { base: 10 })}/s`}
       </span>
-      <ReactTooltip id={`upSpeed${id}`} />
+      <ReactTooltip id={`upSpeed${normalizeInfoHash(infoHash)}`} />
     </div>
   );
 };

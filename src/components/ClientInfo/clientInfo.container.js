@@ -9,7 +9,7 @@ const calculateGobalSpeed = (speeds) => {
     return 0;
   }
   return speeds.reduce((prevVal, speed) => (
-    prevVal + speed.bytesPerSecond
+    prevVal + speed.bytesPerSeconds
   ), 0);
 };
 

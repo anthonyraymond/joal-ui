@@ -4,8 +4,8 @@ import ReactTooltip from 'react-tooltip';
 import styles from './styles.css';
 
 type Props = {
-  leechers?: number,
-  seeders?: number
+  leechers: ?number,
+  seeders: ?number
 };
 
 const PeerStats = (props: Props) => {

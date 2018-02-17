@@ -48,7 +48,7 @@ export default class JOALStompClient {
     const url = `ws://${guiConf.host}:${guiConf.port}/${guiConf.pathPrefix}`;
     const secretToken = guiConf.secretToken;
     this._dispatchOnConnect(); // eslint-disable-line no-underscore-dangle
-    this.stompClient = Webstomp.client(url, { debug: true });
+    this.stompClient = Webstomp.client(url, { debug: false });
 
     this.stompClient.connect({ 'X-Joal-Auth-Token': secretToken, 'X-Joal-Username': uuidv4() }, (/* response */) => {
       this._dispatchHasConnected(); // eslint-disable-line no-underscore-dangle

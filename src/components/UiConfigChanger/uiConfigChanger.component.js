@@ -12,7 +12,7 @@ class UiConfigChanger extends Component {
     isConnected: boolean,
     config: GuiConfig,
     saveNewConf: (config: GuiConfig) => void,
-    style?: {}
+    style: ?{}
   };
   static defaultProps = {
     style: {}

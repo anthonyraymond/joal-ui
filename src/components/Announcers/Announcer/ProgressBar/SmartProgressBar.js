@@ -5,8 +5,8 @@ import UndeterminateProgressBar from './UndeterminateProgressBar';
 
 type SmartAnnounceProps = {
   isFetching: boolean,
-  nextAnnounceIn?: number,
-  announceInterval?: number
+  nextAnnounceIn: ?number,
+  announceInterval:? number
 };
 
 const SmartAnnounceProgressBar = (props: SmartAnnounceProps) => {

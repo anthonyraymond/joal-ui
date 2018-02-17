@@ -1,30 +1,37 @@
 // @flow
 export type Announcer = {
   infoHash: string,
-  isFetching: boolean,
-  interval: number
+  torrentName: string,
+  torrentSize: number,
+  lastKnownInterval: number,
+  consecutiveFails: number,
+  lastAnnouncedAt: ?string,
+  lastKnownLeechers: ?number,
+  lastKnownSeeders: ?number,
+  isFetching: boolean
 };
 
 export type AnnouncerState = Array<Announcer>;
 
 type AnnouncerPayload = {
-  infoHash: string
+  infoHash: string,
+  torrentName: string,
+  torrentSize: number,
+  lastKnownInterval: number,
+  consecutiveFails: number,
+  lastAnnouncedAt: ?string,
+  lastKnownLeechers: ?number,
+  lastKnownSeeders: ?number
 };
 
 export type FailedToAnnouncePayload = AnnouncerPayload & {
-  errMessage: string,
-  dateTime: string,
-  interval: number
+  errMessage: string
 };
 
 export type SuccessfullyAnnouncePayload = AnnouncerPayload & {
-  dateTime: string,
-  requestEvent: 'NONE' | 'COMPLETED' | 'STARTED' | 'STOPPED',
-  interval: number
+  requestEvent: 'NONE' | 'COMPLETED' | 'STARTED' | 'STOPPED'
 };
 
 export type TooManyAnnouncesFailedPayload = AnnouncerPayload;
 
-export type WillAnnouncePayload = AnnouncerPayload & {
-  dateTime: string
-};
+export type WillAnnouncePayload = AnnouncerPayload;

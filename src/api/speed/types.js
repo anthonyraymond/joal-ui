@@ -1,7 +1,7 @@
 // @flow
 export type Speed = {
   infoHash: string,
-  bytesPerSecond: number
+  bytesPerSeconds: number
 };
 
 export type SpeedState = Array<Speed>;
