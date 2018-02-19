@@ -8,8 +8,8 @@ import { red500 } from 'material-ui/styles/colors';
 import filesize from 'filesize';
 import PeerStats from './Peers';
 import AnnounceProgressBar from './ProgressBar';
-import UploadIcon from './UploadIcon';
-import UploadSpeed from './UploadSpeed';
+// import UploadIcon from './UploadIcon';
+import UploadSpeed from '../../UploadSpeed';
 import styles from './styles.css';
 import type { Announcer as AnnouncerType } from '../types';
 
@@ -36,10 +36,9 @@ const Announcer = (props: Props) => {
           <div className={styles.statsContainer}>
             <PeerStats leechers={announcer.lastKnownLeechers} seeders={announcer.lastKnownSeeders} />
             <div className={styles.uploadSpeedContainer}>
-              <UploadIcon />
+              {/* <UploadIcon /> */}
               <UploadSpeed
                 infoHash={announcer.infoHash}
-                speedInBytesPerSeconds={0}
               />
             </div>
           </div>

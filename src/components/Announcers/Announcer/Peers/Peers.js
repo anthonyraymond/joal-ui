@@ -16,17 +16,17 @@ const PeerStats = (props: Props) => {
   return (
     <div>
       <div>
-        <span className={styles.leechers} data-for="seeders" data-tip="Seeders">
+        <span className={styles.leechers} data-for="leechers" data-tip="Leechers">
           <i className="fa fa-cloud-download" aria-hidden="true" />
           {' '}{leechers}
         </span>
-        <span className={styles.seeders} data-for="leechers" data-tip="Leechers">
+        <span className={styles.seeders} data-for="seeders" data-tip="Seeders">
           <i className="fa fa-cloud-upload" aria-hidden="true" />
           {' '}{seeders}
         </span>
       </div>
-      <ReactTooltip id="seeders" />
       <ReactTooltip id="leechers" />
+      <ReactTooltip id="seeders" />
     </div>
   );
 };
