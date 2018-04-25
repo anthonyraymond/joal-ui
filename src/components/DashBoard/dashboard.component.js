@@ -10,6 +10,7 @@ import QueuedTorrents from '../QueuedTorrents';
 type Props = {
   isStarted: boolean,
   isConnectedToWebSocket: boolean,
+  isClientGlobalStatePending: boolean,
   shouldDisplayConfigChangerButton: boolean
 };
 
@@ -20,7 +21,7 @@ const Dashboard = (props: Props) => (
         <UiConfigChangerButton style={{ marginBottom: 6 }} />
       }
       <div style={{ position: 'relative' }}>
-        <AbsoluteOverlayFetchingIndicator active={!props.isConnectedToWebSocket} />
+        <AbsoluteOverlayFetchingIndicator active={!props.isConnectedToWebSocket || props.isClientGlobalStatePending} />
         <ClientInfo />
       </div>
     </div>

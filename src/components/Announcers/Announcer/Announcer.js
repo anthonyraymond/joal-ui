@@ -53,6 +53,7 @@ const Announcer = (props: Props) => {
             </IconButton>
           </div>
           <AnnounceProgressBar
+            infoHash={announcer.infoHash}
             isFetching={announcer.isFetching}
             announceInterval={announcer.lastKnownInterval}
             nextAnnounceIn={nextAnnounceIn}

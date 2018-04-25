@@ -8,6 +8,7 @@ function mapStateToProps(state: StateType) {
   return {
     isStarted: state.api.client.isStarted,
     isConnectedToWebSocket: state.api.stomp.isConnected,
+    isClientGlobalStatePending: state.api.client.isFetching,
     shouldDisplayConfigChangerButton: !isElectron()
   };
 }
