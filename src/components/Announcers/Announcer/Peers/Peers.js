@@ -10,8 +10,8 @@ type Props = {
 
 const PeerStats = (props: Props) => {
   let { leechers, seeders } = props;
-  if (leechers === null) leechers = '?';
-  if (seeders === null) seeders = '?';
+  if (leechers === null || leechers === undefined) leechers = '?';
+  if (seeders === null || seeders === undefined) seeders = '?';
 
   return (
     <div>
