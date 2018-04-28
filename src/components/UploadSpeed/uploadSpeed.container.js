@@ -9,7 +9,7 @@ function mapStateToProps(state: StateType, ownProps: { infoHash: string }) {
 
   return {
     infoHash: ownProps.infoHash,
-    speedInBytesPerSeconds: foundSpeed === undefined ? 0 : foundSpeed.bytesPerSeconds
+    speedInBytesPerSeconds: foundSpeed === null || foundSpeed === undefined ? undefined : foundSpeed.bytesPerSeconds
   };
 }
 
