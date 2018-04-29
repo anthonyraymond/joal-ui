@@ -22,7 +22,7 @@ const initialState = [];
 
 const handlers: Handler<TorrentFilesState> = {
   [TORRENT_FILE_ADDED](state, action: Action<TorrentFilePayload>) {
-    return update(state, { $push: [action.payload] });
+    return update(state.filter(tf => tf.infoHash !== action.payload.infoHash), { $push: [action.payload] });
   },
   [TORRENT_FILE_DELETED](state, action: Action<TorrentFilePayload>) {
     return state.filter(tf => tf.infoHash !== action.payload.infoHash);
