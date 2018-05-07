@@ -20,6 +20,7 @@ class DeterminateProgressBar extends Component {
 
   constructor(props) {
     super(props);
+    this.cancelTimer = this.cancelTimer.bind(this);
 
     this.state = {
       completed: props.startAt,
@@ -38,6 +39,18 @@ class DeterminateProgressBar extends Component {
         this.setState({ completed: newValue });
       }
     }, 1000);
+  }
+
+  // TODO : update to static getDerivedStateFromProps(nextProps, prevState) after migrating to react 17
+  componentWillReceiveProps(nextProps) {
+    // Since we sync state to props.startAt, state won’t be up-to-date with any props update. (see https://reactjs.org/docs/react-component.html#constructor)
+    // We need to update the state ourselves when props are updated
+    if (nextProps.startAt !== this.props.startAt || nextProps.maxValue !== this.props.maxValue) {
+      this.setState({
+        completed: nextProps.startAt,
+        maxValue: nextProps.maxValue
+      });
+    }
   }
 
   componentWillUnmount() {
