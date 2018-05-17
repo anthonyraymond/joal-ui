@@ -6,7 +6,7 @@ import {
   DISCARD_LOCAL_CONFIG
 } from './settings.actions';
 import {
-  CONFIG_HAS_CHANGED as API___CONFIG_HAS_CHANGED,
+  CONFIG_IS_IN_DIRTY_STATE as API___CONFIG_IS_IN_DIRTY_STATE,
   CONFIG_HAS_BEEN_LOADED as API____CONFIG_HAS_BEEN_LOADED
 } from '../../api/settings/settings.actions';
 import type {
@@ -31,7 +31,7 @@ const handlers: Handler<LocalConfigState> = {
     });
   },
   // When the server send the new config we remove the local one
-  [API___CONFIG_HAS_CHANGED]() {
+  [API___CONFIG_IS_IN_DIRTY_STATE]() {
     return initialState;
   },
   [API____CONFIG_HAS_BEEN_LOADED]() {

@@ -10,7 +10,7 @@ export type SettingsState = {
   isDirty: boolean,
   config: Config,
   availableClients: Array<string>,
-  errMessage?: string
+  errMessage: ?string
 };
 
 export type SettingsPayload = {

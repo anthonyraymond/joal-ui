@@ -11,7 +11,13 @@ const QueuedTorrentComponent = ({ queuedTorrents }: Props) => (
     <div className="text-center">
       {queuedTorrents.length === 0
         ? 'There is no more torrents in queue, consider adding some more!'
-        : `${queuedTorrents.length} torrents are in queue ...`
+        : `${queuedTorrents.length} torrent${queuedTorrents.length === 1 ? ' is' : 's are'} queued...`
+      }
+    </div>
+    <div className="text-center">
+      {queuedTorrents.length === 0
+        ? ''
+        : 'You can increase \'Simultaneous seed\' property to seed more torrents at a time'
       }
     </div>
   </div>

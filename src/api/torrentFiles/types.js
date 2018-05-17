@@ -1,6 +1,6 @@
 // @flow
 export type TorrentFile = {
-  id: string,
+  infoHash: string,
   name: string,
   size: number
 };

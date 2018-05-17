@@ -1,7 +1,7 @@
 // @flow
 import update from 'immutability-helper';
 import createReducer from '../reducers/createReducer';
-import { CONFIG_HAS_CHANGED, CONFIG_HAS_BEEN_LOADED } from '../api/settings/settings.actions';
+import { CONFIG_IS_IN_DIRTY_STATE, CONFIG_HAS_BEEN_LOADED } from '../api/settings/settings.actions';
 import { TORRENT_FILE_ADDED, FAILED_TO_ADD_TORRENT_FILE } from '../api/torrentFiles/torrentFile.actions';
 import {
   INIT_OVER,
@@ -79,7 +79,7 @@ const handlers: Handler<NotificationState> = {
       { notifs: state.notifs.filter(notif => notif.id !== action.payload) }
     );
   },
-  [CONFIG_HAS_CHANGED](state) {
+  [CONFIG_IS_IN_DIRTY_STATE](state) {
     return update(state, {
       shouldShowDirtyConfNotif: { $set: true }
     });

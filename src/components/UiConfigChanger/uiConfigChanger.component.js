@@ -12,7 +12,7 @@ class UiConfigChanger extends Component {
     isConnected: boolean,
     config: GuiConfig,
     saveNewConf: (config: GuiConfig) => void,
-    style?: {}
+    style: ?{}
   };
   static defaultProps = {
     style: {}
@@ -108,8 +108,8 @@ class UiConfigChanger extends Component {
           label="Change connection settings"
           fullWidth
           onClick={() => this.setState({ isModalVisible: true })}
-          backgroundColor={isConnected ? 'inherit' : red500}
-          labelColor={isConnected ? 'inherit' : '#FFF'}
+          backgroundColor={isConnected ? '' : red500}
+          labelColor={isConnected ? '' : '#FFF'}
         />
         <Dialog
           actions={modalActions}

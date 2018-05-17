@@ -4,13 +4,14 @@ import DeterminateProgresBar from './DeterminateProgresBar';
 import UndeterminateProgressBar from './UndeterminateProgressBar';
 
 type SmartAnnounceProps = {
+  infoHash: string,
   isFetching: boolean,
-  nextAnnounceIn?: number,
-  announceInterval?: number
+  nextAnnounceIn: ?number,
+  announceInterval:? number
 };
 
 const SmartAnnounceProgressBar = (props: SmartAnnounceProps) => {
-  const { isFetching, nextAnnounceIn, announceInterval } = props;
+  const { isFetching, nextAnnounceIn, announceInterval, infoHash } = props;
   if (isFetching) {
     return (<UndeterminateProgressBar />);
   }
@@ -19,6 +20,7 @@ const SmartAnnounceProgressBar = (props: SmartAnnounceProps) => {
   const maxValue = announceInterval;
   return (
     <DeterminateProgresBar
+      infoHash={infoHash}
       startAt={currentValue}
       maxValue={maxValue}
     />

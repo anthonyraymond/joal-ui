@@ -1,10 +1,11 @@
 // @flow
 import JOALStompClient from './JOALStompClient';
 import { resetAnnouncerState } from './announcers/announcers.actions';
-import { sendStartToServer, sendStopToServer, resetClientState } from './client/client.actions';
+import { sendStartToServer, sendStopToServer, resetGlobalSeedState } from './client/client.actions';
 import { sendConfig, resetConfig } from './settings/settings.actions';
 import { resetStompState } from './stomp/stomp.actions';
 import { resetTorrentFilesState } from './torrentFiles/torrentFile.actions';
+import { resetSpeedState } from './speed/speed.actions';
 import type { ReduxStore } from './types';
 import type { Config } from './settings/types';
 
@@ -18,9 +19,10 @@ export const connectStomp = (appStore: ReduxStore) => {
 
     store.dispatch(resetStompState());
     store.dispatch(resetConfig());
-    store.dispatch(resetClientState());
+    store.dispatch(resetGlobalSeedState());
     store.dispatch(resetAnnouncerState());
     store.dispatch(resetTorrentFilesState());
+    store.dispatch(resetSpeedState());
   });
   stompClient.connect();
 };

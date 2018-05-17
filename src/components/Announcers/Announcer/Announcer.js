@@ -8,8 +8,8 @@ import { red500 } from 'material-ui/styles/colors';
 import filesize from 'filesize';
 import PeerStats from './Peers';
 import AnnounceProgressBar from './ProgressBar';
-import UploadIcon from './UploadIcon';
-import UploadSpeed from './UploadSpeed';
+// import UploadIcon from './UploadIcon';
+import UploadSpeed from '../../UploadSpeed';
 import styles from './styles.css';
 import type { Announcer as AnnouncerType } from '../types';
 
@@ -20,28 +20,25 @@ type Props = {
 
 const Announcer = (props: Props) => {
   const { announcer, onClickDeleteTorrent } = props;
-  let nextAnnounceIn = announcer.interval;
-  if (announcer.announceHistory.length > 0 && announcer.interval) {
-    const lastAnnounceDate = Date.parse(
-      announcer.announceHistory[announcer.announceHistory.length - 1].dateTime
-    );
+  let nextAnnounceIn = announcer.lastKnownInterval;
+  if (announcer.lastAnnouncedAt !== undefined) {
+    const lastAnnounceDate = Date.parse(announcer.lastAnnouncedAt);
     const deltaBetweenLastAnnounce = (Date.now() - lastAnnounceDate) / 1000;
-    nextAnnounceIn = Math.round(announcer.interval - deltaBetweenLastAnnounce);
+    nextAnnounceIn = Math.round(announcer.lastKnownInterval - deltaBetweenLastAnnounce);
   }
 
   return (
     <div className="row">
       <div className="col-xs-12">
         <Paper zDepth={2} style={{ position: 'relative' }}>
-          <Subheader className={styles.torrentName}>{announcer.name}{' '}{`(${filesize(announcer.size, { standard: 'iec' })})`}</Subheader>
+          <Subheader className={styles.torrentName}>{announcer.torrentName}{' '}{`(${filesize(announcer.torrentSize, { standard: 'iec' })})`}</Subheader>
 
           <div className={styles.statsContainer}>
-            <PeerStats leechers={announcer.leechers} seeders={announcer.seeders} />
+            <PeerStats leechers={announcer.lastKnownLeechers} seeders={announcer.lastKnownSeeders} />
             <div className={styles.uploadSpeedContainer}>
-              <UploadIcon />
+              {/* <UploadIcon /> */}
               <UploadSpeed
-                id={announcer.id}
-                speedInBytesPerSeconds={announcer.currentSpeed}
+                infoHash={announcer.infoHash}
               />
             </div>
           </div>
@@ -50,14 +47,15 @@ const Announcer = (props: Props) => {
               className={styles.deleteButton}
               tooltip="Delete this torrent"
               tooltipPosition="top-center"
-              onClick={() => onClickDeleteTorrent(announcer.id)}
+              onClick={() => onClickDeleteTorrent(announcer.infoHash)}
             >
               <Deleteicon color={red500} />
             </IconButton>
           </div>
           <AnnounceProgressBar
+            infoHash={announcer.infoHash}
             isFetching={announcer.isFetching}
-            announceInterval={announcer.interval}
+            announceInterval={announcer.lastKnownInterval}
             nextAnnounceIn={nextAnnounceIn}
           />
         </Paper>

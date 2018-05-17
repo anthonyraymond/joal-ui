@@ -1,8 +1,8 @@
 // @flow
 import update from 'immutability-helper';
 import {
-  SEED_SESSION_HAS_STARTED,
-  SEED_SESSION_HAS_ENDED,
+  GLOBAL_SEED_STARTED,
+  GLOBAL_SEED_STOPPED,
   SEND_START_TO_SERVER,
   SEND_STOP_TO_SERVER,
   RESET_CLIENT_STATE
@@ -14,7 +14,7 @@ import type {
 } from '../types';
 import type {
   ClientState,
-  SeedSessionHasStartedPayload
+  GlobalSeedStartedPayload
 } from './types';
 
 
@@ -26,14 +26,14 @@ const initialState = {
 
 
 const handlers: Handler<ClientState> = {
-  [SEED_SESSION_HAS_STARTED](state, action: Action<SeedSessionHasStartedPayload>) {
+  [GLOBAL_SEED_STARTED](state, action: Action<GlobalSeedStartedPayload>) {
     return update(state, {
       isFetching: { $set: false },
       isStarted: { $set: true },
       name: { $set: action.payload.client }
     });
   },
-  [SEED_SESSION_HAS_ENDED](state) {
+  [GLOBAL_SEED_STOPPED](state) {
     return update(state, {
       isFetching: { $set: false },
       isStarted: { $set: false },
