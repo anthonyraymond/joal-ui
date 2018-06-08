@@ -45,7 +45,8 @@ export default class JOALStompClient {
 
   connect() {
     const guiConf = getGUIConfig();
-    const url = `ws://${guiConf.host}:${guiConf.port}/${guiConf.pathPrefix}`;
+    const urlScheme = (location.protocol === 'https:' ? 'wss' : 'ws');
+    const url = `${urlScheme}://${guiConf.host}:${guiConf.port}/${guiConf.pathPrefix}`;
     const secretToken = guiConf.secretToken;
     this._dispatchOnConnect(); // eslint-disable-line no-underscore-dangle
     this.stompClient = Webstomp.client(url, { debug: false });
