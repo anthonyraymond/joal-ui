@@ -1,22 +1,33 @@
 // @flow
 import React from 'react';
-import CircularProgress from 'material-ui/CircularProgress';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = () => ({
+  container: {
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+});
 
 type Props = {
+  classes: {},
   active: boolean
 };
 
 const FetchingIndicator = (props: Props) => {
-  const { active, ...rest } = props;
+  const { classes, active, ...rest } = props;
 
   if (!active) {
     return (<div />);
   }
   return (
-    <div className="text-center" style={{ position: 'relative' }}>
+    <div className={classes.container}>
       {active && <CircularProgress {...rest} />}
     </div>
   );
 };
 
-export default FetchingIndicator;
+export default withStyles(styles)(FetchingIndicator);

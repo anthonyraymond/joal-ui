@@ -1,3 +1,4 @@
+// @flow
 import Webstomp from 'webstomp-client';
 import { getGUIConfig } from '../utils/ConfigProvider';
 import {
@@ -11,9 +12,9 @@ import {
 import type { ReduxStore, StompMessage } from './types';
 
 const uuidv4 = () => (
-  ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => // eslint-disable-line
-    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16) // eslint-disable-line
-  )
+  ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (// eslint-disable-line space-infix-ops
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16) // eslint-disable-line implicit-arrow-linebreak, no-bitwise, no-mixed-operators
+  ))
 );
 
 type Frame = {
@@ -45,15 +46,14 @@ export default class JOALStompClient {
 
   connect() {
     const guiConf = getGUIConfig();
-    const urlScheme = (location.protocol === 'https:' ? 'wss' : 'ws');
+    const urlScheme = (window.location.protocol === 'https:' ? 'wss' : 'ws');
     const url = `${urlScheme}://${guiConf.host}:${guiConf.port}/${guiConf.pathPrefix}`;
-    const secretToken = guiConf.secretToken;
+    const { secretToken } = guiConf;
     this._dispatchOnConnect(); // eslint-disable-line no-underscore-dangle
-    this.stompClient = Webstomp.client(url, { debug: false });
+    this.stompClient = Webstomp.client(url, { debug: false, protocols: ['v12.stomp', 'v11.stomp'] });
 
     this.stompClient.connect({ 'X-Joal-Auth-Token': secretToken, 'X-Joal-Username': uuidv4() }, (/* response */) => {
       this._dispatchHasConnected(); // eslint-disable-line no-underscore-dangle
-
       /* specific mapping that intentionally include the /joal prefix */
       this.stompClient.subscribe('/joal/initialize-me', (message) => {
         JSON.parse(message.body).forEach(msg => {

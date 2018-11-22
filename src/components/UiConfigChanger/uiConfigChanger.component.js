@@ -1,19 +1,40 @@
 import React, { Component } from 'react';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
-import Dialog from 'material-ui/Dialog';
-import { red500 } from 'material-ui/styles/colors';
+import Button from '@material-ui/core/Button';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import red from '@material-ui/core/colors/red';
+import { withStyles } from '@material-ui/core/styles';
+// import classnames from 'classnames';
 import type { GuiConfig } from '../../utils/ConfigProvider/types';
 
+const styles = theme => ({
+  redButton: {
+    color: theme.palette.getContrastText(red[500]),
+    backgroundColor: red[500],
+    '&:hover': {
+      backgroundColor: red[700]
+    }
+  },
+  formControl: {
+    margin: theme.spacing.unit
+  }
+});
 
 class UiConfigChanger extends Component {
   props: {
+    classes: {},
     isConnected: boolean,
     config: GuiConfig,
     saveNewConf: (config: GuiConfig) => void,
-    style: ?{}
+    style?: {}
   };
+
   static defaultProps = {
     style: {}
   }
@@ -39,10 +60,11 @@ class UiConfigChanger extends Component {
     const hostErr = host === '' ? 'Required field' : '';
     this.setState({ host, hostErr });
   }
+
   handlePortChange(port: string) {
     let portErr = '';
     const intPort = port - 0;
-    if (isNaN(intPort)) {
+    if (isNaN(intPort)) { // eslint-disable-line no-restricted-globals
       portErr = 'You mad bro !';
     } else {
       if (intPort === 0) portErr = 'Port is required';
@@ -50,30 +72,43 @@ class UiConfigChanger extends Component {
     }
     this.setState({ port, portErr });
   }
+
   handlePathPrefixChange(pathPrefix: string) {
     const pathPrefixErr = pathPrefix === '' ? 'Required field' : '';
     this.setState({ pathPrefix, pathPrefixErr });
   }
+
   handleSecretTokenChange(secretToken: string) {
     const secretTokenErr = secretToken === '' ? 'Required field' : '';
     this.setState({ secretToken, secretTokenErr });
   }
+
   discardChangesAndClose() {
-    this.setState({ ...(this.props.config), isModalVisible: false });
+    const { config } = this.props;
+    this.setState({ ...(config), isModalVisible: false });
   }
 
   saveConfig() {
-    const { host, port, pathPrefix, secretToken } = this.state;
+    const { saveNewConf } = this.props;
+    const {
+      host, port, pathPrefix, secretToken
+    } = this.state;
+
     if (this.hasError()) {
       return;
     }
 
-    this.props.saveNewConf({ host, port, pathPrefix, secretToken });
+    saveNewConf({
+      host, port, pathPrefix, secretToken
+    });
     this.setState({ isModalVisible: false });
   }
 
   hasError() {
-    const { host, port, pathPrefix, secretToken, hostErr, portErr, pathPrefixErr, secretTokenErr } = this.state;
+    const {
+      host, port, pathPrefix, secretToken, hostErr, portErr, pathPrefixErr, secretTokenErr
+    } = this.state;
+
     if (!host || !port || !pathPrefix || !secretToken) {
       return true;
     }
@@ -84,94 +119,87 @@ class UiConfigChanger extends Component {
   }
 
   render() {
-    const { isConnected } = this.props;
+    const { classes, isConnected, style } = this.props;
     const {
       isModalVisible,
       host, port, pathPrefix, secretToken,
       hostErr, portErr, pathPrefixErr, secretTokenErr
     } = this.state;
-    const modalActions = [
-      <FlatButton
-        label="Cancel"
-        onClick={() => this.discardChangesAndClose()}
-      />,
-      <FlatButton
-        label="Save"
-        primary
-        disabled={this.hasError()}
-        onClick={() => this.saveConfig()}
-      />,
-    ];
     return (
-      <div style={this.props.style}>
-        <RaisedButton
-          label="Change connection settings"
+      <div style={style}>
+        <Button
+          variant="contained"
           fullWidth
           onClick={() => this.setState({ isModalVisible: true })}
-          backgroundColor={isConnected ? '' : red500}
-          labelColor={isConnected ? '' : '#FFF'}
-        />
-        <Dialog
-          actions={modalActions}
-          title="Connection settings"
-          modal={false}
-          open={isModalVisible}
-          onRequestClose={() => this.discardChangesAndClose()}
-          autoScrollBodyContent
+          className={isConnected ? '' : classes.redButton}
         >
-          <div>
-            <TextField
-              name="host"
-              floatingLabelText="Server address"
-              hintText="ip or hostname"
-              floatingLabelFixed
-              hintStyle={{ fontWeight: 300 }}
-              value={host}
-              errorText={hostErr}
-              onChange={(e) => this.handleHostChange(e.target.value)}
-            />
-          </div>
-          <div>
-            <TextField
-              name="port"
-              type="number"
-              floatingLabelText="Server port"
-              hintText="port"
-              floatingLabelFixed
-              hintStyle={{ fontWeight: 300 }}
-              value={port}
-              errorText={portErr}
-              onChange={(e) => this.handlePortChange(e.target.value)}
-            />
-          </div>
-          <div>
-            <TextField
-              name="path-prefix"
-              floatingLabelText="Path prefix"
-              hintText="Obfuscation path prefix"
-              floatingLabelFixed
-              hintStyle={{ fontWeight: 300 }}
-              value={pathPrefix}
-              errorText={pathPrefixErr}
-              onChange={(e) => this.handlePathPrefixChange(e.target.value)}
-            />
-          </div>
-          <div>
-            <TextField
-              name="secret-token"
-              floatingLabelText="Secret token"
-              hintText="A super secret token"
-              floatingLabelFixed
-              hintStyle={{ fontWeight: 300 }}
-              value={secretToken}
-              errorText={secretTokenErr}
-              onChange={(e) => this.handleSecretTokenChange(e.target.value)}
-            />
-          </div>
+          Change connection settings
+        </Button>
+        <Dialog
+          open={isModalVisible}
+          onClose={() => this.discardChangesAndClose()}
+          aria-labelledby="form-dialog-connection-settings"
+          scroll="paper"
+        >
+          <DialogTitle id="form-dialog-connection-settings">Connection settings</DialogTitle>
+          <DialogContent>
+            <FormControl
+              className={classes.formControl}
+              error={hostErr.length > 0}
+              aria-describedby="server-address-text"
+            >
+              <InputLabel htmlFor="server-address">Server address</InputLabel>
+              <Input id="server-address" placeholder="host" value={host} onChange={(e) => this.handleHostChange(e.target.value)} />
+              <FormHelperText id="server-address-text">{hostErr}</FormHelperText>
+            </FormControl>
+            <FormControl
+              className={classes.formControl}
+              error={hostErr.length > 0}
+              aria-describedby="server-port-text"
+            >
+              <InputLabel htmlFor="server-port">Server port</InputLabel>
+              <Input id="server-port" placeholder="port" type="number" value={port} onChange={(e) => this.handlePortChange(e.target.value)} />
+              <FormHelperText id="server-port-text">{portErr}</FormHelperText>
+            </FormControl>
+            <FormControl
+              className={classes.formControl}
+              error={hostErr.length > 0}
+              aria-describedby="path-prefix-text"
+            >
+              <InputLabel htmlFor="path-prefix">Path prefix</InputLabel>
+              <Input id="path-prefix" placeholder="Obfuscation path prefix" value={pathPrefix} onChange={(e) => this.handlePathPrefixChange(e.target.value)} />
+              <FormHelperText id="path-prefix-text">{pathPrefixErr}</FormHelperText>
+            </FormControl>
+            <FormControl
+              className={classes.formControl}
+              error={hostErr.length > 0}
+              aria-describedby="secret-token-text"
+            >
+              <InputLabel htmlFor="secret-token">Secret token</InputLabel>
+              <Input id="secret-token" placeholder="Your secret token" value={secretToken} onChange={(e) => this.handleSecretTokenChange(e.target.value)} />
+              <FormHelperText id="secret-token-text">{secretTokenErr}</FormHelperText>
+            </FormControl>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              label="Cancel"
+              onClick={() => this.discardChangesAndClose()}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              disabled={this.hasError()}
+              onClick={() => this.saveConfig()}
+            >
+              Save
+            </Button>
+          </DialogActions>
         </Dialog>
       </div>
     );
   }
 }
 
-export default UiConfigChanger;
+export default withStyles(styles)(UiConfigChanger);

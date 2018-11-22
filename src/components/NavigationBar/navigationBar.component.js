@@ -1,10 +1,11 @@
 // @flow
 import React from 'react';
-import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNavigation';
-import Paper from 'material-ui/Paper';
-import DashboardIcon from 'material-ui/svg-icons/action/dashboard';
-import SettingsIcon from 'material-ui/svg-icons/action/settings';
-import LogsIcon from 'material-ui/svg-icons/notification/sms';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import Paper from '@material-ui/core/Paper';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import SettingsIcon from '@material-ui/icons/Settings';
+import LogsIcon from '@material-ui/icons/Sms';
 
 type Props = {
   currentPath: string,
@@ -24,29 +25,37 @@ const NavigationBar = (props: Props) => {
   const whichIndex = (whichPath) => {
     if (whichPath === '/') {
       return 0;
-    } else if (whichPath === '/settings') {
+    }
+    if (whichPath === '/settings') {
       return 1;
     }
     return 2;
   };
 
+  const onChangeTab = (event, index) => {
+    if (index === 0) onClickDashboard();
+    else if (index === 1) onClickSettings();
+    else if (index === 2) onClickLogs();
+  };
+
   return (
-    <Paper zDepth={1}>
-      <BottomNavigation selectedIndex={whichIndex(currentPath)}>
-        <BottomNavigationItem
+    <Paper elevation={1}>
+      <BottomNavigation
+        showLabels
+        value={whichIndex(currentPath)}
+        onChange={onChangeTab}
+      >
+        <BottomNavigationAction
           label="dashboard"
           icon={<DashboardIcon />}
-          onClick={onClickDashboard}
         />
-        <BottomNavigationItem
+        <BottomNavigationAction
           label="configuration"
           icon={<SettingsIcon />}
-          onClick={onClickSettings}
         />
-        <BottomNavigationItem
+        <BottomNavigationAction
           label="history"
           icon={<LogsIcon />}
-          onClick={onClickLogs}
         />
       </BottomNavigation>
     </Paper>

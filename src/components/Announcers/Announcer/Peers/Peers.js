@@ -1,28 +1,42 @@
 // @flow
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
-import styles from './styles.css';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = () => ({
+  leechers: {
+    color: '#3498DB',
+    marginRight: 12
+  },
+  seeders: {
+    color: '#27AE60'
+  }
+});
 
 type Props = {
-  leechers: ?number,
-  seeders: ?number
+  classes: {},
+  className?: string,
+  leechers?: number,
+  seeders?: ?number
 };
 
 const PeerStats = (props: Props) => {
-  let { leechers, seeders } = props;
-  if (leechers === null || leechers === undefined) leechers = '?';
-  if (seeders === null || seeders === undefined) seeders = '?';
+  const {
+    className: classNameProps, classes, leechers, seeders
+  } = props;
+  const leechersText = (leechers === null || leechers === undefined) ? '?' : leechers;
+  const seedersText = (seeders === null || seeders === undefined) ? '?' : seeders;
 
   return (
-    <div>
+    <div className={classNameProps}>
       <div>
-        <span className={styles.leechers} data-for="leechers" data-tip="Leechers">
+        <span className={classes.leechers} data-for="leechers" data-tip="Leechers">
           <i className="fa fa-cloud-download" aria-hidden="true" />
-          {' '}{leechers}
+          {` ${leechersText}`}
         </span>
-        <span className={styles.seeders} data-for="seeders" data-tip="Seeders">
+        <span className={classes.seeders} data-for="seeders" data-tip="Seeders">
           <i className="fa fa-cloud-upload" aria-hidden="true" />
-          {' '}{seeders}
+          {` ${seedersText}`}
         </span>
       </div>
       <ReactTooltip id="leechers" />
@@ -31,8 +45,9 @@ const PeerStats = (props: Props) => {
   );
 };
 PeerStats.defaultProps = {
+  className: '',
   leechers: undefined,
   seeders: undefined
 };
 
-export default PeerStats;
+export default withStyles(styles)(PeerStats);

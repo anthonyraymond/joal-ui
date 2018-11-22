@@ -2,7 +2,7 @@
 export type Notification = {
   id: string,
   text: string,
-  time: number,
+  timeout: number,
   type: 'SUCCESS' | 'INFO' | 'ERROR'
 };
 export type NotificationState = {

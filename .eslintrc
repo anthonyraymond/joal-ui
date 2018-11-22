@@ -14,9 +14,11 @@
     "compat/compat": "error",
     "consistent-return": "off",
     "comma-dangle": "off",
+    "flowtype/boolean-style": [1, boolean],
     "generator-star-spacing": "off",
     "import/no-unresolved": "error",
     "import/no-extraneous-dependencies": "off",
+    "linebreak-style": "off",
     "max-len": "off",
     "no-console": "off",
     "no-use-before-define": "off",
@@ -44,7 +46,7 @@
   "settings": {
     "import/resolver": {
       "webpack": {
-        "config": "config/webpack.config.eslint.js"
+        "config": "config/webpack.config.dev.js"
       }
     }
   }

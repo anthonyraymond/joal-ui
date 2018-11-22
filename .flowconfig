@@ -1,7 +1,7 @@
 [ignore]
 <PROJECT_ROOT>/git/.*
 <PROJECT_ROOT>/node_modules/*
-<PROJECT_ROOT>/src/registerServiceWorker.js
+<PROJECT_ROOT>/src/serviceWorker.js
 <PROJECT_ROOT>/src/public/.*
 <PROJECT_ROOT>/src/scripts/.*
 <PROJECT_ROOT>/release/.*

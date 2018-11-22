@@ -1,18 +1,52 @@
 // @flow
 import React from 'react';
-import Paper from 'material-ui/Paper';
-import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
-import TextField from 'material-ui/TextField';
-import Checkbox from 'material-ui/Checkbox';
-import { green500 } from 'material-ui/styles/colors';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Select from '@material-ui/core/Select';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import { withStyles } from '@material-ui/core/styles';
+import classnames from 'classnames';
 import AbsoluteOverlayFetchingIndicator from '../Generics/FetchingIndicator/AbsoluteOverlayFetchingIndicator';
-import UploadRateFields from './UploadRateFields';
-import ClientSelectField from './ClientSelectField';
 import type { Config } from './types';
-import styles from './styles.css';
+
+const styles = theme => ({
+  container: {
+    padding: theme.spacing.unit * 2,
+    position: 'relative',
+  },
+  discardChange: {
+    height: 37,
+    marginBottom: 5
+  },
+  formInput: {
+    marginBottom: theme.spacing.unit * 3,
+    minWidth: 180
+  },
+  rightSpaced: {
+    marginRight: theme.spacing.unit * 2
+  }
+});
+
+const ITEM_HEIGHT = 48;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 6
+    },
+  },
+};
 
 type Props = {
+  classes: {},
   isLocalConfigChanged: boolean,
   config: Config,
   availableClients: Array<string>,
@@ -24,80 +58,147 @@ type Props = {
 
 const Settings = (props: Props) => {
   const {
+    classes,
     isConnectedToWebSocket,
     discardLocalConfigChanges, onSettingsChange, onClickSave,
     availableClients, config, isLocalConfigChanged
   } = props;
 
-  const valueHasChanged = (newValue) => onSettingsChange(Object.assign({},
+  const valueHasChanged = (newValue) => onSettingsChange(Object.assign(
+    {},
     config,
     newValue
   ));
 
   return (
-    <Paper zDepth={2} className={styles.container}>
-      { isLocalConfigChanged &&
-        <div className={styles.unsavedConfigWrapper}>
-          <span>Unsaved configuration</span>
-          <FlatButton
-            label="discard"
-            onClick={() => discardLocalConfigChanges()}
-            hoverColor="transparent"
-            disableTouchRipple
-            primary
-          />
-        </div>
-      }
-      <AbsoluteOverlayFetchingIndicator active={!isConnectedToWebSocket} />
-      <div className={styles.inputsContainer}>
-        <UploadRateFields
-          minUploadRate={config.minUploadRate}
-          maxUploadRate={config.maxUploadRate}
-          onChange={(uploadRates) => valueHasChanged(uploadRates)}
-        />
-        <div>
-          <ClientSelectField
-            availableClients={availableClients}
-            selectedClient={config.client}
-            onChange={(client) => valueHasChanged(client)}
-          />
-        </div>
-        <div>
-          <TextField
-            floatingLabelText="Simultaneous seed"
-            type="number"
-            min={1}
-            value={config.simultaneousSeed}
-            onChange={(event) => {
-              const value = parseInt(event.target.value, 10);
-              if (isNaN(value)) return;
-              valueHasChanged({ simultaneousSeed: value });
-            }}
-          />
-        </div>
-        <div style={{ marginTop: 10 }}>
-          <Checkbox
-            label={
-              <div>
-                <div style={{ height: 16 }}>Keep seeding torrents even with no peers</div>
-                <div style={{ height: 13 }} className={styles.inputDescription}>If checked, when a torrent reach 0 peers it will seed at 0 kB/s.</div>
-                <div className={styles.inputDescription}>If unchecked, when a torrent reach 0 peers it will be removed.</div>
+    <Grid
+      container
+      direction="column"
+      justify="center"
+      alignItems="center"
+    >
+      <Grid item className={classes.discardChange}>
+        { isLocalConfigChanged && (
+          <div>
+            <Typography variant="body2">
+              Unsaved configuration
+              <Button
+                onClick={() => discardLocalConfigChanges()}
+                color="secondary"
+              >
+                Discard changes
+              </Button>
+            </Typography>
+          </div>
+        )}
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <Paper
+          className={classes.container}
+          elevation={2}
+        >
+          <AbsoluteOverlayFetchingIndicator active={!isConnectedToWebSocket} />
+          <Grid
+            container
+            direction="row"
+          >
+            <Grid item xs={12}>
+              <TextField
+                className={classnames(classes.formInput, classes.rightSpaced)}
+                label="Min upload rate (kB/s)"
+                type="number"
+                min={0}
+                value={config.minUploadRate}
+                onChange={(event) => {
+                  const value = parseInt(event.target.value, 10);
+                  if (isNaN(value)) return; // eslint-disable-line no-restricted-globals
+                  valueHasChanged({ minUploadRate: value });
+                }}
+              />
+              <TextField
+                className={classes.formInput}
+                label="Max upload rate (kB/s)"
+                type="number"
+                min={0}
+                value={config.maxUploadRate}
+                onChange={(event) => {
+                  const value = parseInt(event.target.value, 10);
+                  if (isNaN(value)) return; // eslint-disable-line no-restricted-globals
+                  valueHasChanged({ maxUploadRate: value });
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl className={classes.formInput}>
+                <InputLabel htmlFor="torrent-client-selector">Torrent client</InputLabel>
+                <Select
+                  value={config.client}
+                  onChange={(event) => valueHasChanged({ client: event.target.value })}
+                  input={<Input name="torrent-client" id="torrent-client-selector" />}
+                  MenuProps={MenuProps}
+                >
+                  {availableClients.map(client => (
+                    <MenuItem
+                      key={client}
+                      value={client}
+                    >
+                      {client.substring(0, client.lastIndexOf('.'))}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                className={classes.formInput}
+                label="Simultaneous seed"
+                type="number"
+                min={1}
+                value={config.simultaneousSeed}
+                onChange={(event) => {
+                  const value = parseInt(event.target.value, 10);
+                  if (isNaN(value)) return; // eslint-disable-line no-restricted-globals
+                  valueHasChanged({ simultaneousSeed: value });
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <div className={classes.formInput}>
+                <FormControlLabel
+                  control={(
+                    <Checkbox
+                      style={{ paddingBottom: 0, paddingTop: 0 }}
+                      checked={config.keepTorrentWithZeroLeechers}
+                      onChange={(e, checked) => valueHasChanged({ keepTorrentWithZeroLeechers: checked })}
+                    />
+                  )}
+                  label="Keep seeding torrents even with no peers"
+                />
+                <FormHelperText style={{ marginTop: 0 }}>
+                  If checked, when a torrent reach 0 peers it will seed at 0 kB/s. Otherwise, when a torrent reach 0 peers it will be removed.
+                </FormHelperText>
               </div>
-            }
-            checked={config.keepTorrentWithZeroLeechers}
-            onCheck={(e, checked) => valueHasChanged({ keepTorrentWithZeroLeechers: checked })}
-            onChange={(client) => valueHasChanged(client)}
-          />
-        </div>
-      </div>
-      <RaisedButton
-        label="Save"
-        backgroundColor={green500}
-        className={styles.buttonStyle}
-        onClick={() => onClickSave(config)}
-      />
-    </Paper>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            align="right"
+            justify="flex-end"
+          >
+            <Grid item xs={12}>
+              <Button
+                variant="contained"
+                onClick={() => onClickSave(config)}
+                color="primary"
+              >
+                Save
+              </Button>
+            </Grid>
+          </Grid>
+        </Paper>
+      </Grid>
+    </Grid>
   );
 };
 
-export default Settings;
+export default withStyles(styles)(Settings);

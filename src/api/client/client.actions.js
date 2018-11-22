@@ -5,7 +5,7 @@ export const GLOBAL_SEED_STOPPED = '@@api/listener/GLOBAL_SEED_STOPPED';
 export const SEND_START_TO_SERVER = '@@api/send/SEND_START_TO_SERVER';
 export const SEND_STOP_TO_SERVER = '@@api/send/SEND_STOP_TO_SERVER';
 
-export const RESET_GLOBAL_SEED_STATE_STATE = '@@reset/RESET_GLOBAL_SEED_STATE_STATE';
+export const RESET_CLIENT_STATE = '@@reset/RESET_CLIENT_STATE';
 
 
 export function sendStartToServer() {
@@ -21,6 +21,6 @@ export function sendStopToServer() {
 }
 
 
-export const resetGlobalSeedState = () => (
-  { type: RESET_GLOBAL_SEED_STATE_STATE }
+export const resetClientState = () => (
+  { type: RESET_CLIENT_STATE }
 );

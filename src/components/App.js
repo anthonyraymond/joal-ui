@@ -2,18 +2,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
 import DashboardPage from './DashBoard';
 import SettingsPage from './Settings';
 import Historypage from './EventHistory';
 import NavigationBar from './NavigationBar';
 import TorrentDropZone from './TorrentDropZone';
-// import FullScreenOverlayFetchingIndicator from '../components/Generics/FetchingIndicator/FullScreenOverlayFetchingIndicator';
 import { uploadTorrents } from '../api';
-import type { StateType } from '../types';
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    padding: theme.spacing.unit * 2
+  },
+  navigationBarWrapper: {
+    position: 'fixed',
+    left: 0,
+    right: 0,
+    bottom: 0
+  }
+});
+
 
 type Props = {
-  /* isGlobalFetching: boolean, */
-  onDrop: () => void
+  classes: {},
+  onFileDrop: () => void
 };
 
 type DropzoneFile = {
@@ -24,36 +38,31 @@ type DropzoneFile = {
 };
 
 const App = (props: Props) => {
-  const { /* isGlobalFetching, */ onDrop } = props;
+  const { onFileDrop, classes } = props;
   return (
-    <TorrentDropZone onDrop={onDrop}>
-      <div className="container-fluid">
-        <div style={{ paddingTop: 20 }}>
+    <TorrentDropZone onDrop={onFileDrop}>
+      <Grid container className={classes.root}>
+        <Grid item xs={12}>
           <main style={{ marginBottom: 56 }}>
             <Route exact path="/history" component={Historypage} />
             <Route exact path="/settings" component={SettingsPage} />
             <Route exact path="/" component={DashboardPage} />
           </main>
-          <div style={{ position: 'fixed', left: 0, right: 0, bottom: 0 }}>
+          <div className={classes.navigationBarWrapper}>
             <NavigationBar />
           </div>
-          {/* <FullScreenOverlayFetchingIndicator active={isGlobalFetching} /> */}
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </TorrentDropZone>
   );
 };
 
-function mapStateToProps(state: StateType) {
-  const isGlobalFetching = !state.api.stomp.isConnected
-    || !state.api.stomp.isFullyInit
-    || state.api.client.isFetching;
+function mapStateToProps() {
   return {
-    isGlobalFetching,
-    onDrop: (accepted: Array<DropzoneFile>/* , rejected: Array<DropzoneFile> */) => {
+    onFileDrop: (accepted: Array<DropzoneFile>/* , rejected: Array<DropzoneFile> */) => {
       uploadTorrents(accepted);
     }
   };
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(withStyles(styles)(App));

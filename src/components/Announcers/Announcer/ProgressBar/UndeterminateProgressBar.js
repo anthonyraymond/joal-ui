@@ -1,11 +1,25 @@
 // @flow
 import React from 'react';
-import LinearProgress from 'material-ui/LinearProgress';
-import styles from './styles.css';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import { withStyles } from '@material-ui/core/styles';
+import classnames from 'classnames';
 
+const styles = () => ({
+  progressBar: {
+    height: 7
+  }
+});
 
-const UndeterminateProgressBar = () => (
-  <LinearProgress className={styles.progressBar} />
+type Props = {
+  classes: {},
+  className?: string
+}
+
+const UndeterminateProgressBar = ({ classes, className: classNameProps }: Props) => (
+  <LinearProgress className={classnames(classes.progressBar, classNameProps)} />
 );
+UndeterminateProgressBar.defaultProps = {
+  className: ''
+};
 
-export default UndeterminateProgressBar;
+export default withStyles(styles)(UndeterminateProgressBar);

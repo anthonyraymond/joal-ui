@@ -1,6 +1,6 @@
 // @flow
 import React, { Component } from 'react';
-import AlertContainer from 'react-alert';
+import { withAlert } from 'react-alert';
 import { connect } from 'react-redux';
 import { removeNotification } from '../notifications/notifications.actions';
 import type { StateType, Dispatch } from '../types';
@@ -8,6 +8,7 @@ import type { Notification } from '../notifications/types';
 
 class JoalMessageAlertContainer extends Component {
   props: {
+    alert: {}, // given by withAlert wrapper
     notifs: Array<Notification>,
     shouldShowDirtyConfNotif: boolean,
     onMessageClosed: (id: string) => void
@@ -18,28 +19,29 @@ class JoalMessageAlertContainer extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.shouldShowDirtyConfNotif !== this.props.shouldShowDirtyConfNotif) {
-      if (this.props.shouldShowDirtyConfNotif === true) {
-        this.reactAlert.info('Config wont be refreshed until you restart JOAL', {
+    const { shouldShowDirtyConfNotif, alert, notifs } = this.props;
+    if (prevProps.shouldShowDirtyConfNotif !== shouldShowDirtyConfNotif) {
+      if (shouldShowDirtyConfNotif === true) {
+        alert.info('Config wont be refreshed until you restart JOAL', {
           id: 'dirtyConfID'
         });
       } else {
-        this.reactAlert.removeAlert('dirtyConfID');
+        alert.remove('dirtyConfID');
       }
     }
 
-    if (this.props.notifs === prevProps.notifs) {
+    if (notifs === prevProps.notifs) {
       return;
     }
     // Remove notifications that are not present anymore
-    prevProps.notifs.forEach(oldNotif => {
-      if (this.props.notifs.findIndex(n => n.id === oldNotif.id) === -1) {
-        this.reactAlert.removeAlert(oldNotif.id); // eslint-disable-line no-underscore-dangle
+    notifs.forEach(oldNotif => {
+      if (notifs.findIndex(n => n.id === oldNotif.id) === -1) {
+        alert.remove(oldNotif.id);
       }
     });
 
     // Add new notifications
-    this.props.notifs.forEach(newNotif => {
+    notifs.forEach(newNotif => {
       if (prevProps.notifs.findIndex(n => n.id === newNotif.id) === -1) {
         this.showNotification(newNotif);
       }
@@ -47,21 +49,22 @@ class JoalMessageAlertContainer extends Component {
   }
 
   showNotification(notification) {
+    const { alert, onMessageClosed } = this.props;
     const notifCopy = Object.assign({}, notification, {
-      onClose: () => this.props.onMessageClosed(notification.id)
+      onClose: () => onMessageClosed(notification.id)
     });
-    const text = notifCopy.text;
+    const { text } = notifCopy;
     switch (notifCopy.type) {
       case 'ERROR': {
-        this.reactAlert.error(<span>{text}</span>, notifCopy);
+        alert.error(<span>{text}</span>, notifCopy);
         break;
       }
       case 'SUCCESS': {
-        this.reactAlert.success(text, notifCopy);
+        alert.success(text, notifCopy);
         break;
       }
       case 'INFO': {
-        this.reactAlert.info(text, notifCopy);
+        alert.info(text, notifCopy);
         break;
       }
       default: {
@@ -72,15 +75,7 @@ class JoalMessageAlertContainer extends Component {
 
   render() {
     return (
-      <AlertContainer
-        ref={a => { this.reactAlert = a; }}
-        offset={14}
-        position={'top right'}
-        theme={'light'}
-        time={0}
-        transition={'scale'}
-        style={{ zIndex: 16777272 }}
-      />
+      <span />
     );
   }
 }
@@ -100,4 +95,4 @@ function mapDispatchToProps(dispatch: Dispatch) {
   });
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(JoalMessageAlertContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(withAlert(JoalMessageAlertContainer));

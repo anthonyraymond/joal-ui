@@ -27,13 +27,17 @@ const initialState = [];
 const handlers: Handler<AnnouncerState> = {
   [FAILED_TO_ANNOUNCE](state, action: Action<FailedToAnnouncePayload>) {
     if (!state.find(announcer => announcer.infoHash === action.payload.infoHash)) {
-      return update(state, { $push: [
-        Object.assign({}, { isFetching: false }, action.payload)
-      ] });
+      return update(state, {
+        $push: [
+          Object.assign({}, { isFetching: false }, action.payload)
+        ]
+      });
     }
     return state.map(announcer => {
       if (announcer.infoHash === action.payload.infoHash) {
-        return Object.assign({}, announcer,
+        return Object.assign(
+          {},
+          announcer,
           { isFetching: false },
           action.payload
         );
@@ -47,14 +51,18 @@ const handlers: Handler<AnnouncerState> = {
     }
 
     if (!state.find(announcer => announcer.infoHash === action.payload.infoHash)) {
-      return update(state, { $push: [
-        Object.assign({}, { isFetching: false }, action.payload)
-      ] });
+      return update(state, {
+        $push: [
+          Object.assign({}, { isFetching: false }, action.payload)
+        ]
+      });
     }
 
     return state.map(announcer => {
       if (announcer.infoHash === action.payload.infoHash) {
-        return Object.assign({}, announcer,
+        return Object.assign(
+          {},
+          announcer,
           { isFetching: false },
           action.payload
         );
@@ -67,14 +75,18 @@ const handlers: Handler<AnnouncerState> = {
   },
   [WILL_ANNOUNCE](state, action: Action<WillAnnouncePayload>) {
     if (!state.find(announcer => announcer.infoHash === action.payload.infoHash)) {
-      return update(state, { $push: [
-        Object.assign({}, { isFetching: true }, action.payload)
-      ] });
+      return update(state, {
+        $push: [
+          Object.assign({}, { isFetching: true }, action.payload)
+        ]
+      });
     }
 
     return state.map(announcer => {
       if (announcer.infoHash === action.payload.infoHash) {
-        return Object.assign({}, announcer,
+        return Object.assign(
+          {},
+          announcer,
           { isFetching: true },
           action.payload
         );

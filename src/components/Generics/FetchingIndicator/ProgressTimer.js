@@ -1,11 +1,12 @@
 // @flow
 import React from 'react';
-import LinearProgress from 'material-ui/LinearProgress';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import PropTypes from 'prop-types';
 
 export class ProgressTimer extends React.Component {
   static propTypes = {
-    position: React.PropTypes.number.isRequired,
-    total: React.PropTypes.number.isRequired
+    position: PropTypes.number.isRequired,
+    total: PropTypes.number.isRequired
   }
 
   constructor(props) {
@@ -26,11 +27,14 @@ export class ProgressTimer extends React.Component {
   }
 
   incrementTimeBar() {
-    if (this.state.completed + 1 >= this.props.total) {
-      this.setState({ completed: this.props.total });
+    const { completed } = this.state;
+    const { total } = this.props;
+
+    if (completed + 1 >= total) {
+      this.setState({ completed: total });
       clearInterval(this.timer);
     } else {
-      this.setState({ completed: this.state.completed + 1 });
+      this.setState({ completed: completed + 1 });
     }
   }
 
@@ -44,12 +48,14 @@ export class ProgressTimer extends React.Component {
   }
 
   render() {
+    const { completed } = this.state;
+    const { total } = this.props;
     return (
       <div>
         <div className="text-right">
-          {this.secondToHMS(this.props.total - this.state.completed)}
+          {this.secondToHMS(total - completed)}
         </div>
-        <LinearProgress mode="determinate" value={this.state.completed} max={this.props.total} />
+        <LinearProgress variant="determinate" value={completed} max={total} />
       </div>
     );
   }
