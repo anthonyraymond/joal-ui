@@ -151,6 +151,7 @@ const Settings = (props: Props) => {
                   control={(
                     <Checkbox
                       style={{ paddingBottom: 0, paddingTop: 0 }}
+                      color="primary"
                       checked={config.keepTorrentWithZeroLeechers}
                       onChange={(e, checked) => valueHasChanged({ keepTorrentWithZeroLeechers: checked })}
                     />

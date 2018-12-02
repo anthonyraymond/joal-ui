@@ -3,13 +3,13 @@ import React from 'react';
 import ReactTooltip from 'react-tooltip';
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = () => ({
+const styles = (theme) => ({
   leechers: {
-    color: '#3498DB',
+    color: theme.palette.secondary.main,
     marginRight: 12
   },
   seeders: {
-    color: '#27AE60'
+    color: theme.palette.secondary.main
   }
 });
 

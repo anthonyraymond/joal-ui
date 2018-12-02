@@ -8,17 +8,42 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import red from '@material-ui/core/colors/red';
 import { withStyles } from '@material-ui/core/styles';
 // import classnames from 'classnames';
 import type { GuiConfig } from '../../utils/ConfigProvider/types';
 
 const styles = theme => ({
-  redButton: {
-    color: theme.palette.getContrastText(red[500]),
-    backgroundColor: red[500],
+  changeConfigButton: {
+    color: theme.palette.getContrastText(theme.palette.type === 'dark' ? theme.palette.grey[700] : theme.palette.grey[100]),
+    backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[700] : theme.palette.grey[100],
+    boxShadow: theme.shadows[2],
+    '&:focusVisible': {
+      boxShadow: theme.shadows[6],
+    },
+    '&:active': {
+      boxShadow: theme.shadows[8],
+    },
+    '&:disabled': {
+      color: theme.palette.action.disabled,
+      boxShadow: theme.shadows[0],
+      backgroundColor: theme.palette.action.disabledBackground,
+    },
     '&:hover': {
-      backgroundColor: red[700]
+      backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[800] : theme.palette.grey[300],
+      // Reset on touch devices, it doesn't add specificity
+      '@media (hover: none)': {
+        backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[700] : theme.palette.grey[300],
+      },
+      '&:disabled': {
+        backgroundColor: theme.palette.action.disabledBackground,
+      },
+    },
+  },
+  redButton: {
+    color: theme.palette.getContrastText(theme.palette.error.main),
+    backgroundColor: theme.palette.error.main,
+    '&:hover': {
+      backgroundColor: theme.palette.error.dark
     }
   },
   formControl: {
@@ -132,6 +157,7 @@ class UiConfigChanger extends Component {
           fullWidth
           onClick={() => this.setState({ isModalVisible: true })}
           className={isConnected ? '' : classes.redButton}
+          classes={{ contained: classes.changeConfigButton }}
         >
           Change connection settings
         </Button>

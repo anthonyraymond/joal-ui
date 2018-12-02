@@ -2,27 +2,25 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
-import { Provider as AlertProvider } from 'react-alert';
-import AlertTemplate from 'react-alert-template-basic';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import purple from '@material-ui/core/colors/purple';
-import green from '@material-ui/core/colors/green';
+import primary from '@material-ui/core/colors/teal';
+import secondary from '@material-ui/core/colors/blue';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import JoalMessageAlertContainer from './JoalMessageAlertContainer';
 import App from './App';
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: purple[300],
-      main: purple[500],
-      dark: purple[700],
+      light: primary[300],
+      main: primary[500],
+      dark: primary[700],
     },
     secondary: {
-      light: green[300],
-      main: green[500],
-      dark: green[700],
+      light: secondary[300],
+      main: secondary[500],
+      dark: secondary[700],
     },
+    // type: 'dark'
   },
   typography: {
     useNextVariants: true,
@@ -35,27 +33,15 @@ type Props = {
 };
 
 const Root = ({ store, history }: Props) => (
-  <MuiThemeProvider theme={theme}>
-    {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-    <CssBaseline />
-    <Provider store={store}>
-      <AlertProvider
-        template={AlertTemplate}
-        offset="14px"
-        position="top right"
-        timeout={0}
-        transition="scale"
-        zIndex={14000000}
-      >
-        <div>
-          <JoalMessageAlertContainer />
-          <ConnectedRouter history={history}>
-            <App />
-          </ConnectedRouter>
-        </div>
-      </AlertProvider>
-    </Provider>
-  </MuiThemeProvider>
+  <Provider store={store}>
+    <MuiThemeProvider theme={theme}>
+      {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+      <CssBaseline />
+      <ConnectedRouter history={history}>
+        <App />
+      </ConnectedRouter>
+    </MuiThemeProvider>
+  </Provider>
 );
 
 export default Root;

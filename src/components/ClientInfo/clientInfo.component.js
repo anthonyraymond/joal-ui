@@ -19,6 +19,31 @@ const styles = theme => ({
   leftIcon: {
     marginRight: theme.spacing.unit,
   },
+  playPauseButton: {
+    backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[700] : theme.palette.grey[100],
+    boxShadow: theme.shadows[2],
+    '&:focusVisible': {
+      boxShadow: theme.shadows[6],
+    },
+    '&:active': {
+      boxShadow: theme.shadows[8],
+    },
+    '&:disabled': {
+      color: theme.palette.action.disabled,
+      boxShadow: theme.shadows[0],
+      backgroundColor: theme.palette.action.disabledBackground,
+    },
+    '&:hover': {
+      backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[800] : theme.palette.grey[300],
+      // Reset on touch devices, it doesn't add specificity
+      '@media (hover: none)': {
+        backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[700] : theme.palette.grey[300],
+      },
+      '&:disabled': {
+        backgroundColor: theme.palette.action.disabledBackground,
+      },
+    },
+  },
   redTextButton: {
     color: red[500]
   },
@@ -50,9 +75,11 @@ const ClientInfo = (props: Props) => {
         {stateText}
       </Typography>
       <Button
+        color="primary"
         fullWidth
         variant="contained"
         className={isStarted ? classes.redTextButton : classes.greenTextButton}
+        classes={{ contained: classes.playPauseButton }}
         onClick={isStarted ? onClickStop : onClickStart}
       >
         {isStarted ? <PauseIcon className={classes.leftIcon} /> : <PlayIcon className={classes.leftIcon} />}

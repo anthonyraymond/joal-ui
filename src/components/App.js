@@ -4,11 +4,14 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
+import { Provider as AlertProvider } from 'react-alert';
+import AlertTemplate from 'react-alert-template-basic';
 import DashboardPage from './DashBoard';
 import SettingsPage from './Settings';
 import Historypage from './EventHistory';
 import NavigationBar from './NavigationBar';
 import TorrentDropZone from './TorrentDropZone';
+import JoalMessageAlertContainer from './JoalMessageAlertContainer';
 import { uploadTorrents } from '../api';
 
 const styles = theme => ({
@@ -40,20 +43,30 @@ type DropzoneFile = {
 const App = (props: Props) => {
   const { onFileDrop, classes } = props;
   return (
-    <TorrentDropZone onDrop={onFileDrop}>
-      <Grid container className={classes.root}>
-        <Grid item xs={12}>
-          <main>
-            <Route exact path="/history" component={Historypage} />
-            <Route exact path="/settings" component={SettingsPage} />
-            <Route exact path="/" component={DashboardPage} />
-          </main>
-          <div className={classes.navigationBarWrapper}>
-            <NavigationBar />
-          </div>
+    <AlertProvider
+      template={AlertTemplate}
+      offset="14px"
+      position="top right"
+      timeout={0}
+      transition="scale"
+      zIndex={14000000}
+    >
+      <JoalMessageAlertContainer />
+      <TorrentDropZone onDrop={onFileDrop}>
+        <Grid container className={classes.root}>
+          <Grid item xs={12}>
+            <main>
+              <Route exact path="/history" component={Historypage} />
+              <Route exact path="/settings" component={SettingsPage} />
+              <Route exact path="/" component={DashboardPage} />
+            </main>
+            <div className={classes.navigationBarWrapper}>
+              <NavigationBar />
+            </div>
+          </Grid>
         </Grid>
-      </Grid>
-    </TorrentDropZone>
+      </TorrentDropZone>
+    </AlertProvider>
   );
 };
 
