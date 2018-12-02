@@ -22,7 +22,7 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit,
     paddingLeft: theme.spacing.unit * 2,
     paddingRight: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit
+    paddingBottom: theme.spacing.unit / 2
   },
   title: {
     marginTop: 3,
@@ -54,7 +54,8 @@ const styles = theme => ({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 0
+    bottom: 0,
+    height: 5
   }
 });
 
@@ -95,7 +96,7 @@ const Announcer = (props: Props) => {
             {`${trimedTorrentName} (${filesize(announcer.torrentSize, { standard: 'iec' })})`}
           </Typography>
         </Grid>
-        <Grid item style={{ width: 42 }} alignContent="flex-end">
+        <Grid item style={{ width: 42 }}>
           <Tooltip title="Delete this torrent" placement="top">
             <IconButton
               className={classes.deleteButton}
