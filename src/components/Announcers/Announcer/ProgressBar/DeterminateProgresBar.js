@@ -74,7 +74,9 @@ class DeterminateProgressBar extends Component {
   }
 
   // The ReactTooltip does not support some special character, we need to create an infoHash with normal chars only
-  normalizeInfoHash = (infoHash: string) => btoa(infoHash);
+  normaliseInfoHash = (infoHash: string) => btoa(infoHash);
+
+  normaliseProgressPercent = (value, maximum) => (value) * 100 / maximum;
 
   render() {
     const { className: classNameProps, classes, infoHash } = this.props;
@@ -86,15 +88,14 @@ class DeterminateProgressBar extends Component {
           className={classnames(classes.progressBar, classNameProps)}
           variant="determinate"
           data-tip={`Updating tracker stats in ${timeUntilNext}s`}
-          data-for={`nextUpdate${this.normalizeInfoHash(infoHash)}`}
-          max={maxValue}
-          value={completed}
+          data-for={`nextUpdate${this.normaliseInfoHash(infoHash)}`}
+          value={this.normaliseProgressPercent(completed, maxValue)}
         />
         {/*
           TODO: Check that this line does not register a new ReactTooltip every
           second. Because the component is updated by his own state every second as well
         */}
-        <ReactTooltip id={`nextUpdate${this.normalizeInfoHash(infoHash)}`} getContent={[() => `Updating tracker stats in ${timeUntilNext}s`, 1000]} />
+        <ReactTooltip id={`nextUpdate${this.normaliseInfoHash(infoHash)}`} getContent={[() => `Updating tracker stats in ${timeUntilNext}s`, 1000]} />
       </div>
     );
   }
