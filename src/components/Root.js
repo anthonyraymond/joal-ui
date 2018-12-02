@@ -45,7 +45,7 @@ const Root = ({ store, history }: Props) => (
         position="top right"
         timeout={0}
         transition="scale"
-        zIndex={16777272}
+        zIndex={14000000}
       >
         <div>
           <JoalMessageAlertContainer />
