@@ -43,7 +43,7 @@ const App = (props: Props) => {
     <TorrentDropZone onDrop={onFileDrop}>
       <Grid container className={classes.root}>
         <Grid item xs={12}>
-          <main style={{ marginBottom: 56 }}>
+          <main>
             <Route exact path="/history" component={Historypage} />
             <Route exact path="/settings" component={SettingsPage} />
             <Route exact path="/" component={DashboardPage} />
