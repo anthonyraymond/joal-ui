@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import filesize from 'filesize';
+import Typography from '@material-ui/core/Typography';
 
 type Props = {
   className?: string,
@@ -11,9 +12,9 @@ const UploadSpeed = (props: Props) => {
   const { className: classNameProps, speedInBytesPerSeconds } = props;
 
   return (
-    <div className={classNameProps}>
+    <Typography variant="caption" className={classNameProps}>
       {speedInBytesPerSeconds === undefined ? '? B/s' : `${filesize(speedInBytesPerSeconds, { base: 10 })}/s`}
-    </div>
+    </Typography>
   );
 };
 UploadSpeed.defaultProps = {
