@@ -1,10 +1,12 @@
 // @flow
 import React from 'react';
+import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteOutlined';
 import { withStyles } from '@material-ui/core/styles';
+import withWidth from '@material-ui/core/withWidth';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Tooltip from '@material-ui/core/Tooltip';
 import filesize from 'filesize';
@@ -21,6 +23,11 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit * 2,
     paddingRight: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit
+  },
+  title: {
+    marginTop: 3,
+    lineHeight: 1.2,
+    wordBreak: 'break-word'
   },
   uploadSpeedContainer: {
     bottom: 5,
@@ -53,6 +60,7 @@ const styles = theme => ({
 
 type Props = {
   classes: {},
+  width: 'lg' | 'md' | 'sm' | 'xs',
   className?: string,
   announcer: AnnouncerType,
   onClickDeleteTorrent: (infoHash: string) => void
@@ -60,7 +68,7 @@ type Props = {
 
 const Announcer = (props: Props) => {
   const {
-    className: classNameProps, classes, announcer, onClickDeleteTorrent
+    width: componentBreakpoint, className: classNameProps, classes, announcer, onClickDeleteTorrent
   } = props;
   let nextAnnounceIn = announcer.lastKnownInterval;
   if (announcer.lastAnnouncedAt !== undefined) {
@@ -69,29 +77,49 @@ const Announcer = (props: Props) => {
     nextAnnounceIn = Math.round(announcer.lastKnownInterval - deltaBetweenLastAnnounce);
   }
 
+  const maxAllowedTorrentNameLength = (componentBreakpoint === 'xs' || componentBreakpoint === 'sm') ? 70 : 175;
+  let trimedTorrentName = announcer.torrentName;
+  if (announcer.torrentName.length > maxAllowedTorrentNameLength) {
+    trimedTorrentName = `${announcer.torrentName.substring(0, maxAllowedTorrentNameLength)}...`;
+  }
+
   return (
     <Paper elevation={2} style={{ position: 'relative' }} className={classnames(classes.root, classNameProps)}>
-      <Typography
-        variant="body2"
-        gutterBottom
-      >
-        {`${announcer.torrentName} (${filesize(announcer.torrentSize, { standard: 'iec' })})`}
-      </Typography>
-      <Tooltip title="Delete this torrent" placement="top">
-        <IconButton
-          className={classes.deleteButton}
-          aria-label="Delete"
-          onClick={() => onClickDeleteTorrent(announcer.infoHash)}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </Tooltip>
-      <PeerStats className={classes.peersStats} leechers={announcer.lastKnownLeechers} seeders={announcer.lastKnownSeeders} />
-      <div className={classes.uploadSpeedContainer}>
-        <UploadSpeed
-          infoHash={announcer.infoHash}
-        />
-      </div>
+      <Grid container direction="row">
+        <Grid item xs>
+          <Typography
+            className={classes.title}
+            variant="body2"
+            gutterBottom
+          >
+            {`${trimedTorrentName} (${filesize(announcer.torrentSize, { standard: 'iec' })})`}
+          </Typography>
+        </Grid>
+        <Grid item style={{ width: 42 }} alignContent="flex-end">
+          <Tooltip title="Delete this torrent" placement="top">
+            <IconButton
+              className={classes.deleteButton}
+              aria-label="Delete"
+              onClick={() => onClickDeleteTorrent(announcer.infoHash)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+        </Grid>
+      </Grid>
+      <Grid container direction="row">
+        <Grid item xs>
+          <PeerStats className={classes.peersStats} leechers={announcer.lastKnownLeechers} seeders={announcer.lastKnownSeeders} />
+        </Grid>
+        <Grid item xs>
+          <div className={classes.uploadSpeedContainer}>
+            <UploadSpeed
+              infoHash={announcer.infoHash}
+            />
+          </div>
+        </Grid>
+      </Grid>
+
       <AnnounceProgressBar
         className={classes.announceProgressBar}
         infoHash={announcer.infoHash}
@@ -106,4 +134,4 @@ Announcer.defaultProps = {
   className: ''
 };
 
-export default withStyles(styles)(Announcer);
+export default withWidth()(withStyles(styles)(Announcer));
