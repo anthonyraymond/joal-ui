@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -23,9 +22,8 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
     position: 'relative',
   },
-  discardChange: {
-    height: 37,
-    marginBottom: 5
+  discardChangesButton: {
+    marginRight: theme.spacing.unit * 2
   },
   formInput: {
     marginBottom: theme.spacing.unit * 3,
@@ -77,21 +75,6 @@ const Settings = (props: Props) => {
       justify="center"
       alignItems="center"
     >
-      <Grid item className={classes.discardChange}>
-        { isLocalConfigChanged && (
-          <div>
-            <Typography variant="body2">
-              Unsaved configuration
-              <Button
-                onClick={() => discardLocalConfigChanges()}
-                color="secondary"
-              >
-                Discard changes
-              </Button>
-            </Typography>
-          </div>
-        )}
-      </Grid>
       <Grid item xs={12} md={6}>
         <Paper
           className={classes.container}
@@ -180,12 +163,17 @@ const Settings = (props: Props) => {
               </div>
             </Grid>
           </Grid>
-          <Grid
-            container
-            align="right"
-            justify="flex-end"
-          >
-            <Grid item xs={12}>
+          <Grid container direction="row" justify="flex-end" alignItems="center">
+            <Grid item>
+              { isLocalConfigChanged && (
+                <Button
+                  onClick={() => discardLocalConfigChanges()}
+                  color="secondary"
+                  className={classes.discardChangesButton}
+                >
+                  Discard
+                </Button>
+              )}
               <Button
                 variant="contained"
                 onClick={() => onClickSave(config)}
