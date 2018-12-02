@@ -21,14 +21,10 @@ const styles = () => ({
     bottom: 0,
     left: 0,
     backgroundColor: 'rgba(156, 155, 155, 0.86)',
-    textAlign: 'center',
-    color: 'rgba(130, 130, 130, 0.75)'
-  },
-  icon: {
-    position: 'absolute',
-    top: '50%',
-    bottom: '50%',
-    transform: 'translate(0, -50%)'
+    color: 'rgba(130, 130, 130, 0.75)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 
@@ -84,9 +80,7 @@ class TorrentDropZone extends Component {
           {children}
           {dropzoneActive && (
             <div className={classes.overlay}>
-              <div>
-                <i className={classnames(classes.icon, 'fa', 'fa-download', 'fa-5x')} aria-hidden="true" />
-              </div>
+              <i className={classnames('fa', 'fa-download', 'fa-5x')} aria-hidden="true" />
             </div>
           )}
         </div>
