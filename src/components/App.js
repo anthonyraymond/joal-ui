@@ -31,8 +31,6 @@ const styles = theme => ({
 
 type Props = {
   classes: {},
-  themeProfile: 'light' | 'dark',
-  onRequestThemeChange: () => void,
   onFileDrop: () => void
 };
 
@@ -45,7 +43,7 @@ type DropzoneFile = {
 
 const App = (props: Props) => {
   const {
-    onFileDrop, classes, themeProfile, onRequestThemeChange
+    onFileDrop, classes
   } = props;
   return (
     <AlertProvider
@@ -59,7 +57,7 @@ const App = (props: Props) => {
       <JoalMessageAlertContainer />
       <TorrentDropZone onDrop={onFileDrop}>
         <header>
-          <JoalAppBar isLightTheme={themeProfile === 'light'} onRequestThemeChange={onRequestThemeChange} />
+          <JoalAppBar />
         </header>
         <Grid container className={classes.root}>
           <Grid item xs={12}>
