@@ -7,7 +7,7 @@ import secondary from '@material-ui/core/colors/lightGreen';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 
-const materialUiThemeCreator = (themeProfile: 'light' | 'dark') => createMuiTheme({
+const materialUiThemeCreator = (themeType: 'light' | 'dark') => createMuiTheme({
   palette: {
     primary: {
       light: primary[300],
@@ -19,7 +19,7 @@ const materialUiThemeCreator = (themeProfile: 'light' | 'dark') => createMuiThem
       main: secondary[500],
       dark: secondary[700],
     },
-    type: themeProfile
+    type: themeType
   },
   typography: {
     useNextVariants: true,
