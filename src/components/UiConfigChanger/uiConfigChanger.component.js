@@ -14,7 +14,6 @@ import type { GuiConfig } from '../../utils/ConfigProvider/types';
 
 const styles = theme => ({
   changeConfigButton: {
-    color: theme.palette.getContrastText(theme.palette.type === 'dark' ? theme.palette.grey[700] : theme.palette.grey[100]),
     backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[700] : theme.palette.grey[100],
     boxShadow: theme.shadows[2],
     '&:focusVisible': {
