@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { routerReducer as router } from 'react-router-redux';
 import uiConfigReducer from '../components/Settings/settings.reducer';
+import themeReducer from '../components/AppBar/appbar.reducer';
 import apiTorrentFileReducer from '../api/torrentFiles/torrentFiles.reducer';
 import apiClientReducer from '../api/client/client.reducer';
 import apiSettingsReducer from '../api/settings/settings.reducer';
@@ -19,7 +20,8 @@ export default combineReducers({
     stomp: apiStompReducer
   }),
   app: combineReducers({
-    config: uiConfigReducer
+    config: uiConfigReducer,
+    theme: themeReducer
   }),
   notifications: notificationsReducer,
   router

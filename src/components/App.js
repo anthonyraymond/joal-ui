@@ -11,8 +11,10 @@ import SettingsPage from './Settings';
 import Historypage from './EventHistory';
 import NavigationBar from './NavigationBar';
 import TorrentDropZone from './TorrentDropZone';
+import JoalAppBar from './AppBar';
 import JoalMessageAlertContainer from './JoalMessageAlertContainer';
 import { uploadTorrents } from '../api';
+
 
 const styles = theme => ({
   root: {
@@ -27,9 +29,10 @@ const styles = theme => ({
   }
 });
 
-
 type Props = {
   classes: {},
+  themeProfile: 'light' | 'dark',
+  onRequestThemeChange: () => void,
   onFileDrop: () => void
 };
 
@@ -41,7 +44,9 @@ type DropzoneFile = {
 };
 
 const App = (props: Props) => {
-  const { onFileDrop, classes } = props;
+  const {
+    onFileDrop, classes, themeProfile, onRequestThemeChange
+  } = props;
   return (
     <AlertProvider
       template={AlertTemplate}
@@ -53,6 +58,9 @@ const App = (props: Props) => {
     >
       <JoalMessageAlertContainer />
       <TorrentDropZone onDrop={onFileDrop}>
+        <header>
+          <JoalAppBar isLightTheme={themeProfile === 'light'} onRequestThemeChange={onRequestThemeChange} />
+        </header>
         <Grid container className={classes.root}>
           <Grid item xs={12}>
             <main>
@@ -60,9 +68,9 @@ const App = (props: Props) => {
               <Route exact path="/settings" component={SettingsPage} />
               <Route exact path="/" component={DashboardPage} />
             </main>
-            <div className={classes.navigationBarWrapper}>
+            <footer className={classes.navigationBarWrapper}>
               <NavigationBar />
-            </div>
+            </footer>
           </Grid>
         </Grid>
       </TorrentDropZone>
