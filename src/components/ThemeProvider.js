@@ -2,8 +2,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import primary from '@material-ui/core/colors/purple';
-import secondary from '@material-ui/core/colors/lightBlue';
+import primary from '@material-ui/core/colors/blue';
+import secondary from '@material-ui/core/colors/lightGreen';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 
@@ -16,8 +16,8 @@ const materialUiThemeCreator = (themeProfile: 'light' | 'dark') => createMuiThem
     },
     secondary: {
       light: secondary[300],
-      dark: secondary[500],
-      main: secondary[700],
+      main: secondary[500],
+      dark: secondary[700],
     },
     type: themeProfile
   },
