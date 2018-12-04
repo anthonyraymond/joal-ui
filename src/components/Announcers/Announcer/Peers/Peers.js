@@ -5,11 +5,11 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = (theme) => ({
   leechers: {
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.light,
     marginRight: 12
   },
   seeders: {
-    color: theme.palette.secondary.main
+    color: theme.palette.primary.light
   }
 });
 

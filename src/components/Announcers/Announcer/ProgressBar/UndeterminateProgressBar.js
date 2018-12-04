@@ -6,17 +6,17 @@ import classnames from 'classnames';
 
 const styles = () => ({
   progressBar: {
-    height: 7
   }
 });
 
 type Props = {
   classes: {},
-  className?: string
+  className?: string,
+  color: 'primary' | 'secondary'
 }
 
-const UndeterminateProgressBar = ({ classes, className: classNameProps }: Props) => (
-  <LinearProgress className={classnames(classes.progressBar, classNameProps)} />
+const UndeterminateProgressBar = ({ classes, className: classNameProps, color }: Props) => (
+  <LinearProgress color={color} className={classnames(classes.progressBar, classNameProps)} />
 );
 UndeterminateProgressBar.defaultProps = {
   className: ''

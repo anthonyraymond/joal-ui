@@ -7,13 +7,13 @@ import classnames from 'classnames';
 
 const styles = () => ({
   progressBar: {
-    height: 7
   }
 });
 
 type AnnounceProgressBarProps = {
   classes: {},
   className?: string,
+  color: 'primary' | 'secondary',
   infoHash: string,
   startAt: number,
   maxValue: number
@@ -79,12 +79,15 @@ class DeterminateProgressBar extends Component {
   normaliseProgressPercent = (value, maximum) => (value) * 100 / maximum;
 
   render() {
-    const { className: classNameProps, classes, infoHash } = this.props;
+    const {
+      className: classNameProps, classes, infoHash, color
+    } = this.props;
     const { maxValue, completed } = this.state;
     const timeUntilNext = maxValue - completed;
     return (
       <div>
         <LinearProgress
+          color={color}
           className={classnames(classes.progressBar, classNameProps)}
           variant="determinate"
           data-tip={`Updating tracker stats in ${timeUntilNext}s`}

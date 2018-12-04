@@ -45,10 +45,10 @@ const styles = theme => ({
     },
   },
   redTextButton: {
-    color: red[500]
+    color: red[400]
   },
   greenTextButton: {
-    color: green[500]
+    color: green[400]
   }
 });
 

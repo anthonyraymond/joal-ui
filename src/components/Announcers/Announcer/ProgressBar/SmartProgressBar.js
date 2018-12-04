@@ -5,6 +5,7 @@ import UndeterminateProgressBar from './UndeterminateProgressBar';
 
 type SmartAnnounceProps = {
   className?: string,
+  color?: 'primary' | 'secondary',
   infoHash: string,
   isFetching: boolean,
   nextAnnounceIn?: number,
@@ -13,11 +14,11 @@ type SmartAnnounceProps = {
 
 const SmartAnnounceProgressBar = (props: SmartAnnounceProps) => {
   const {
-    className, isFetching, nextAnnounceIn, announceInterval, infoHash
+    className, color, isFetching, nextAnnounceIn, announceInterval, infoHash
   } = props;
 
   if (isFetching) {
-    return (<UndeterminateProgressBar className={className} />);
+    return (<UndeterminateProgressBar color={color} className={className} />);
   }
 
   const currentValue = announceInterval - nextAnnounceIn;
@@ -25,6 +26,7 @@ const SmartAnnounceProgressBar = (props: SmartAnnounceProps) => {
   return (
     <DeterminateProgresBar
       className={className}
+      color={color}
       infoHash={infoHash}
       startAt={currentValue}
       maxValue={maxValue}
@@ -33,6 +35,7 @@ const SmartAnnounceProgressBar = (props: SmartAnnounceProps) => {
 };
 SmartAnnounceProgressBar.defaultProps = {
   className: '',
+  color: 'primary',
   nextAnnounceIn: undefined,
   announceInterval: undefined
 };

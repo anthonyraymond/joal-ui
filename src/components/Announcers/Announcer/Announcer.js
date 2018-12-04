@@ -55,7 +55,7 @@ const styles = theme => ({
     left: 0,
     right: 0,
     bottom: 0,
-    height: 5
+    height: 4
   }
 });
 
@@ -110,7 +110,11 @@ const Announcer = (props: Props) => {
       </Grid>
       <Grid container direction="row">
         <Grid item xs>
-          <PeerStats className={classes.peersStats} leechers={announcer.lastKnownLeechers} seeders={announcer.lastKnownSeeders} />
+          <PeerStats
+            className={classes.peersStats}
+            leechers={announcer.lastKnownLeechers}
+            seeders={announcer.lastKnownSeeders}
+          />
         </Grid>
         <Grid item xs>
           <div className={classes.uploadSpeedContainer}>
@@ -122,6 +126,7 @@ const Announcer = (props: Props) => {
       </Grid>
 
       <AnnounceProgressBar
+        color="primary"
         className={classes.announceProgressBar}
         infoHash={announcer.infoHash}
         isFetching={announcer.isFetching}
