@@ -2,6 +2,7 @@
 import { connect } from 'react-redux';
 import isElectron from 'is-electron';
 import Dashboard from './dashboard.component';
+import { uploadTorrents } from '../../api';
 import type { StateType } from '../../types';
 
 function mapStateToProps(state: StateType) {
@@ -12,5 +13,10 @@ function mapStateToProps(state: StateType) {
     shouldDisplayConfigChangerButton: !isElectron()
   };
 }
+function mapDispatchToProps() {
+  return {
+    uploadTorrentFiles: (files) => uploadTorrents(files)
+  };
+}
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

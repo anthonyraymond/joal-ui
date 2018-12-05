@@ -55,6 +55,7 @@ type File = {
 };
 export const uploadTorrents = (files: Array<File>) => {
   const reader = new FileReader();
+  console.log(files);
 
   // Process files one by one (queue like) to reduce memory consuption when sender a lot of torrent files.
   const processOne = () => {

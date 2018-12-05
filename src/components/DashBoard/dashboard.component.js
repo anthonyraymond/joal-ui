@@ -17,8 +17,11 @@ const styles = theme => ({
   },
   addButton: {
     position: 'fixed',
-    bottom: 65,
-    right: theme.spacing.unit
+    bottom: 75,
+    right: theme.spacing.unit * 2
+  },
+  addButtonInput: {
+    display: 'none'
   }
 });
 
@@ -28,12 +31,14 @@ type Props = {
   isStarted: boolean,
   isConnectedToWebSocket: boolean,
   isClientGlobalStatePending: boolean,
-  shouldDisplayConfigChangerButton: boolean
+  shouldDisplayConfigChangerButton: boolean,
+  uploadTorrentFiles: (files: Array<File>) => void
 };
 
 const Dashboard = ({
   className: classNameProps,
-  shouldDisplayConfigChangerButton, classes, isConnectedToWebSocket, isClientGlobalStatePending, isStarted
+  shouldDisplayConfigChangerButton, classes, isConnectedToWebSocket, isClientGlobalStatePending, isStarted,
+  uploadTorrentFiles
 }: Props) => (
   <Grid
     container
@@ -59,9 +64,19 @@ const Dashboard = ({
     )}
     <ReactTooltip place="top" type="dark" effect="float" />
 
-    <Fab className={classes.addButton} variant="fab" disabled={!isStarted} size="medium" color="secondary" aria-label="Add">
-      <AddIcon />
-    </Fab>
+    <input
+      type="file"
+      accept=".torrent"
+      multiple
+      id="add-torrent-file-button"
+      className={classes.addButtonInput}
+      onChange={(e) => uploadTorrentFiles(Array.from(e.target.files))}
+    />
+    <label htmlFor="add-torrent-file-button"> {/* eslint-disable-line */}
+      <Fab className={classes.addButton} variant="fab" component="span" disabled={!isStarted} size="medium" color="secondary" aria-label="Add">
+        <AddIcon />
+      </Fab>
+    </label>
   </Grid>
 );
 
