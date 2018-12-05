@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import { withStyles } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
 import ClientInfo from '../ClientInfo';
 import AbsoluteOverlayFetchingIndicator from '../Generics/FetchingIndicator/AbsoluteOverlayFetchingIndicator';
 import UiConfigChangerButton from '../UiConfigChanger';
@@ -73,9 +74,11 @@ const Dashboard = ({
       onChange={(e) => uploadTorrentFiles(Array.from(e.target.files))}
     />
     <label htmlFor="add-torrent-file-button"> {/* eslint-disable-line */}
-      <Fab className={classes.addButton} variant="fab" component="span" disabled={!isStarted} size="medium" color="secondary" aria-label="Add">
-        <AddIcon />
-      </Fab>
+      <Tooltip title="Add a torrent" aria-label="Add a torrent" placement="left">
+        <Fab className={classes.addButton} variant="fab" component="span" disabled={!isStarted} size="medium" color="secondary" aria-label="Add">
+          <AddIcon />
+        </Fab>
+      </Tooltip>
     </label>
   </Grid>
 );

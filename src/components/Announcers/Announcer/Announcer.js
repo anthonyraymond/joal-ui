@@ -97,7 +97,7 @@ const Announcer = (props: Props) => {
           </Typography>
         </Grid>
         <Grid item style={{ width: 42 }}>
-          <Tooltip title="Delete this torrent" placement="top">
+          <Tooltip title="Delete this torrent" placement="left">
             <IconButton
               className={classes.deleteButton}
               aria-label="Delete"

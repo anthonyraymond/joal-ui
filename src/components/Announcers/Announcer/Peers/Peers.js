@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import ReactTooltip from 'react-tooltip';
+import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = (theme) => ({
@@ -30,17 +30,19 @@ const PeerStats = (props: Props) => {
   return (
     <div className={classNameProps}>
       <div>
-        <span className={classes.leechers} data-for="leechers" data-tip="Leechers">
-          <i className="fa fa-cloud-download" aria-hidden="true" />
-          {` ${leechersText}`}
-        </span>
-        <span className={classes.seeders} data-for="seeders" data-tip="Seeders">
-          <i className="fa fa-cloud-upload" aria-hidden="true" />
-          {` ${seedersText}`}
-        </span>
+        <Tooltip title="leechers" aria-label="leechers" placement="top">
+          <span className={classes.leechers} data-for="leechers" data-tip="Leechers">
+            <i className="fa fa-cloud-download" aria-hidden="true" />
+            {` ${leechersText}`}
+          </span>
+        </Tooltip>
+        <Tooltip title="leechers" aria-label="seeders" placement="top">
+          <span className={classes.seeders} data-for="seeders" data-tip="Seeders">
+            <i className="fa fa-cloud-upload" aria-hidden="true" />
+            {` ${seedersText}`}
+          </span>
+        </Tooltip>
       </div>
-      <ReactTooltip id="leechers" />
-      <ReactTooltip id="seeders" />
     </div>
   );
 };

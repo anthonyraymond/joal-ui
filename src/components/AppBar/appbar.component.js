@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 
@@ -44,11 +45,17 @@ const JoalAppBar = (props: Props) => {
           <Typography variant="h6" color="inherit" className={classes.grow}>
             Joal
           </Typography>
-          <FormControlLabel
-            control={
-              <Switch checked={!isLightTheme} onChange={onRequestThemeChange} aria-label="ThemeSwitch" />
-            }
-          />
+          <Tooltip
+            title={`Switch to ${isLightTheme ? 'dark' : 'light'} theme`}
+            aria-label={`Switch to ${isLightTheme ? 'dark' : 'light'} theme`}
+            placement="left"
+          >
+            <FormControlLabel
+              control={
+                <Switch checked={!isLightTheme} onChange={onRequestThemeChange} aria-label="ThemeSwitch" />
+              }
+            />
+          </Tooltip>
         </Toolbar>
       </AppBar>
     </div>
