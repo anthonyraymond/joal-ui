@@ -168,6 +168,7 @@ const Settings = (props: Props) => {
             <Grid item>
               { isLocalConfigChanged && (
                 <Button
+                  variant="outlined"
                   onClick={() => discardLocalConfigChanges()}
                   color="secondary"
                   className={classes.discardChangesButton}
@@ -178,7 +179,7 @@ const Settings = (props: Props) => {
               <Button
                 variant="contained"
                 onClick={() => onClickSave(config)}
-                color="primary"
+                color="secondary"
               >
                 Save
               </Button>
