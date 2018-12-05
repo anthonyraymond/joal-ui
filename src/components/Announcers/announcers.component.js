@@ -8,7 +8,9 @@ import type { Announcer as AnnouncerType } from './types';
 const styles = theme => ({
   announersList: {
     marginTop: theme.spacing.unit,
-    marginLeft: theme.spacing.unit * 2
+    [theme.breakpoints.up('md')]: {
+      marginLeft: theme.spacing.unit * 2,
+    }
   },
   announcer: {
     [theme.breakpoints.down('md')]: {
