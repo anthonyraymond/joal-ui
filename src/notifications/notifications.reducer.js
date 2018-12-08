@@ -1,7 +1,7 @@
 // @flow
 import update from 'immutability-helper';
 import createReducer from '../reducers/createReducer';
-import { CONFIG_IS_IN_DIRTY_STATE, CONFIG_HAS_BEEN_LOADED } from '../api/settings/settings.actions';
+import { CONFIG_IS_IN_DIRTY_STATE, CONFIG_HAS_BEEN_LOADED, INVALID_CONFIG } from '../api/settings/settings.actions';
 import { TORRENT_FILE_ADDED, FAILED_TO_ADD_TORRENT_FILE } from '../api/torrentFiles/torrentFile.actions';
 import {
   INIT_OVER,
@@ -88,6 +88,17 @@ const handlers: Handler<NotificationState> = {
   [CONFIG_HAS_BEEN_LOADED](state) {
     return update(state, {
       shouldShowDirtyConfNotif: { $set: false }
+    });
+  },
+  [INVALID_CONFIG](state, action) {
+    const notif = {
+      id: uuidv4(),
+      text: `Invalid config: ${action.payload.error}`,
+      timeout: 6000,
+      type: 'ERROR'
+    };
+    return update(state, {
+      notifs: { $push: [notif] }
     });
   },
   [TORRENT_FILE_ADDED](state, action: Action<TorrentFilePayload>) {
