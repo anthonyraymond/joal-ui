@@ -93,8 +93,7 @@ const Settings = (props: Props) => {
                 min={0}
                 value={config.minUploadRate}
                 onChange={(event) => {
-                  const value = parseInt(event.target.value, 10);
-                  if (isNaN(value)) return; // eslint-disable-line no-restricted-globals
+                  const value = event.target.value === '' ? '' : parseInt(event.target.value, 10);
                   valueHasChanged({ minUploadRate: value });
                 }}
               />
@@ -105,8 +104,7 @@ const Settings = (props: Props) => {
                 min={0}
                 value={config.maxUploadRate}
                 onChange={(event) => {
-                  const value = parseInt(event.target.value, 10);
-                  if (isNaN(value)) return; // eslint-disable-line no-restricted-globals
+                  const value = event.target.value === '' ? '' : parseInt(event.target.value, 10);
                   valueHasChanged({ maxUploadRate: value });
                 }}
               />
@@ -139,8 +137,7 @@ const Settings = (props: Props) => {
                 min={1}
                 value={config.simultaneousSeed}
                 onChange={(event) => {
-                  const value = parseInt(event.target.value, 10);
-                  if (isNaN(value)) return; // eslint-disable-line no-restricted-globals
+                  const value = event.target.value === '' ? '' : parseInt(event.target.value, 10);
                   valueHasChanged({ simultaneousSeed: value });
                 }}
               />
