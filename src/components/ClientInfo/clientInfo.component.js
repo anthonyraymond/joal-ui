@@ -58,6 +58,7 @@ type Props = {
   client: string,
   overallUploadSpeed: number,
   isStarted: boolean,
+  numberOfQueuedTorrents: number,
   onClickStart: () => void,
   onClickStop: () => void
 };
@@ -65,7 +66,7 @@ type Props = {
 const ClientInfo = (props: Props) => {
   const {
     className: classNameProps,
-    classes, client, overallUploadSpeed, isStarted, onClickStart, onClickStop
+    classes, client, overallUploadSpeed, isStarted, onClickStart, onClickStop, numberOfQueuedTorrents
   } = props;
   const stateText = isStarted ? 'Running' : 'Paused';
 
@@ -92,6 +93,9 @@ const ClientInfo = (props: Props) => {
       </Typography>
       <Typography align="left" variant="body2" gutterBottom>
         {`Overall speed :  ${filesize(overallUploadSpeed, { base: 10 })}/s`}
+      </Typography>
+      <Typography align="left" variant="body2" gutterBottom>
+        {`Torrents in queue :  ${numberOfQueuedTorrents}`}
       </Typography>
     </Paper>
   );

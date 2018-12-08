@@ -10,7 +10,6 @@ import ClientInfo from '../ClientInfo';
 import AbsoluteOverlayFetchingIndicator from '../Generics/FetchingIndicator/AbsoluteOverlayFetchingIndicator';
 import UiConfigChangerButton from '../UiConfigChanger';
 import Announcers from '../Announcers';
-import QueuedTorrents from '../QueuedTorrents';
 
 const styles = theme => ({
   relative: {
@@ -23,6 +22,9 @@ const styles = theme => ({
   },
   addButtonInput: {
     display: 'none'
+  },
+  announcers: {
+    marginBottom: 70
   }
 });
 
@@ -55,12 +57,8 @@ const Dashboard = ({
       </div>
     </Grid>
     {isStarted && (
-      <Grid item xs={12} md={8} lg={9}>
+      <Grid item xs={12} md={8} lg={9} className={classes.announcers}>
         <Announcers />
-        <h2>Queued torrents</h2>
-        <div style={{ paddingLeft: 15, paddingRight: 15 }}>
-          <QueuedTorrents />
-        </div>
       </Grid>
     )}
     <ReactTooltip place="top" type="dark" effect="float" />

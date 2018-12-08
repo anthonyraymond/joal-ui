@@ -14,10 +14,13 @@ const calculateGobalSpeed = (speeds) => {
 };
 
 function mapStateToProps(state: StateType) {
+  // TODO : performance issue
+  const announcersIds = state.api.announcers.map(an => an.infoHash);
   return {
     client: state.api.client.name,
     overallUploadSpeed: calculateGobalSpeed(state.api.speed),
     isStarted: state.api.client.isStarted,
+    numberOfQueuedTorrents: state.api.torrentFiles.filter(tf => !announcersIds.includes(tf.infoHash)).length,
     onClickStart: () => sendStartSession(),
     onClickStop: () => sendStopSession()
   };
