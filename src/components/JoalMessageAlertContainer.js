@@ -15,7 +15,8 @@ class JoalMessageAlertContainer extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return this.props !== nextProps;
+    const { notifs: currentNotifs, shouldShowDirtyConfNotif: currentShouldShowDirtyConfNotif } = this.props;
+    return (currentNotifs !== nextProps.notifs || currentShouldShowDirtyConfNotif !== nextProps.shouldShowDirtyConfNotif);
   }
 
   componentDidUpdate(prevProps) {
