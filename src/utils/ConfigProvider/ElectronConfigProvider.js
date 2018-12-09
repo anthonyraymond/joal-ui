@@ -9,7 +9,7 @@ export const getConfig = () => {
     return {
       host: window.location.hostname, // this default settings is to prevent Firefox to crash with "SecurityError: The operation is insecure." due to cross origin websocket
       port: window.location.port || 80, // this default settings is to prevent Firefox to crash with "SecurityError: The operation is insecure." due to cross origin websocket
-      pathPrefix: '',
+      pathPrefix: window.location.pathname.substring(1, window.location.pathname.lastIndexOf('/ui')) || '',
       secretToken: ''
     };
   }
