@@ -1,5 +1,7 @@
 # TODO
 - [x] Re-design alerts.
+- [ ] Add pagination to announcers.
+- [ ] Add a search bar to the paginated announcers.
 - [ ] Wait for https://github.com/schiehll/react-alert/pull/96 to be merged (allow alert removals).
 - [ ] Add errors on settings form.
 - [ ] Use enter to validate on settings form.
