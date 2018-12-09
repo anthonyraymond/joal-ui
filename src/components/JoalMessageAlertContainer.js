@@ -26,7 +26,7 @@ class JoalMessageAlertContainer extends Component {
           id: 'dirtyConfID'
         });
       } else {
-        alert.remove('dirtyConfID');
+        alert.remove({ id: 'dirtyConfID' });
       }
     }
 
@@ -36,7 +36,7 @@ class JoalMessageAlertContainer extends Component {
     // Remove notifications that are not present anymore
     notifs.forEach(oldNotif => {
       if (notifs.findIndex(n => n.id === oldNotif.id) === -1) {
-        alert.remove(oldNotif.id);
+        alert.remove({ id: oldNotif.id });
       }
     });
 
