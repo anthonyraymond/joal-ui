@@ -2,11 +2,11 @@
 import React, { Component } from 'react';
 import { withAlert } from 'react-alert';
 import { connect } from 'react-redux';
-import { removeNotification } from '../notifications/notifications.actions';
-import type { StateType, Dispatch } from '../types';
-import type { Notification } from '../notifications/types';
+import { removeNotification } from './alerts.actions';
+import type { StateType, Dispatch } from '../../types';
+import type { Notification } from './types';
 
-class JoalMessageAlertContainer extends Component {
+class JoalAlertDisplayer extends Component {
   props: {
     alert: {}, // given by withAlert wrapper
     notifs: Array<Notification>,
@@ -83,7 +83,7 @@ class JoalMessageAlertContainer extends Component {
 
 
 function mapStateToProps(state: StateType) {
-  const { notifs, shouldShowDirtyConfNotif } = state.notifications;
+  const { notifs, shouldShowDirtyConfNotif } = state.alerts;
   return {
     notifs,
     shouldShowDirtyConfNotif
@@ -96,4 +96,4 @@ function mapDispatchToProps(dispatch: Dispatch) {
   });
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withAlert(JoalMessageAlertContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(withAlert(JoalAlertDisplayer));

@@ -1,4 +1,4 @@
 // @flow
-import JoalAppBar from './appbar.container';
+import JoalAppBar from './appbar.component';
 
 export default JoalAppBar;

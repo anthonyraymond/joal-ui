@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import { connect } from 'react-redux';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import primary from '@material-ui/core/colors/blue';
 import secondary from '@material-ui/core/colors/lightGreen';
@@ -42,10 +41,4 @@ const ThemeProvider = (props: Props) => {
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    themeType: state.app.theme.type
-  };
-}
-
-export default connect(mapStateToProps)(ThemeProvider);
+export default ThemeProvider;

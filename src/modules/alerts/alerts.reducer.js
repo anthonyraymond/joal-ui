@@ -1,25 +1,25 @@
 // @flow
 import update from 'immutability-helper';
-import createReducer from '../reducers/createReducer';
-import { CONFIG_IS_IN_DIRTY_STATE, CONFIG_HAS_BEEN_LOADED, INVALID_CONFIG } from '../api/settings/settings.actions';
-import { TORRENT_FILE_ADDED, FAILED_TO_ADD_TORRENT_FILE } from '../api/torrentFiles/torrentFile.actions';
+import createReducer from '../../reducers/createReducer';
+import { CONFIG_IS_IN_DIRTY_STATE, CONFIG_HAS_BEEN_LOADED, INVALID_CONFIG } from '../../api/settings/settings.actions';
+import { TORRENT_FILE_ADDED, FAILED_TO_ADD_TORRENT_FILE } from '../../api/torrentFiles/torrentFile.actions';
 import {
   INIT_OVER,
   HAS_CONNECTED,
   HAS_DROP_CONNECTION,
   HAS_FAILED_TO_CONNECT,
   RECEIVED_ERROR_MESSAGE
-} from '../api/stomp/stomp.actions';
-import { REMOVE_NOTIFICATION } from './notifications.actions';
+} from '../../api/stomp/stomp.actions';
+import { REMOVE_NOTIFICATION } from './alerts.actions';
 import type {
   Handler,
   Action
-} from '../types';
+} from '../../types';
 import type { NotificationState } from './types';
 import type {
   TorrentFilePayload,
   FailedToAddTorrentFilePayload
-} from '../api/torrentFiles/types';
+} from '../../api/torrentFiles/types';
 
 
 const uuidv4 = () => (

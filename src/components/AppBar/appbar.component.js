@@ -4,11 +4,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
+import { ThemeModifier } from '../../modules/theme';
 
 const styles = {
   root: {
@@ -25,14 +23,12 @@ const styles = {
 
 type Props = {
   classes: {},
-  className?: {},
-  isLightTheme: boolean,
-  onRequestThemeChange: () => void
+  className?: {}
 }
 
 const JoalAppBar = (props: Props) => {
   const {
-    className: classNameProps, classes, isLightTheme, onRequestThemeChange
+    className: classNameProps, classes
   } = props;
 
   return (
@@ -45,17 +41,7 @@ const JoalAppBar = (props: Props) => {
           <Typography variant="h6" color="inherit" className={classes.grow}>
             Joal
           </Typography>
-          <Tooltip
-            title={`Switch to ${isLightTheme ? 'dark' : 'light'} theme`}
-            aria-label={`Switch to ${isLightTheme ? 'dark' : 'light'} theme`}
-            placement="left"
-          >
-            <FormControlLabel
-              control={
-                <Switch checked={!isLightTheme} onChange={onRequestThemeChange} aria-label="ThemeSwitch" />
-              }
-            />
-          </Tooltip>
+          <ThemeModifier />
         </Toolbar>
       </AppBar>
     </div>

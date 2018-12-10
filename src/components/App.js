@@ -4,16 +4,13 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
-import { Provider as AlertProvider } from 'react-alert';
-// import AlertTemplate from 'react-alert-template-basic';
-import AlertTemplate from '../notifications/AlertTemplate';
 import DashboardPage from './DashBoard';
 import SettingsPage from './Settings';
 import Historypage from './EventHistory';
 import NavigationBar from './NavigationBar';
 import TorrentDropZone from './TorrentDropZone';
 import JoalAppBar from './AppBar';
-import JoalMessageAlertContainer from './JoalMessageAlertContainer';
+import Alerts from '../modules/alerts';
 import { uploadTorrents } from '../api';
 
 
@@ -47,15 +44,8 @@ const App = (props: Props) => {
     onFileDrop, classes
   } = props;
   return (
-    <AlertProvider
-      template={AlertTemplate}
-      offset="14px"
-      position="top right"
-      timeout={0}
-      transition="scale"
-      zIndex={14000000}
-    >
-      <JoalMessageAlertContainer />
+    <div>
+      <Alerts />
       <TorrentDropZone onDrop={onFileDrop}>
         <header>
           <JoalAppBar />
@@ -73,7 +63,7 @@ const App = (props: Props) => {
           </Grid>
         </Grid>
       </TorrentDropZone>
-    </AlertProvider>
+    </div>
   );
 };
 
