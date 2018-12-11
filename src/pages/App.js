@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
-import DashboardPage from './DashBoard';
-import SettingsPage from './Settings';
-import Historypage from './EventHistory';
-import NavigationBar from './NavigationBar';
-import TorrentDropZone from './TorrentDropZone';
-import JoalAppBar from './AppBar';
+import DashboardPage from './dashboard';
+import SettingsPage from './settings';
+import Historypage from './event-history';
+import NavigationBar from '../components/NavigationBar';
+import TorrentDropZone from '../components/TorrentDropZone';
+import JoalAppBar from '../components/AppBar';
 import Alerts from '../modules/alerts';
 import { uploadTorrents } from '../modules/joal-api';
 

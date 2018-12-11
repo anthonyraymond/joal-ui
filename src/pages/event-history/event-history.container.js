@@ -1,6 +1,6 @@
 // @flow
 import { connect } from 'react-redux';
-import EventHistoryComponent from './eventHistory.component';
+import EventHistoryComponent from './event-history.component';
 
 function mapStateToProps() {
   return {

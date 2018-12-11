@@ -6,10 +6,10 @@ import Fab from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import { withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
-import ClientInfo from '../ClientInfo';
-import AbsoluteOverlayFetchingIndicator from '../Generics/FetchingIndicator/AbsoluteOverlayFetchingIndicator';
-import UiConfigChangerButton from '../UiConfigChanger';
-import Announcers from '../Announcers';
+import ClientInfo from '../../components/ClientInfo';
+import AbsoluteOverlayFetchingIndicator from '../../components/Generics/FetchingIndicator/AbsoluteOverlayFetchingIndicator';
+import UiConfigChangerButton from '../../components/UiConfigChanger';
+import Announcers from '../../components/Announcers';
 
 const styles = theme => ({
   relative: {
@@ -73,7 +73,7 @@ const Dashboard = ({
     />
     <label htmlFor="add-torrent-file-button"> {/* eslint-disable-line */}
       <Tooltip title="Add a torrent" aria-label="Add a torrent" placement="left">
-        <Fab className={classes.addButton} variant="fab" component="span" disabled={!isStarted} size="medium" color="secondary" aria-label="Add">
+        <Fab className={classes.addButton} variant="fab" component="span" disabled={!isStarted} color="secondary" aria-label="Add">
           <AddIcon />
         </Fab>
       </Tooltip>

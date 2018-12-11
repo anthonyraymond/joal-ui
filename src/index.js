@@ -14,7 +14,7 @@ const rootEl = document.getElementById('root');
 
 let render = () => {
   // Dynamically import our main App component, and render it
-  const Root = require('./components/Root').default; // eslint-disable-line global-require
+  const Root = require('./pages/Root').default; // eslint-disable-line global-require
   ReactDOM.render(<Root store={store} history={history} />, rootEl);
 };
 
@@ -31,7 +31,7 @@ if (module.hot) {
 
   // Whenever the App component file or one of its dependencies
   // is changed, re-import the updated component and re-render it
-  module.hot.accept('./components/Root', () => {
+  module.hot.accept('./pages/Root', () => {
     setTimeout(render);
   });
 }

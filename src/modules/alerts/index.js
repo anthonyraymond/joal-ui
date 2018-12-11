@@ -1,3 +1,3 @@
-import JoalAlertProvider from './alertProvider.component';
+import JoalAlertProvider from './alerts-provider.component';
 
 export default JoalAlertProvider;

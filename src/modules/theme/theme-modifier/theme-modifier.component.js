@@ -17,15 +17,15 @@ type Props = {
   onClickChangeThemeType: () => void
 }
 
-const ThemeChanger = ({ classes, palette, onClickChangeThemeType }: Props) => (
+const ThemeModifier = ({ classes, palette, onClickChangeThemeType }: Props) => (
   <div>
     <IconButton aria-label="Switch theme type" onClick={onClickChangeThemeType}>
       {palette.type === 'light'
-        ? <LightModeOnIcon className={classes.icon} fontSize="medium" />
-        : <DarkModeOnIcon className={classes.icon} fontSize="medium" />
+        ? <LightModeOnIcon className={classes.icon} size="medium" />
+        : <DarkModeOnIcon className={classes.icon} size="medium" />
       }
     </IconButton>
   </div>
 );
 
-export default withStyles(styles)(ThemeChanger);
+export default withStyles(styles)(ThemeModifier);
