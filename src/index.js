@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { configureStore, history } from './store/configureStore';
 import * as serviceWorker from './serviceWorker';
-import { connectStomp } from './api';
+import { connectStomp } from './modules/joal-api';
 import 'typeface-roboto';
 import './app.global.css';
 

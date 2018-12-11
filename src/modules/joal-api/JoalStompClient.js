@@ -1,6 +1,6 @@
 // @flow
 import Webstomp from 'webstomp-client';
-import { getGUIConfig } from '../utils/ConfigProvider';
+import { getGUIConfig } from '../../utils/ConfigProvider';
 import {
   isConnecting,
   hasConnected,
@@ -23,7 +23,7 @@ type Frame = {
   body: {} | string;
 }
 
-export default class JOALStompClient {
+export default class JoalStompClient {
   constructor(reduxStore: ReduxStore, onDisconnectCallback: () => void) {
     this.reconnectTimeout = undefined;
     this.reduxStore = reduxStore;

@@ -11,7 +11,7 @@ import NavigationBar from './NavigationBar';
 import TorrentDropZone from './TorrentDropZone';
 import JoalAppBar from './AppBar';
 import Alerts from '../modules/alerts';
-import { uploadTorrents } from '../api';
+import { uploadTorrents } from '../modules/joal-api';
 
 
 const styles = theme => ({

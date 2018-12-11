@@ -1,7 +1,7 @@
 // @flow
 import { connect } from 'react-redux';
 import Announcers from './announcers.component';
-import { deleteTorrent } from '../../api';
+import { deleteTorrent } from '../../modules/joal-api';
 import type { StateType } from '../../types';
 
 

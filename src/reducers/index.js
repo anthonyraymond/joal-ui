@@ -2,12 +2,12 @@ import { combineReducers } from 'redux';
 import { routerReducer as router } from 'react-router-redux';
 import uiConfigReducer from '../components/Settings/settings.reducer';
 import themeReducer from '../modules/theme/theme-modifier/theme-modifier.reducer';
-import apiTorrentFileReducer from '../api/torrentFiles/torrentFiles.reducer';
-import apiClientReducer from '../api/client/client.reducer';
-import apiSettingsReducer from '../api/settings/settings.reducer';
-import apiSpeedReducer from '../api/speed/speed.reducer';
-import apiAnnouncersReducer from '../api/announcers/announcers.reducer';
-import apiStompReducer from '../api/stomp/stomp.reducer';
+import apiTorrentFileReducer from '../modules/joal-api/torrentFiles/torrentFiles.reducer';
+import apiClientReducer from '../modules/joal-api/client/client.reducer';
+import apiSettingsReducer from '../modules/joal-api/settings/settings.reducer';
+import apiSpeedReducer from '../modules/joal-api/speed/speed.reducer';
+import apiAnnouncersReducer from '../modules/joal-api/announcers/announcers.reducer';
+import apiStompReducer from '../modules/joal-api/stomp/stomp.reducer';
 import alertReducer from '../modules/alerts/alerts.reducer';
 
 export default combineReducers({

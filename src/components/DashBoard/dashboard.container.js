@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import isElectron from 'is-electron';
 import Dashboard from './dashboard.component';
-import { uploadTorrents } from '../../api';
+import { uploadTorrents } from '../../modules/joal-api';
 import type { StateType } from '../../types';
 
 function mapStateToProps(state: StateType) {

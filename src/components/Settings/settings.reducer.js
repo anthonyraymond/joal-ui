@@ -8,7 +8,7 @@ import {
 import {
   CONFIG_IS_IN_DIRTY_STATE as API___CONFIG_IS_IN_DIRTY_STATE,
   CONFIG_HAS_BEEN_LOADED as API____CONFIG_HAS_BEEN_LOADED
-} from '../../api/settings/settings.actions';
+} from '../../modules/joal-api/settings/settings.actions';
 import type {
   Handler,
   Action

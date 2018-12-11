@@ -3,7 +3,7 @@ import {
   SEEDING_SPEED_HAS_CHANGED,
   RESET_SPEED_STATE
 } from './speed.actions';
-import createReducer from '../../reducers/createReducer';
+import createReducer from '../../../reducers/createReducer';
 import type {
   SpeedState,
   SeedingSpeedHasChangedPayload

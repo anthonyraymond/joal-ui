@@ -1,5 +1,5 @@
 // @flow
-import JOALStompClient from './JOALStompClient';
+import JoalStompClient from './JoalStompClient';
 import { resetAnnouncerState } from './announcers/announcers.actions';
 import { sendStartToServer, sendStopToServer, resetClientState } from './client/client.actions';
 import { sendConfig, resetConfig } from './settings/settings.actions';
@@ -14,7 +14,7 @@ let stompClient;
 
 export const connectStomp = (appStore: ReduxStore) => {
   store = appStore;
-  stompClient = new JOALStompClient(store, () => {
+  stompClient = new JoalStompClient(store, () => {
     // On disconnect
 
     store.dispatch(resetStompState());

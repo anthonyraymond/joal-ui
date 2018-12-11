@@ -6,11 +6,11 @@ import {
   FAILED_TO_ADD_TORRENT_FILE,
   RESET_TORRENT_FILES_STATE
 } from './torrentFile.actions';
-import createReducer from '../../reducers/createReducer';
+import createReducer from '../../../reducers/createReducer';
 import type {
   Handler,
   Action
-} from '../../types';
+} from '../../../types';
 import type {
   TorrentFilesState,
   TorrentFilePayload

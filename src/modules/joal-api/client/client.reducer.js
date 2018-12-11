@@ -7,7 +7,7 @@ import {
   SEND_STOP_TO_SERVER,
   RESET_CLIENT_STATE
 } from './client.actions';
-import createReducer from '../../reducers/createReducer';
+import createReducer from '../../../reducers/createReducer';
 import type {
   Handler,
   Action

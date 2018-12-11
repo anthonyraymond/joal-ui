@@ -1,7 +1,7 @@
 // @flow
 import { connect } from 'react-redux';
 import ClientInfoComponent from './clientInfo.component';
-import { sendStartSession, sendStopSession } from '../../api';
+import { sendStartSession, sendStopSession } from '../../modules/joal-api';
 import type { StateType } from '../../types';
 
 const calculateGobalSpeed = (speeds) => {

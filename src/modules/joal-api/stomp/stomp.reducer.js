@@ -8,10 +8,10 @@ import {
   INIT_OVER,
   RESET_STOMP_STATE
 } from './stomp.actions';
-import createReducer from '../../reducers/createReducer';
+import createReducer from '../../../reducers/createReducer';
 import type {
   Handler
-} from '../../types';
+} from '../../../types';
 import type { StompState } from './types';
 
 

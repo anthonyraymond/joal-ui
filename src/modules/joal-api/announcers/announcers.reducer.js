@@ -7,7 +7,7 @@ import {
   WILL_ANNOUNCE,
   RESET_ANNOUNCER_STATE
 } from './announcers.actions';
-import createReducer from '../../reducers/createReducer';
+import createReducer from '../../../reducers/createReducer';
 import type {
   AnnouncerState,
   FailedToAnnouncePayload,

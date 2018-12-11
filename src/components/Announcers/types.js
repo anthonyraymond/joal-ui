@@ -1,6 +1,6 @@
 // @flow
 import type {
   Announcer as ApiAnnouncer
-} from '../../api/announcers/types';
+} from '../../modules/joal-api/announcers/types';
 
 export type Announcer = ApiAnnouncer;

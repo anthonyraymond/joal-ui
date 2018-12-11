@@ -1,5 +1,5 @@
 // @flow
-import type { Config as ApiConfig } from '../../api/settings/types';
+import type { Config as ApiConfig } from '../../modules/joal-api/settings/types';
 
 export type Config = ApiConfig;
 

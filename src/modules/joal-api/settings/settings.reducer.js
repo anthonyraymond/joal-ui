@@ -7,7 +7,7 @@ import {
   LIST_OF_CLIENT_FILES,
   RESET_CONFIG
 } from './settings.actions';
-import createReducer from '../../reducers/createReducer';
+import createReducer from '../../../reducers/createReducer';
 import type {
   SettingsState,
   InvalidConfigPayload,
