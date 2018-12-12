@@ -1,3 +1,6 @@
+# Disclamer
+JOAL is not designed to help you download illegal materials ! Don't break your country's law. I couldn't be held responsible for illegal activities performed by your usage of JOAL.
+
 # TODO
 - [x] Re-design alerts.
 - [ ] Add pagination to announcers.
