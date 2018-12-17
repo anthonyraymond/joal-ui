@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
 import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
 import { ThemeProvider } from '../modules/theme';
 import App from './App';
 
@@ -13,9 +12,7 @@ type Props = {
 const Root = ({ store, history }: Props) => (
   <Provider store={store}>
     <ThemeProvider>
-      <ConnectedRouter history={history}>
-        <App />
-      </ConnectedRouter>
+      <App history={history} />
     </ThemeProvider>
   </Provider>
 );

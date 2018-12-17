@@ -1,7 +1,8 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import { ConnectedRouter } from 'react-router-redux';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import DashboardPage from './dashboard';
@@ -29,6 +30,7 @@ const styles = theme => ({
 
 type Props = {
   classes: {},
+  history: {},
   onFileDrop: () => void
 };
 
@@ -41,7 +43,7 @@ type DropzoneFile = {
 
 const App = (props: Props) => {
   const {
-    onFileDrop, classes
+    onFileDrop, classes, history
   } = props;
   return (
     <div>
@@ -53,9 +55,13 @@ const App = (props: Props) => {
         <Grid container className={classes.root}>
           <Grid item xs={12}>
             <main>
-              <Route exact path="/history" component={Historypage} />
-              <Route exact path="/settings" component={SettingsPage} />
-              <Route exact path="/" component={DashboardPage} />
+              <ConnectedRouter history={history}>
+                <Switch>
+                  <Route exact path="/history" component={Historypage} />
+                  <Route exact path="/settings" component={SettingsPage} />
+                  <Route exact path="/" component={DashboardPage} />
+                </Switch>
+              </ConnectedRouter>
             </main>
             <footer className={classes.navigationBarWrapper}>
               <NavigationBar />
