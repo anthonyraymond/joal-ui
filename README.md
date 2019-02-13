@@ -10,3 +10,5 @@ JOAL is not designed to help or encourage you downloading illegal materials ! Yo
 - [ ] Use enter to validate on settings form.
 - [ ] Add errors on ui-config changer form.
 - [ ] Use enter to validate on ui-config changer form.
+- [ ] Fix the dropzone not taking the whole screen if there are no torrent seeding
+- [ ] Add a tooltip on light/dark theme switcher
