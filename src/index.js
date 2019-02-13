@@ -2,12 +2,44 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { configureStore, history } from './store/configureStore';
 import * as serviceWorker from './serviceWorker';
+import { saveGUIConfig } from './utils/ConfigProvider';
 import { connectStomp } from './modules/joal-api';
 import 'typeface-roboto';
 import './app.global.css';
 
+const attemptToGetUiConfigFromQuerySearchParam = () => {
+  if (!window.location.search || !window.location.search.includes('ui_credentials')) {
+    return;
+  }
+  const uRLSearchParams = new URLSearchParams(window.location.search); // eslint-disable-line compat/compat
+  const credentialsUriEncoded = uRLSearchParams.get('ui_credentials');
+  if (credentialsUriEncoded === null) {
+    return;
+  }
+
+  try {
+    const config = JSON.parse(decodeURI(credentialsUriEncoded));
+    saveGUIConfig(config);
+  } catch (e) {
+    console.error('Failed to extract uiConfig from url params.', e);
+  } finally {
+    // Remove url param from uri to make it cleaner in history tab
+    uRLSearchParams.delete('ui_credentials');
+    let cleanUri = window.location.pathname;
+    if ([...uRLSearchParams].length >= 1) {
+      cleanUri += `?${uRLSearchParams.toString()}`;
+    }
+    if (window.location.hash) {
+      cleanUri += window.location.hash;
+    }
+    window.history.replaceState({}, document.title, cleanUri);
+  }
+};
 
 const store = configureStore();
+
+attemptToGetUiConfigFromQuerySearchParam();
+
 connectStomp(store);
 
 const rootEl = document.getElementById('root');

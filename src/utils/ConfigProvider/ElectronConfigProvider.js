@@ -20,5 +20,5 @@ export const getConfig = () => {
 };
 
 export const saveConfig = (newConfig: GuiConfig) => {
-  console.error('Cannot save config: config is immutable in Electron context.', newConfig);
+  localStorage.setItem('guiConfig', JSON.stringify(newConfig));
 };
