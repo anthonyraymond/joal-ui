@@ -5,9 +5,10 @@ import { changeSearchFilterText } from './torrentsTable.actions';
 import { deleteTorrent } from '../../modules/joal-api';
 import type { StateType, Dispatch } from '../../types';
 
-const filterTorrents = (torrents, searchFilter) => (
-  torrents.filter(t => t.torrentName.includes(searchFilter))
-);
+const filterTorrents = (torrents, searchFilter) => {
+  const filterText = searchFilter.toLowerCase();
+  return torrents.filter(t => t.torrentName.toLowerCase().includes(filterText));
+};
 
 function mapStateToProps(state: StateType) {
   return {
