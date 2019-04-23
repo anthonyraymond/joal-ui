@@ -9,7 +9,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import ClientInfo from '../../components/ClientInfo';
 import AbsoluteOverlayFetchingIndicator from '../../components/Generics/FetchingIndicator/AbsoluteOverlayFetchingIndicator';
 import UiConfigChangerButton from '../../components/UiConfigChanger';
-import Announcers from '../../components/Announcers';
+import TorrentsTable from '../../components/TorrentsTable';
 
 const styles = theme => ({
   relative: {
@@ -58,7 +58,7 @@ const Dashboard = ({
     </Grid>
     {isStarted && (
       <Grid item xs={12} md={8} lg={9} className={classes.announcers}>
-        <Announcers />
+        <TorrentsTable />
       </Grid>
     )}
     <ReactTooltip place="top" type="dark" effect="float" />

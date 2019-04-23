@@ -3,6 +3,7 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Announcer from './Announcer';
+import SearchBar from './SearchBar';
 import type { Announcer as AnnouncerType } from './types';
 
 const styles = theme => ({
@@ -19,18 +20,26 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       marginBottom: theme.spacing.unit,
     }
+  },
+  searchBar: {
+    marginBottom: theme.spacing.unit * 2
   }
 });
 
 type Props = {
   classes: {},
   announcers: Array<AnnouncerType>,
+  searchFilter: string,
+  onFilterTextChange: (text: string) => void,
   onClickDeleteTorrent: (infoHash: string) => void
 };
 
-const Announcers = ({ classes, announcers, onClickDeleteTorrent }: Props) => (
+const Announcers = ({
+  classes, announcers, searchFilter, onFilterTextChange, onClickDeleteTorrent
+}: Props) => (
   <div>
     <Typography variant="h6">{`Currently seeding (${announcers.length})`}</Typography>
+    <SearchBar onFilterTextChange={onFilterTextChange} className={classes.searchBar} searchFilter={searchFilter} onSearchTextChange={console.log} />
     <div className={classes.announersList}>
       {announcers.map((announcer) => (
         <div key={announcer.infoHash}>
