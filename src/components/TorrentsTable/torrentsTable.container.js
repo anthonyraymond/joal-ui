@@ -6,6 +6,9 @@ import { deleteTorrent } from '../../modules/joal-api';
 import type { StateType, Dispatch } from '../../types';
 
 const filterTorrents = (torrents, searchFilter) => {
+  if (searchFilter.trim().length === 0) {
+    return torrents;
+  }
   const filterText = searchFilter.toLowerCase();
   return torrents.filter(t => t.torrentName.toLowerCase().includes(filterText));
 };
