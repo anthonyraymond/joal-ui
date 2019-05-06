@@ -18,7 +18,7 @@ const attemptToGetUiConfigFromQuerySearchParam = () => {
   }
 
   try {
-    const config = JSON.parse(decodeURI(credentialsUriEncoded));
+    const config = JSON.parse(decodeURIComponent(credentialsUriEncoded));
     saveGUIConfig(config);
   } catch (e) {
     console.error('Failed to extract uiConfig from url params.', e);
