@@ -1,9 +1,13 @@
 // @flow
 import React from 'react';
+import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
+import classnames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = (theme) => ({
+  root: {
+  },
   leechers: {
     color: theme.palette.primary.light,
     marginRight: 12
@@ -28,8 +32,8 @@ const PeerStats = (props: Props) => {
   const seedersText = (seeders === null || seeders === undefined) ? '?' : seeders;
 
   return (
-    <div className={classNameProps}>
-      <div>
+    <Grid container direction="row" className={classnames(classes.root, classNameProps)}>
+      <Grid item>
         <Tooltip title="leechers" aria-label="leechers" placement="top">
           <span className={classes.leechers} data-for="leechers" data-tip="Leechers">
             <i className="fa fa-cloud-download" aria-hidden="true" />
@@ -42,8 +46,8 @@ const PeerStats = (props: Props) => {
             {` ${seedersText}`}
           </span>
         </Tooltip>
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 PeerStats.defaultProps = {

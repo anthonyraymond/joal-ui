@@ -89,6 +89,7 @@ const Announcer = (props: Props) => {
       <Grid container direction="row">
         <Grid item xs>
           <Typography
+            align="left"
             className={classes.title}
             variant="body2"
             gutterBottom
