@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
 import Grid from '@material-ui/core/Grid';
-import Fab from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -73,9 +73,11 @@ const Dashboard = ({
     />
     <label htmlFor="add-torrent-file-button"> {/* eslint-disable-line */}
       <Tooltip title="Add a torrent" aria-label="Add a torrent" placement="left">
-        <Fab className={classes.addButton} variant="fab" component="span" disabled={!isStarted} color="secondary" aria-label="Add">
-          <AddIcon />
-        </Fab>
+        <div className={classes.addButton}>
+          <Fab disabled={!isStarted} color="secondary" aria-label="Add">
+            <AddIcon />
+          </Fab>
+        </div>
       </Tooltip>
     </label>
   </Grid>
