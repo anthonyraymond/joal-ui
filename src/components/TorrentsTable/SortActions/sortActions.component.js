@@ -1,8 +1,8 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import NameIcon from '@material-ui/icons/TextFormat';
-import SeedersIcon from '@material-ui/icons/CloudUpload';
-import LeechersIcon from '@material-ui/icons/CloudDownload';
+import NameIcon from '@material-ui/icons/SortByAlpha';
+import LeechersIcon from '@material-ui/icons/CloudDownloadOutlined';
+import SeedersIcon from '@material-ui/icons/CloudUploadOutlined';
 import Grid from '@material-ui/core/Grid';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';

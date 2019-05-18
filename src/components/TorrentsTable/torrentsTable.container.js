@@ -14,11 +14,9 @@ const filterTorrents = (torrents, searchFilter) => {
 };
 
 const sortTorrents = (torrents, sortProperty, sortDirection) => {
-  console.log('d');
   if (sortProperty === '' || sortProperty === undefined || sortProperty === null) {
     return torrents;
   }
-  console.log('a');
 
   // Spread the array to sort on a copy of the original, it will prevent side effects on the original array
   return [...torrents].sort((t1, t2) => {
