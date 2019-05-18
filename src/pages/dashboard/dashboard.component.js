@@ -6,6 +6,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { withStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
+import Zoom from '@material-ui/core/Zoom';
 import ClientInfo from '../../components/ClientInfo';
 import AbsoluteOverlayFetchingIndicator from '../../components/Generics/FetchingIndicator/AbsoluteOverlayFetchingIndicator';
 import UiConfigChangerButton from '../../components/UiConfigChanger';
@@ -30,6 +31,7 @@ const styles = theme => ({
 
 type Props = {
   classes: {},
+  theme: {},
   className?: string,
   isStarted: boolean,
   isConnectedToWebSocket: boolean,
@@ -40,7 +42,7 @@ type Props = {
 
 const Dashboard = ({
   className: classNameProps,
-  shouldDisplayConfigChangerButton, classes, isConnectedToWebSocket, isClientGlobalStatePending, isStarted,
+  shouldDisplayConfigChangerButton, classes, theme, isConnectedToWebSocket, isClientGlobalStatePending, isStarted,
   uploadTorrentFiles
 }: Props) => (
   <Grid
@@ -71,15 +73,22 @@ const Dashboard = ({
       className={classes.addButtonInput}
       onChange={(e) => uploadTorrentFiles(Array.from(e.target.files))}
     />
-    <label htmlFor="add-torrent-file-button" className={classes.addButton}> {/* eslint-disable-line */}
-      <Tooltip title="Add a torrent" aria-label="Add a torrent" placement="left">
-        <div>
+    <Zoom
+      in={isStarted}
+      timeout={{ enter: theme.transitions.duration.enteringScreen, exit: theme.transitions.duration.leavingScreen }}
+      style={{
+        transitionDelay: `${theme.transitions.duration.enteringScreen}ms`,
+      }}
+      unmountOnExit
+    >
+      <label htmlFor="add-torrent-file-button" className={classes.addButton}> {/* eslint-disable-line */}
+        <Tooltip title="Add a torrent" aria-label="Add a torrent" placement="left">
           <Fab component="div" disabled={!isStarted} color="secondary" aria-label="Add">
             <AddIcon />
           </Fab>
-        </div>
-      </Tooltip>
-    </label>
+        </Tooltip>
+      </label>
+    </Zoom>
   </Grid>
 );
 
@@ -87,4 +96,4 @@ Dashboard.defaultProps = {
   className: ''
 };
 
-export default withStyles(styles)(Dashboard);
+export default withStyles(styles, { withTheme: true })(Dashboard);
