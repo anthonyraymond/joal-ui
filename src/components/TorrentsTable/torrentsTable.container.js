@@ -13,9 +13,28 @@ const filterTorrents = (torrents, searchFilter) => {
   return torrents.filter(t => t.torrentName.toLowerCase().includes(filterText));
 };
 
+const sortTorrents = (torrents, sortProperty, sortDirection) => {
+  console.log('d');
+  if (sortProperty === '' || sortProperty === undefined || sortProperty === null) {
+    return torrents;
+  }
+  console.log('a');
+
+  // Spread the array to sort on a copy of the original, it will prevent side effects on the original array
+  return [...torrents].sort((t1, t2) => {
+    if (t1[sortProperty] < t2[sortProperty]) return sortDirection === 'asc' ? -1 : 1;
+    if (t1[sortProperty] === t2[sortProperty]) return 0;
+    return sortDirection === 'asc' ? 1 : -1;
+  });
+};
+
 function mapStateToProps(state: StateType) {
   return {
-    announcers: filterTorrents(state.api.announcers, state.app.torrentsTable.searchFilter),
+    announcers: sortTorrents(
+      filterTorrents(state.api.announcers, state.app.torrentsTable.searchFilter),
+      state.app.torrentsTable.sortProperty,
+      state.app.torrentsTable.sortDirection
+    ),
     searchFilter: state.app.torrentsTable.searchFilter,
     sortProperty: state.app.torrentsTable.sortProperty,
     sortDirection: state.app.torrentsTable.sortDirection,

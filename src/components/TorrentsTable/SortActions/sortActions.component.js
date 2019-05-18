@@ -57,17 +57,17 @@ const SortActions = (props: Props) => {
         <div className={classes.toggleContainer}>
           <ToggleButtonGroup selected={sortProperty !== ''} value={sortProperty} exclusive onChange={(e, v) => handleSortChange(v)}>
             <Tooltip title="Sort by name" selected={sortProperty} placement="top">
-              <ToggleButton selected={sortProperty === 'name'} className={classes.toggleButton} value="name">
+              <ToggleButton selected={sortProperty === 'torrentName'} className={classes.toggleButton} value="torrentName">
                 <NameIcon />
               </ToggleButton>
             </Tooltip>
             <Tooltip title="Sort by leechers" placement="top">
-              <ToggleButton selected={sortProperty === 'leechers'} className={classes.toggleButton} value="leechers">
+              <ToggleButton selected={sortProperty === 'lastKnownLeechers'} className={classes.toggleButton} value="lastKnownLeechers">
                 <LeechersIcon />
               </ToggleButton>
             </Tooltip>
             <Tooltip title="Sort by seeders" placement="top">
-              <ToggleButton selected={sortProperty === 'seeders'} className={classes.toggleButton} value="seeders">
+              <ToggleButton selected={sortProperty === 'lastKnownSeeders'} className={classes.toggleButton} value="lastKnownSeeders">
                 <SeedersIcon />
               </ToggleButton>
             </Tooltip>
