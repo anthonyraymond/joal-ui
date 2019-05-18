@@ -71,10 +71,10 @@ const Dashboard = ({
       className={classes.addButtonInput}
       onChange={(e) => uploadTorrentFiles(Array.from(e.target.files))}
     />
-    <label htmlFor="add-torrent-file-button"> {/* eslint-disable-line */}
+    <label htmlFor="add-torrent-file-button" className={classes.addButton}> {/* eslint-disable-line */}
       <Tooltip title="Add a torrent" aria-label="Add a torrent" placement="left">
-        <div className={classes.addButton}>
-          <Fab disabled={!isStarted} color="secondary" aria-label="Add">
+        <div>
+          <Fab component="div" disabled={!isStarted} color="secondary" aria-label="Add">
             <AddIcon />
           </Fab>
         </div>
