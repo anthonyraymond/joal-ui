@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { configureStore, history } from './store/configureStore';
-import * as serviceWorker from './serviceWorker';
+import configureAppStore, { history } from './store/configureAppStore';
 import { saveGUIConfig } from './utils/ConfigProvider';
 import { connectStomp } from './modules/joal-api';
+import * as serviceWorker from './serviceWorker';
+import './index.css';
 import 'typeface-roboto';
-import './app.global.css';
 
 const attemptToGetUiConfigFromQuerySearchParam = () => {
   if (!window.location.search || !window.location.search.includes('ui_credentials')) {
@@ -36,7 +36,7 @@ const attemptToGetUiConfigFromQuerySearchParam = () => {
   }
 };
 
-const store = configureStore();
+const store = configureAppStore();
 
 attemptToGetUiConfigFromQuerySearchParam();
 
@@ -44,9 +44,10 @@ connectStomp(store);
 
 const rootEl = document.getElementById('root');
 
+
 let render = () => {
   // Dynamically import our main App component, and render it
-  const Root = require('./pages/Root').default; // eslint-disable-line global-require
+  const Root = require('./Root').default; // eslint-disable-line global-require
   ReactDOM.render(<Root store={store} history={history} />, rootEl);
 };
 
@@ -63,7 +64,7 @@ if (module.hot) {
 
   // Whenever the App component file or one of its dependencies
   // is changed, re-import the updated component and re-render it
-  module.hot.accept('./pages/Root', () => {
+  module.hot.accept('./Root', () => {
     setTimeout(render);
   });
 }

@@ -1,5 +1,4 @@
-// @flow
-import update from 'immutability-helper';
+import { createReducer } from 'redux-starter-kit';
 import {
   CONFIG_IS_IN_DIRTY_STATE,
   INVALID_CONFIG,
@@ -7,17 +6,6 @@ import {
   LIST_OF_CLIENT_FILES,
   RESET_CONFIG
 } from './settings.actions';
-import createReducer from '../../../reducers/createReducer';
-import type {
-  SettingsState,
-  InvalidConfigPayload,
-  SettingsPayload,
-  ClientFilesDiscoveredPayload
-} from './types';
-import type {
-  Handler,
-  Action
-} from '../types';
 
 
 const initialState = {
@@ -33,32 +21,25 @@ const initialState = {
   availableClients: []
 };
 
-const handlers: Handler<SettingsState> = {
-  [CONFIG_IS_IN_DIRTY_STATE](state, action: Action<SettingsPayload>) {
-    return update(state, {
-      isDirty: { $set: true },
-      config: { $set: action.payload.config },
-      errMessage: { $set: undefined }
-    });
+
+export default createReducer(initialState, {
+  [CONFIG_IS_IN_DIRTY_STATE]: (state, action) => {
+    state.isDirty = true;
+    state.config = action.payload.config;
+    state.errMessage = undefined;
   },
-  [INVALID_CONFIG](state, action: Action<InvalidConfigPayload>) {
-    return update(state, {
-      errMessage: { $set: action.payload.error }
-    });
+  [INVALID_CONFIG]: (state, action) => {
+    state.errMessage = action.payload.error;
   },
-  [CONFIG_HAS_BEEN_LOADED](state, action: Action<SettingsPayload>) {
-    return update(state, {
-      isDirty: { $set: false },
-      config: { $set: action.payload.config },
-      errMessage: { $set: undefined }
-    });
+  [CONFIG_HAS_BEEN_LOADED]: (state, action) => {
+    state.isDirty = false;
+    state.config = action.payload.config;
+    state.errMessage = undefined;
   },
-  [LIST_OF_CLIENT_FILES](state, action: Action<ClientFilesDiscoveredPayload>) {
-    return update(state, { availableClients: { $set: action.payload.clients } });
+  [LIST_OF_CLIENT_FILES]: (state, action) => {
+    state.availableClients = action.payload.clients;
   },
-  [RESET_CONFIG]() {
+  [RESET_CONFIG]: () => {
     return initialState;
   }
-};
-
-export default createReducer(initialState, handlers);
+});

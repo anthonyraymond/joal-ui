@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { routerReducer as router } from 'react-router-redux';
+import { connectRouter } from 'connected-react-router'
 import torrentsTableReducer from '../components/TorrentsTable/torrentsTable.reducer';
 import uiConfigReducer from '../pages/settings/settings.reducer';
 import themeReducer from '../modules/theme/theme-modifier/theme-modifier.reducer';
@@ -11,7 +11,7 @@ import apiAnnouncersReducer from '../modules/joal-api/announcers/announcers.redu
 import apiStompReducer from '../modules/joal-api/stomp/stomp.reducer';
 import alertReducer from '../modules/alerts/alerts.reducer';
 
-export default combineReducers({
+export default (history) => combineReducers({
   api: combineReducers({
     torrentFiles: apiTorrentFileReducer,
     client: apiClientReducer,
@@ -26,5 +26,5 @@ export default combineReducers({
   }),
   theme: themeReducer,
   alerts: alertReducer,
-  router
+  router: connectRouter(history)
 });

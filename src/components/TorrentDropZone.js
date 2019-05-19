@@ -1,9 +1,9 @@
-// @flow
-import React, { Component } from 'react';
-import type { Children } from 'react';
-import Dropzone from 'react-dropzone';
+import React from 'react';
+import { useDropzone } from 'react-dropzone'
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
+
+import type { Children } from 'react';
 
 const styles = () => ({
   dropzone: {
@@ -28,65 +28,32 @@ const styles = () => ({
   }
 });
 
+type Props = {
+  classes: {},
+  onDrop: () => void,
+  children: Children
+}
 
-class TorrentDropZone extends Component {
-  props: {
-    classes: {},
-    onDrop: () => void,
-    children: Children
-  }
+const TorrentDropZone = (props: Props) => {
+  const { classes, children } = props;
 
-  constructor() {
-    super();
-    this.state = {
-      dropzoneActive: false
-    };
-  }
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: (accepted, rejected) => props.onDrop(accepted, rejected),
+    noClick: true,
+    noKeyboard: true,
+  })
 
-  onDragEnter() {
-    this.setState({
-      dropzoneActive: true
-    });
-  }
-
-  onDragLeave() {
-    this.setState({
-      dropzoneActive: false
-    });
-  }
-
-  onDrop(accepted, rejected) {
-    const { onDrop } = this.props;
-
-    this.setState({
-      dropzoneActive: false
-    });
-    onDrop(accepted, rejected);
-  }
-
-  render() {
-    const { dropzoneActive } = this.state;
-    const { classes, children } = this.props;
-
-    return (
-      <Dropzone
-        disableClick
-        className={classes.dropzone}
-        onDrop={this.onDrop.bind(this)}
-        onDragEnter={this.onDragEnter.bind(this)}
-        onDragLeave={this.onDragLeave.bind(this)}
-      >
-        <div>
-          {children}
-          {dropzoneActive && (
-            <div className={classes.overlay}>
-              <i className={classnames('fa', 'fa-download', 'fa-5x')} aria-hidden="true" />
-            </div>
-          )}
+  return (
+    <div {...getRootProps()} className={classes.dropzone}>
+      <input {...getInputProps()} />
+      {children}
+      {isDragActive && (
+        <div className={classes.overlay}>
+          <i className={classnames('fa', 'fa-download', 'fa-5x')} aria-hidden="true" />
         </div>
-      </Dropzone>
-    );
-  }
+      )}
+    </div>
+  )
 }
 
 export default withStyles(styles)(TorrentDropZone);

@@ -1,7 +1,7 @@
 // @flow
 import { connect } from 'react-redux';
 import NavigationBar from './navigationBar.component';
-import { history } from '../../store/configureStore';
+import { push } from 'connected-react-router';
 import type { StateType } from '../../types';
 
 function mapStateToProps(state: StateType) {
@@ -10,11 +10,11 @@ function mapStateToProps(state: StateType) {
   };
 }
 
-function mapDispatchToProps() {
+function mapDispatchToProps(dispatch) {
   return {
-    onClickDashboard: () => history.push('/'),
-    onClickSettings: () => history.push('/settings'),
-    onClickLogs: () => history.push('/history')
+    onClickDashboard: () => dispatch(push('/')),
+    onClickSettings: () => dispatch(push('/settings')),
+    onClickLogs: () => dispatch(push('/history'))
   };
 }
 

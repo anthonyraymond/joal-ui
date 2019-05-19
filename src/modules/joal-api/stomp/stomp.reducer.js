@@ -1,5 +1,5 @@
 // @flow
-import update from 'immutability-helper';
+import { createReducer } from 'redux-starter-kit';
 import {
   IS_CONNECTING,
   HAS_CONNECTED,
@@ -8,11 +8,6 @@ import {
   INIT_OVER,
   RESET_STOMP_STATE
 } from './stomp.actions';
-import createReducer from '../../../reducers/createReducer';
-import type {
-  Handler
-} from '../../../types';
-import type { StompState } from './types';
 
 
 const initialState = {
@@ -21,37 +16,25 @@ const initialState = {
 };
 
 
-const handlers: Handler<StompState> = {
-  [IS_CONNECTING](state) {
-    return update(state, {
-      isFullyInit: { $set: false }
-    });
+export default createReducer(initialState, {
+  [IS_CONNECTING]: (state) => {
+    state.isFullyInit = false;
   },
-  [HAS_CONNECTED](state) {
-    return update(state, {
-      isConnected: { $set: true }
-    });
+  [HAS_CONNECTED]: (state) => {
+    state.isConnected = true;
   },
-  [HAS_FAILED_TO_CONNECT](state) {
-    return update(state, {
-      isConnected: { $set: false },
-      isFullyInit: { $set: false }
-    });
+  [HAS_FAILED_TO_CONNECT]: (state) => {
+    state.isConnected = false;
+    state.isFullyInit = false;
   },
-  [HAS_DROP_CONNECTION](state) {
-    return update(state, {
-      isConnected: { $set: false },
-      isFullyInit: { $set: false }
-    });
+  [HAS_DROP_CONNECTION]: (state) => {
+    state.isConnected = false;
+    state.isFullyInit = false;
   },
-  [INIT_OVER](state) {
-    return update(state, {
-      isFullyInit: { $set: true }
-    });
+  [INIT_OVER]: (state) => {
+    state.isFullyInit = true;
   },
-  [RESET_STOMP_STATE]() {
+  [RESET_STOMP_STATE]: () => {
     return initialState;
   }
-};
-
-export default createReducer(initialState, handlers);
+});

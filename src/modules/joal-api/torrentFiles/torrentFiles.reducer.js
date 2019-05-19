@@ -1,40 +1,32 @@
 // @flow
-import update from 'immutability-helper';
+import { createReducer } from 'redux-starter-kit';
 import {
   TORRENT_FILE_ADDED,
   TORRENT_FILE_DELETED,
   FAILED_TO_ADD_TORRENT_FILE,
   RESET_TORRENT_FILES_STATE
 } from './torrentFile.actions';
-import createReducer from '../../../reducers/createReducer';
-import type {
-  Handler,
-  Action
-} from '../../../types';
-import type {
-  TorrentFilesState,
-  TorrentFilePayload
-} from './types';
 
 
 const initialState = [];
 
 
 const handlers: Handler<TorrentFilesState> = {
-  [TORRENT_FILE_ADDED](state, action: Action<TorrentFilePayload>) {
-    return update(state.filter(tf => tf.infoHash !== action.payload.infoHash), { $push: [action.payload] });
+  [TORRENT_FILE_ADDED]: (state, action) => {
+    const newState = state.filter(tf => tf.infoHash !== action.payload.infoHash);
+    newState.push(action.payload);
+    return newState;
   },
-  [TORRENT_FILE_DELETED](state, action: Action<TorrentFilePayload>) {
+  [TORRENT_FILE_DELETED]: (state, action) => {
     return state.filter(tf => tf.infoHash !== action.payload.infoHash);
   },
-  [FAILED_TO_ADD_TORRENT_FILE](state) {
+  [FAILED_TO_ADD_TORRENT_FILE]: (state) => {
     // Do nothing, notifications reducer will handle it
     return state;
   },
-  [RESET_TORRENT_FILES_STATE]() {
+  [RESET_TORRENT_FILES_STATE]: () => {
     return initialState;
   }
 };
 
 export default createReducer(initialState, handlers);
-// @flow

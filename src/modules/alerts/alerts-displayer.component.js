@@ -96,4 +96,4 @@ function mapDispatchToProps(dispatch: Dispatch) {
   });
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withAlert(JoalAlertDisplayer));
+export default connect(mapStateToProps, mapDispatchToProps)(withAlert()(JoalAlertDisplayer));

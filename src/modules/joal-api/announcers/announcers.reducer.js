@@ -1,5 +1,5 @@
 // @flow
-import update from 'immutability-helper';
+import { createReducer } from 'redux-starter-kit';
 import {
   FAILED_TO_ANNOUNCE,
   SUCCESSFULLY_ANNOUNCE,
@@ -7,31 +7,15 @@ import {
   WILL_ANNOUNCE,
   RESET_ANNOUNCER_STATE
 } from './announcers.actions';
-import createReducer from '../../../reducers/createReducer';
-import type {
-  AnnouncerState,
-  FailedToAnnouncePayload,
-  SuccessfullyAnnouncePayload,
-  TooManyAnnouncesFailedPayload,
-  WillAnnouncePayload
-} from './types';
-import type {
-  Handler,
-  Action
-} from '../types';
-
 
 const initialState = [];
 
 
-const handlers: Handler<AnnouncerState> = {
-  [FAILED_TO_ANNOUNCE](state, action: Action<FailedToAnnouncePayload>) {
+export default createReducer(initialState, {
+  [FAILED_TO_ANNOUNCE]: (state, action) => {
     if (!state.find(announcer => announcer.infoHash === action.payload.infoHash)) {
-      return update(state, {
-        $push: [
-          Object.assign({}, { isFetching: false }, action.payload)
-        ]
-      });
+      state.push(Object.assign({}, { isFetching: false }, action.payload));
+      return;
     }
     return state.map(announcer => {
       if (announcer.infoHash === action.payload.infoHash) {
@@ -45,17 +29,14 @@ const handlers: Handler<AnnouncerState> = {
       return announcer;
     });
   },
-  [SUCCESSFULLY_ANNOUNCE](state, action: Action<SuccessfullyAnnouncePayload>) {
+  [SUCCESSFULLY_ANNOUNCE]: (state, action) => {
     if (action.payload.requestEvent === 'STOPPED') {
       return state.filter(announcer => announcer.infoHash !== action.payload.infoHash);
     }
 
     if (!state.find(announcer => announcer.infoHash === action.payload.infoHash)) {
-      return update(state, {
-        $push: [
-          Object.assign({}, { isFetching: false }, action.payload)
-        ]
-      });
+      state.push(Object.assign({}, { isFetching: false }, action.payload));
+      return;
     }
 
     return state.map(announcer => {
@@ -70,16 +51,13 @@ const handlers: Handler<AnnouncerState> = {
       return announcer;
     });
   },
-  [TOO_MANY_ANNOUNCES_FAILED](state, action: Action<TooManyAnnouncesFailedPayload>) {
+  [TOO_MANY_ANNOUNCES_FAILED]: (state, action) => {
     return state.filter(announcer => announcer.infoHash !== action.payload.infoHash);
   },
-  [WILL_ANNOUNCE](state, action: Action<WillAnnouncePayload>) {
+  [WILL_ANNOUNCE]: (state, action) => {
     if (!state.find(announcer => announcer.infoHash === action.payload.infoHash)) {
-      return update(state, {
-        $push: [
-          Object.assign({}, { isFetching: true }, action.payload)
-        ]
-      });
+      state.push(Object.assign({}, { isFetching: true }, action.payload));
+      return;
     }
 
     return state.map(announcer => {
@@ -94,9 +72,7 @@ const handlers: Handler<AnnouncerState> = {
       return announcer;
     });
   },
-  [RESET_ANNOUNCER_STATE]() {
+  [RESET_ANNOUNCER_STATE]: () => {
     return initialState;
   }
-};
-
-export default createReducer(initialState, handlers);
+});
