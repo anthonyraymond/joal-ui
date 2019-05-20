@@ -6,13 +6,11 @@ import { sendConfig, resetConfig } from './settings/settings.actions';
 import { resetStompState } from './stomp/stomp.actions';
 import { resetTorrentFilesState } from './torrentFiles/torrentFile.actions';
 import { resetSpeedState } from './speed/speed.actions';
-import type { ReduxStore } from './types';
-import type { Config } from './settings/types';
 
 let store;
 let stompClient;
 
-export const connectStomp = (appStore: ReduxStore) => {
+export const connectStomp = (appStore) => {
   store = appStore;
   stompClient = new JoalStompClient(store, () => {
     // On disconnect
@@ -42,7 +40,7 @@ export const sendStopSession = () => {
   stompClient.send('/joal/global/stop');
 };
 
-export const sendConfigToServer = (config: Config) => {
+export const sendConfigToServer = (config) => {
   store.dispatch(sendConfig(config));
   stompClient.send('/joal/config/save', JSON.stringify(config));
 };
@@ -55,7 +53,6 @@ type File = {
 };
 export const uploadTorrents = (files: Array<File>) => {
   const reader = new FileReader();
-  console.log(files);
 
   // Process files one by one (queue like) to reduce memory consuption when sender a lot of torrent files.
   const processOne = () => {

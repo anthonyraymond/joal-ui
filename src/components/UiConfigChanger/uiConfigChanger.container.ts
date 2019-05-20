@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import UiConfigChanger from './uiConfigChanger.component';
 import { getGUIConfig, saveGUIConfig } from '../../utils/ConfigProvider';
 import { disconnectAndReconnect } from '../../modules/joal-api';
-import type { GuiConfig } from '../../utils/ConfigProvider/types';
+import { GuiConfig } from '../../utils/ConfigProvider/types';
 
 function mapStateToProps(state) {
   return {

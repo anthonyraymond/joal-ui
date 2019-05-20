@@ -1,6 +1,4 @@
 /* eslint-disable import/no-unresolved, global-require, import/no-absolute-path */
-// @flow
-import type { GuiConfig } from './types';
 
 export const getConfig = () => {
   const localStorageConf = localStorage.getItem('guiConfig');

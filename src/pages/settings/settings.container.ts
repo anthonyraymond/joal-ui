@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import SettingsComponent from './settings.component';
 import { localConfigHasChanged, discardLocalConfigChanges } from './settings.actions';
 import { sendConfigToServer } from '../../modules/joal-api';
-import type { StateType, Dispatch } from '../../types';
-import type { Config } from './types';
+import { Config } from './types';
 
 function mapStateToProps(state: StateType) {
   return {

@@ -1,10 +1,8 @@
 // @flow
 import { connect } from 'react-redux';
 import UploadSpeed from './uploadSpeed.component';
-import type { StateType } from '../../../../types';
 
-
-function mapStateToProps(state: StateType, ownProps: { infoHash: string }) {
+const mapStateToProps = (state, ownProps: { infoHash: string }) => {
   const foundSpeed = state.api.speed.find(speed => speed.infoHash === ownProps.infoHash);
 
   return {
@@ -12,8 +10,6 @@ function mapStateToProps(state: StateType, ownProps: { infoHash: string }) {
   };
 }
 
-function mapDispatchToProps() {
-  return {};
-}
+const mapDispatchToProps = () => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(UploadSpeed);

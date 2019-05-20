@@ -2,15 +2,14 @@
 import { connect } from 'react-redux';
 import NavigationBar from './navigationBar.component';
 import { push } from 'connected-react-router';
-import type { StateType } from '../../types';
 
-function mapStateToProps(state: StateType) {
+const mapStateToProps = (state) => {
   return {
     currentPath: state.router.location.pathname
   };
 }
 
-function mapDispatchToProps(dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
     onClickDashboard: () => dispatch(push('/')),
     onClickSettings: () => dispatch(push('/settings')),

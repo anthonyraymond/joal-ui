@@ -15,7 +15,6 @@ import FormControl from '@material-ui/core/FormControl';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import AbsoluteOverlayFetchingIndicator from '../../components/Generics/FetchingIndicator/AbsoluteOverlayFetchingIndicator';
-import type { Config } from './types';
 
 const styles = theme => ({
   container: {
@@ -46,7 +45,7 @@ const MenuProps = {
 type Props = {
   classes: {},
   isLocalConfigChanged: boolean,
-  config: Config,
+  config: object,
   availableClients: Array<string>,
   isConnectedToWebSocket: boolean,
   discardLocalConfigChanges: () => void,

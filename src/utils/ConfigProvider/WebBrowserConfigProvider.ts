@@ -1,5 +1,5 @@
 // @flow
-import type { GuiConfig } from './types';
+import { GuiConfig } from './types';
 
 let cachedConf: GuiConfig;
 

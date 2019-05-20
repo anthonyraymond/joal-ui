@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import isElectron from 'is-electron';
 import Dashboard from './dashboard.component';
 import { uploadTorrents } from '../../modules/joal-api';
-import type { StateType } from '../../types';
 
-function mapStateToProps(state: StateType) {
+function mapStateToProps(state) {
   return {
     isStarted: state.api.client.isStarted,
     isConnectedToWebSocket: state.api.stomp.isConnected,

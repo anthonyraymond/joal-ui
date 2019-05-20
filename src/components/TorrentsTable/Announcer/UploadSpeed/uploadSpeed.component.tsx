@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 
 type Props = {
   className?: string,
-  speedInBytesPerSeconds: ?number
+  speedInBytesPerSeconds?: number
 };
 
 const UploadSpeed = (props: Props) => {

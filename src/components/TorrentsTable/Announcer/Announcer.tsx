@@ -15,7 +15,7 @@ import PeerStats from './Peers';
 import AnnounceProgressBar from './ProgressBar';
 // import UploadIcon from './UploadIcon';
 import UploadSpeed from './UploadSpeed';
-import type { Announcer as AnnouncerType } from '../types';
+import { Announcer as AnnouncerType } from '../types';
 
 const styles = theme => ({
   root: {

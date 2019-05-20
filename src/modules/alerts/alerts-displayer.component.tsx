@@ -3,13 +3,11 @@ import React, { Component } from 'react';
 import { withAlert } from 'react-alert';
 import { connect } from 'react-redux';
 import { removeNotification } from './alerts.actions';
-import type { StateType, Dispatch } from '../../types';
-import type { Notification } from './types';
 
 class JoalAlertDisplayer extends Component {
   props: {
     alert: {}, // given by withAlert wrapper
-    notifs: Array<Notification>,
+    notifs: Array<>,
     shouldShowDirtyConfNotif: boolean,
     onMessageClosed: (id: string) => void
   }
@@ -82,7 +80,7 @@ class JoalAlertDisplayer extends Component {
 }
 
 
-function mapStateToProps(state: StateType) {
+function mapStateToProps(state) {
   const { notifs, shouldShowDirtyConfNotif } = state.alerts;
   return {
     notifs,
@@ -90,7 +88,7 @@ function mapStateToProps(state: StateType) {
   };
 }
 
-function mapDispatchToProps(dispatch: Dispatch) {
+function mapDispatchToProps(dispatch) {
   return ({
     onMessageClosed: (id: string) => dispatch(removeNotification(id))
   });

@@ -1,18 +1,17 @@
-// @flow
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
-import { ConnectedRouter } from 'react-router-redux';
+import { ConnectedRouter } from 'connected-react-router'
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
-import DashboardPage from './dashboard';
-import SettingsPage from './settings';
-import Historypage from './event-history';
-import NavigationBar from '../components/NavigationBar';
-import TorrentDropZone from '../components/TorrentDropZone';
-import JoalAppBar from '../components/AppBar';
-import Alerts from '../modules/alerts';
-import { uploadTorrents } from '../modules/joal-api';
+import DashboardPage from './pages/dashboard';
+import SettingsPage from './pages/settings';
+import Historypage from './pages/event-history';
+import NavigationBar from './components/NavigationBar';
+import TorrentDropZone from './components/TorrentDropZone';
+import JoalAppBar from './components/AppBar';
+import Alerts from './modules/alerts';
+import { uploadTorrents } from './modules/joal-api';
 
 
 const styles = theme => ({
@@ -34,12 +33,6 @@ type Props = {
   onFileDrop: () => void
 };
 
-type DropzoneFile = {
-  lastModified: number,
-  name: string,
-  size: number,
-  type: string
-};
 
 const App = (props: Props) => {
   const {
@@ -73,9 +66,16 @@ const App = (props: Props) => {
   );
 };
 
+type DropzoneFile = {
+  lastModified: number,
+  name: string,
+  size: number,
+  type: string
+};
+
 function mapStateToProps() {
   return {
-    onFileDrop: (accepted: Array<DropzoneFile>/* , rejected: Array<DropzoneFile> */) => {
+    onFileDrop: (accepted: Array<DropzoneFile>) => {
       uploadTorrents(accepted);
     }
   };

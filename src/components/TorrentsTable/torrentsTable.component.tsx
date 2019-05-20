@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
@@ -6,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import Announcer from './Announcer';
 import SearchBar from './SearchBar';
 import SortActions from './SortActions';
-import type { Announcer as AnnouncerType } from './types';
 
 const styles = theme => ({
   announersList: {
@@ -35,7 +33,7 @@ const styles = theme => ({
 
 type Props = {
   classes: {},
-  announcers: Array<AnnouncerType>,
+  announcers: Array<>,
   searchFilter: string,
   onFilterTextChange: (text: string) => void,
   sortProperty: string,

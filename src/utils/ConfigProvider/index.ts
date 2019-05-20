@@ -1,6 +1,5 @@
 // @flow
 import isElectron from 'is-electron';
-import type { GuiConfig } from './types';
 
 let confProvider;
 

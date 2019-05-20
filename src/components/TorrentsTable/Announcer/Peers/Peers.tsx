@@ -21,7 +21,7 @@ type Props = {
   classes: {},
   className?: string,
   leechers?: number,
-  seeders?: ?number
+  seeders?: number
 };
 
 const PeerStats = (props: Props) => {

@@ -9,8 +9,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { withStyles } from '@material-ui/core/styles';
-// import classnames from 'classnames';
-import type { GuiConfig } from '../../utils/ConfigProvider/types';
+import { GuiConfig } from '../../utils/ConfigProvider/types';
 
 const styles = theme => ({
   changeConfigButton: {

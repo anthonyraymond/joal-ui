@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { Children } from 'react';
 import { useDropzone } from 'react-dropzone'
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
-
-import type { Children } from 'react';
 
 const styles = () => ({
   dropzone: {

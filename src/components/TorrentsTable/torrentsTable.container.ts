@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Announcers from './torrentsTable.component';
 import { changeSearchFilterText, changeTorrentSort } from './torrentsTable.actions';
 import { deleteTorrent } from '../../modules/joal-api';
-import type { StateType, Dispatch } from '../../types';
 
 const filterTorrents = (torrents, searchFilter) => {
   if (searchFilter.trim().length === 0) {
@@ -26,7 +25,7 @@ const sortTorrents = (torrents, sortProperty, sortDirection) => {
   });
 };
 
-function mapStateToProps(state: StateType) {
+function mapStateToProps(state) {
   return {
     announcers: sortTorrents(
       filterTorrents(state.api.announcers, state.app.torrentsTable.searchFilter),
@@ -39,7 +38,7 @@ function mapStateToProps(state: StateType) {
   };
 }
 
-function mapDispatchToProps(dispatch: Dispatch) {
+const mapDispatchToProps = (dispatch) => {
   return {
     onFilterTextChange: (text) => dispatch(changeSearchFilterText(text)),
     onSortChange: (sortProperty, sortDirection) => dispatch(changeTorrentSort(sortProperty, sortDirection)),

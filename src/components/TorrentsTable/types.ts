@@ -1,5 +1,5 @@
 // @flow
-import type {
+import {
   Announcer as ApiAnnouncer
 } from '../../modules/joal-api/announcers/types';
 

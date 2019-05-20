@@ -9,13 +9,17 @@ import {
   initOver,
   hasReceivedError
 } from './stomp/stomp.actions';
-import type { ReduxStore, StompMessage } from './types';
 
 const uuidv4 = () => (
   ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (// eslint-disable-line space-infix-ops
     (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16) // eslint-disable-line implicit-arrow-linebreak, no-bitwise, no-mixed-operators
   ))
 );
+
+export type StompMessage = {
+  type: string,
+  payload: {}
+};
 
 type Frame = {
   command: string;
@@ -24,7 +28,7 @@ type Frame = {
 }
 
 export default class JoalStompClient {
-  constructor(reduxStore: ReduxStore, onDisconnectCallback: () => void) {
+  constructor(reduxStore, onDisconnectCallback: () => void) {
     this.reconnectTimeout = undefined;
     this.reduxStore = reduxStore;
     this.onDisconnectCallback = onDisconnectCallback;

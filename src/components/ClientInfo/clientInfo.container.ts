@@ -2,7 +2,6 @@
 import { connect } from 'react-redux';
 import ClientInfoComponent from './clientInfo.component';
 import { sendStartSession, sendStopSession } from '../../modules/joal-api';
-import type { StateType } from '../../types';
 
 const calculateGobalSpeed = (speeds) => {
   if (speeds.length === 0) {
@@ -13,7 +12,7 @@ const calculateGobalSpeed = (speeds) => {
   ), 0);
 };
 
-function mapStateToProps(state: StateType) {
+const mapStateToProps = (state) => {
   // TODO : performance issue
   const announcersIds = state.api.announcers.map(an => an.infoHash);
   return {
