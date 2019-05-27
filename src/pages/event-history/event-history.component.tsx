@@ -3,9 +3,9 @@ import React from 'react';
 import IconWarning from '@material-ui/icons/Warning';
 import Grid from '@material-ui/core/Grid';
 import orange from '@material-ui/core/colors/orange';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 
-const styles = () => ({
+const styles = () => createStyles({
   container: {
     textAlign: 'center',
     marginTop: 100,
@@ -14,7 +14,7 @@ const styles = () => ({
 });
 
 type Props = {
-  classes: {},
+  classes: any,
   events: Array<string>
 };
 

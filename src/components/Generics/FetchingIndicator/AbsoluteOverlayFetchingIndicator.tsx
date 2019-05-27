@@ -1,9 +1,9 @@
 // @flow
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 
-const styles = () => ({
+const styles = () => createStyles({
   container: {
     position: 'absolute',
     top: 0,
@@ -18,14 +18,14 @@ const styles = () => ({
   }
 });
 
-type Props = {
-  classes: {},
-  style?: {},
-  containerStyle?: {},
+type AbsoluteOverlayFetchingIndicatorProps = {
+  classes: any,
+  style?: object,
+  containerStyle?: object,
   active: boolean
 };
 
-const AbsoluteOverlayFetchingIndicator = (props: Props) => {
+const AbsoluteOverlayFetchingIndicator: React.FC<AbsoluteOverlayFetchingIndicatorProps> = (props) => {
   const {
     classes, style, containerStyle, active, ...rest
   } = props;

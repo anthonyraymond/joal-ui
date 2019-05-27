@@ -1,10 +1,11 @@
 // @flow
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
+import { Theme } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 import ClientInfo from '../../components/ClientInfo';
@@ -12,7 +13,7 @@ import AbsoluteOverlayFetchingIndicator from '../../components/Generics/Fetching
 import UiConfigChangerButton from '../../components/UiConfigChanger';
 import TorrentsTable from '../../components/TorrentsTable';
 
-const styles = theme => ({
+const styles = (theme: Theme) => createStyles({
   relative: {
     position: 'relative'
   },
@@ -30,8 +31,8 @@ const styles = theme => ({
 });
 
 type Props = {
-  classes: {},
-  theme: {},
+  classes: any,
+  theme: Theme,
   className?: string,
   isStarted: boolean,
   isConnectedToWebSocket: boolean,
@@ -71,7 +72,11 @@ const Dashboard = ({
       multiple
       id="add-torrent-file-button"
       className={classes.addButtonInput}
-      onChange={(e) => uploadTorrentFiles(Array.from(e.target.files))}
+      onChange={(e) => {
+        if (e.target.files != null) {
+          uploadTorrentFiles(Array.from(e.target.files))
+        }
+      }}
     />
     <Zoom
       in={isStarted}

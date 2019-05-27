@@ -2,16 +2,16 @@
 import React, { Component } from 'react';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import ReactTooltip from 'react-tooltip';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 
-const styles = () => ({
+const styles = () => createStyles({
   progressBar: {
   }
 });
 
-type AnnounceProgressBarProps = {
-  classes: {},
+interface DeterminateProgressBarProps {
+  classes: any,
   className?: string,
   color: 'primary' | 'secondary',
   infoHash: string,
@@ -19,17 +19,15 @@ type AnnounceProgressBarProps = {
   maxValue: number
 };
 
-class DeterminateProgressBar extends Component {
-  props: AnnounceProgressBarProps;
+interface DeterminateProgressBarState {
+  completed: number,
+  maxValue: number
+}
 
-  state: {
-    completed: number,
-    maxValue: number
-  };
+class DeterminateProgressBar extends Component<DeterminateProgressBarProps, DeterminateProgressBarState> {
+  timer?: NodeJS.Timeout | number = undefined
 
-  timer: number
-
-  constructor(props) {
+  constructor(props: DeterminateProgressBarProps) {
     super(props);
     this.cancelTimer = this.cancelTimer.bind(this);
 
@@ -53,7 +51,7 @@ class DeterminateProgressBar extends Component {
   }
 
   // TODO : update to static getDerivedStateFromProps(nextProps, prevState) after migrating to react 17
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: DeterminateProgressBarProps) {
     const { startAt, maxValue } = this.props;
     // Since we sync state to props.startAt, state won’t be up-to-date with any props update. (see https://reactjs.org/docs/react-component.html#constructor)
     // We need to update the state ourselves when props are updated
@@ -70,13 +68,13 @@ class DeterminateProgressBar extends Component {
   }
 
   cancelTimer() {
-    clearInterval(this.timer);
+    clearInterval((this.timer as number));
   }
 
   // The ReactTooltip does not support some special character, we need to create an infoHash with normal chars only
   normaliseInfoHash = (infoHash: string) => btoa(infoHash);
 
-  normaliseProgressPercent = (value, maximum) => (value) * 100 / maximum;
+  normaliseProgressPercent = (value: number, maximum: number) => (value) * 100 / maximum;
 
   render() {
     const {
@@ -103,8 +101,5 @@ class DeterminateProgressBar extends Component {
     );
   }
 }
-DeterminateProgressBar.defaultProps = {
-  className: ''
-};
 
 export default withStyles(styles)(DeterminateProgressBar);

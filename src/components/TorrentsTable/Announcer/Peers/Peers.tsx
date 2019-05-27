@@ -3,9 +3,11 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 import classnames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 
-const styles = (theme) => ({
+import { Theme } from '@material-ui/core';
+
+const styles = (theme: Theme) => createStyles({
   root: {
   },
   leechers: {
@@ -17,14 +19,14 @@ const styles = (theme) => ({
   }
 });
 
-type Props = {
-  classes: {},
+type PeerStatsProps = {
+  classes: any,
   className?: string,
   leechers?: number,
   seeders?: number
 };
 
-const PeerStats = (props: Props) => {
+const PeerStats: React.FC<PeerStatsProps> = (props) => {
   const {
     className: classNameProps, classes, leechers, seeders
   } = props;

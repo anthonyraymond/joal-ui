@@ -1,19 +1,19 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import BaseIcon from './BaseIcon';
 
-const styles = () => ({
+const styles = () => createStyles({
   icon: {
     stroke: '#FF0040'
   }
 });
 
-type Props = {
-  classes: {},
+type ErrorIconProps = {
+  classes: any,
   className?: string
 }
 
-const ErrorIcon = ({ classes, className: classNameProps }: Props) => (
+const ErrorIcon: React.FC<ErrorIconProps> = ({ classes, className: classNameProps }) => (
   <BaseIcon classes={{ icon: classes.icon }} className={classNameProps}>
     <circle cx="12" cy="12" r="10" />
     <line x1="12" y1="8" x2="12" y2="12" />

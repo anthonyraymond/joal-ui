@@ -9,8 +9,9 @@ import {
   RESET_STOMP_STATE
 } from './stomp.actions';
 
+import { Stomp } from '../types';
 
-const initialState = {
+const initialState: Stomp = {
   isConnected: false,
   isFullyInit: false
 };

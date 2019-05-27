@@ -1,12 +1,14 @@
 /* eslint-disable import/no-unresolved, global-require, import/no-absolute-path */
 
-export const getConfig = () => {
+import { GuiConfig } from './types';
+
+export const getConfig = (): GuiConfig => {
   const localStorageConf = localStorage.getItem('guiConfig');
   if (!localStorageConf) {
     console.log('Returning a mocked config to prevent exception from NullPointer');
     return {
       host: window.location.hostname, // this default settings is to prevent Firefox to crash with "SecurityError: The operation is insecure." due to cross origin websocket
-      port: window.location.port || 80, // this default settings is to prevent Firefox to crash with "SecurityError: The operation is insecure." due to cross origin websocket
+      port: window.location.port || '80', // this default settings is to prevent Firefox to crash with "SecurityError: The operation is insecure." due to cross origin websocket
       pathPrefix: window.location.pathname.substring(1, window.location.pathname.lastIndexOf('/ui')) || '',
       secretToken: ''
     };

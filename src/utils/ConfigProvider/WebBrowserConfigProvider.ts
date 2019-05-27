@@ -3,13 +3,13 @@ import { GuiConfig } from './types';
 
 let cachedConf: GuiConfig;
 
-export const getConfig = () => {
+export const getConfig = (): GuiConfig => {
   if (!cachedConf) {
     const localStorageConf = localStorage.getItem('guiConfig');
     if (!localStorageConf) {
       cachedConf = {
         host: window.location.hostname, // this default settings is to prevent Firefox to crash with "SecurityError: The operation is insecure." due to cross origin websocket
-        port: window.location.port || 80, // this default settings is to prevent Firefox to crash with "SecurityError: The operation is insecure." due to cross origin websocket
+        port: window.location.port || '80', // this default settings is to prevent Firefox to crash with "SecurityError: The operation is insecure." due to cross origin websocket
         pathPrefix: '',
         secretToken: ''
       };

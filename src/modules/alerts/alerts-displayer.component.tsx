@@ -1,43 +1,37 @@
-// @flow
 import React, { Component } from 'react';
-import { withAlert } from 'react-alert';
+import { Dispatch } from 'redux';
+import { withAlert, AlertManager } from 'react-alert';
 import { connect } from 'react-redux';
 import { removeNotification } from './alerts.actions';
 
-class JoalAlertDisplayer extends Component {
-  props: {
-    alert: {}, // given by withAlert wrapper
-    notifs: Array<>,
-    shouldShowDirtyConfNotif: boolean,
-    onMessageClosed: (id: string) => void
-  }
+import { JoalState } from '../../reducers/types';
+import { Notification } from './types';
 
-  shouldComponentUpdate(nextProps) {
+interface JoalAlertDisplayerProps {
+  alert: AlertManager, // given by withAlert wrapper
+  notifs: Array<Notification>,
+  shouldShowDirtyConfNotif: boolean,
+  onMessageClosed: (id: string) => void
+}
+
+class JoalAlertDisplayer extends Component<JoalAlertDisplayerProps> {
+
+  shouldComponentUpdate(nextProps: JoalAlertDisplayerProps) {
     const { notifs: currentNotifs, shouldShowDirtyConfNotif: currentShouldShowDirtyConfNotif } = this.props;
     return (currentNotifs !== nextProps.notifs || currentShouldShowDirtyConfNotif !== nextProps.shouldShowDirtyConfNotif);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: JoalAlertDisplayerProps) {
     const { shouldShowDirtyConfNotif, alert, notifs } = this.props;
     if (prevProps.shouldShowDirtyConfNotif !== shouldShowDirtyConfNotif) {
       if (shouldShowDirtyConfNotif === true) {
-        alert.info('Config wont be refreshed until you restart JOAL', {
-          id: 'dirtyConfID'
-        });
-      } else {
-        alert.remove({ id: 'dirtyConfID' });
+        alert.info('Config wont be refreshed until you restart JOAL');
       }
     }
 
     if (notifs === prevProps.notifs) {
       return;
     }
-    // Remove notifications that are not present anymore
-    notifs.forEach(oldNotif => {
-      if (notifs.findIndex(n => n.id === oldNotif.id) === -1) {
-        alert.remove({ id: oldNotif.id });
-      }
-    });
 
     // Add new notifications
     notifs.forEach(newNotif => {
@@ -47,7 +41,7 @@ class JoalAlertDisplayer extends Component {
     });
   }
 
-  showNotification(notification) {
+  showNotification(notification: Notification) {
     const { alert, onMessageClosed } = this.props;
     const notifCopy = Object.assign({}, notification, {
       onClose: () => onMessageClosed(notification.id)
@@ -80,7 +74,7 @@ class JoalAlertDisplayer extends Component {
 }
 
 
-function mapStateToProps(state) {
+function mapStateToProps(state: JoalState) {
   const { notifs, shouldShowDirtyConfNotif } = state.alerts;
   return {
     notifs,
@@ -88,10 +82,10 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: Dispatch) {
   return ({
     onMessageClosed: (id: string) => dispatch(removeNotification(id))
   });
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withAlert()(JoalAlertDisplayer));
+export default withAlert()(connect(mapStateToProps, mapDispatchToProps)(JoalAlertDisplayer));

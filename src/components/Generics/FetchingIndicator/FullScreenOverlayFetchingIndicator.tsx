@@ -1,9 +1,9 @@
 // @flow
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 
-const styles = () => ({
+const styles = () => createStyles({
   container: {
     position: 'fixed',
     top: 0,
@@ -18,14 +18,14 @@ const styles = () => ({
   }
 });
 
-type Props = {
-  classes: {},
-  style?: {},
-  containerStyle?: {},
+type FullScreenOverlayFetchingIndicatorProps = {
+  classes: any,
+  style?: object,
+  containerStyle?: object,
   active: boolean
 };
 
-const FullScreenOverlayFetchingIndicator = (props: Props) => {
+const FullScreenOverlayFetchingIndicator: React.FC<FullScreenOverlayFetchingIndicatorProps> = (props) => {
   const {
     classes, style, containerStyle, active, ...rest
   } = props;

@@ -1,15 +1,17 @@
-// @flow
+import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import NavigationBar from './navigationBar.component';
 import { push } from 'connected-react-router';
 
-const mapStateToProps = (state) => {
+import { JoalState } from '../../reducers/types';
+
+const mapStateToProps = (state: JoalState) => {
   return {
     currentPath: state.router.location.pathname
   };
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     onClickDashboard: () => dispatch(push('/')),
     onClickSettings: () => dispatch(push('/settings')),

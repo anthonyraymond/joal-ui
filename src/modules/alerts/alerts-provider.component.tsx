@@ -1,15 +1,14 @@
 // @flow
 import React from 'react';
 import { Provider as AlertProvider, positions, transitions } from 'react-alert';
-import withWidth, { isWidthUp } from '@material-ui/core/withWidth';
+import withWidth, { isWidthUp, WithWidth } from '@material-ui/core/withWidth';
 import AlertTemplate from './alert-template';
 import AlertsDisplayer from './alerts-displayer.component';
 
-type Props = {
-  width: number
+interface JoalAlertProviderProps extends WithWidth {
 }
 
-const JoalAlertProvider = ({ width }: Props) => (
+const JoalAlertProvider: React.FC<JoalAlertProviderProps> = ({ width }) => (
   <AlertProvider
     template={AlertTemplate}
     offset={isWidthUp('sm', width) ? '10px' : '6px'}

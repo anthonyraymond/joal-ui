@@ -7,11 +7,11 @@ import {
   RESET_TORRENT_FILES_STATE
 } from './torrentFile.actions';
 
+import { TorrentFile } from '../types';
 
-const initialState = [];
+const initialState: Array<TorrentFile> = [];
 
-
-const handlers: Handler<TorrentFilesState> = {
+export default createReducer(initialState, {
   [TORRENT_FILE_ADDED]: (state, action) => {
     const newState = state.filter(tf => tf.infoHash !== action.payload.infoHash);
     newState.push(action.payload);
@@ -27,6 +27,4 @@ const handlers: Handler<TorrentFilesState> = {
   [RESET_TORRENT_FILES_STATE]: () => {
     return initialState;
   }
-};
-
-export default createReducer(initialState, handlers);
+});

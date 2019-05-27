@@ -1,5 +1,4 @@
-// @flow
-export type GuiConfig = {
+export interface GuiConfig {
   host: string,
   port: string,
   pathPrefix: string,

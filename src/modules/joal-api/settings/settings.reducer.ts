@@ -7,8 +7,9 @@ import {
   RESET_CONFIG
 } from './settings.actions';
 
+import { Settings } from '../types';
 
-const initialState = {
+const initialState: Settings = {
   isDirty: false,
   errMessage: undefined,
   config: {

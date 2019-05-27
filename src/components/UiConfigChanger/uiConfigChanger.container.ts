@@ -5,7 +5,9 @@ import { getGUIConfig, saveGUIConfig } from '../../utils/ConfigProvider';
 import { disconnectAndReconnect } from '../../modules/joal-api';
 import { GuiConfig } from '../../utils/ConfigProvider/types';
 
-function mapStateToProps(state) {
+import { JoalState } from '../../reducers/types';
+
+function mapStateToProps(state: JoalState) {
   return {
     isConnected: state.api.stomp.isConnected,
     config: getGUIConfig(),

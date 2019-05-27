@@ -1,15 +1,20 @@
 // @flow
 import React from 'react';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import PropTypes from 'prop-types';
 
-export class ProgressTimer extends React.Component {
-  static propTypes = {
-    position: PropTypes.number.isRequired,
-    total: PropTypes.number.isRequired
-  }
+interface ProgressTimerProps {
+  position: number,
+  total: number
+}
 
-  constructor(props) {
+interface ProgressTimerState {
+  completed: number
+}
+
+export class ProgressTimer extends React.Component<ProgressTimerProps, ProgressTimerState> {
+  timer?: NodeJS.Timeout | number = undefined
+
+  constructor(props: ProgressTimerProps) {
     super(props);
     const { position } = this.props;
 
@@ -23,7 +28,7 @@ export class ProgressTimer extends React.Component {
   }
 
   componentWillUnmount() {
-    clearInterval(this.timer);
+    clearInterval((this.timer as number));
   }
 
   incrementTimeBar() {
@@ -32,14 +37,14 @@ export class ProgressTimer extends React.Component {
 
     if (completed + 1 >= total) {
       this.setState({ completed: total });
-      clearInterval(this.timer);
+      clearInterval((this.timer as number));
     } else {
       this.setState({ completed: completed + 1 });
     }
   }
 
   // eslint-disable-next-line class-methods-use-this
-  secondToHMS(sec) {
+  secondToHMS(sec: number): string {
     const h = Math.floor(sec / 3600);
     const m = Math.floor(sec % 3600 / 60);// eslint-disable-line no-mixed-operators
     const s = Math.floor(sec % 3600 % 60);
@@ -55,7 +60,7 @@ export class ProgressTimer extends React.Component {
         <div className="text-right">
           {this.secondToHMS(total - completed)}
         </div>
-        <LinearProgress variant="determinate" value={completed} max={total} />
+        <LinearProgress variant="determinate" value={completed} />
       </div>
     );
   }

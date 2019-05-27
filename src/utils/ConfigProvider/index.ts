@@ -1,14 +1,21 @@
-// @flow
 import isElectron from 'is-electron';
 
-let confProvider;
+import { GuiConfig } from './types';
 
+interface ConfigProvider {
+  getConfig: () => GuiConfig
+  saveConfig: (config: GuiConfig) => void
+}
+
+let selectedConfProvider: ConfigProvider;
 if (isElectron()) {
-  confProvider = require('./ElectronConfigProvider'); // eslint-disable-line global-require
+  selectedConfProvider = require('./ElectronConfigProvider'); // eslint-disable-line global-require
 } else {
-  confProvider = require('./WebBrowserConfigProvider'); // eslint-disable-line global-require
+  selectedConfProvider = require('./WebBrowserConfigProvider'); // eslint-disable-line global-require
 }
 
 
-export const getGUIConfig = () => confProvider.getConfig();
-export const saveGUIConfig = (config: GuiConfig) => confProvider.saveConfig(config);
+export const getGUIConfig = () => selectedConfProvider.getConfig();
+export const saveGUIConfig = (config: GuiConfig) => selectedConfProvider.saveConfig(config);
+
+export type GuiConfig = GuiConfig;

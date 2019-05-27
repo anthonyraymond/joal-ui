@@ -5,8 +5,9 @@ import {
   RESET_SPEED_STATE
 } from './speed.actions';
 
+import { Speed } from '../types';
 
-const initialState = [];
+const initialState: Array<Speed> = [];
 
 
 export default createReducer(initialState, {

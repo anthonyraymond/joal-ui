@@ -26,7 +26,7 @@ const attemptToGetUiConfigFromQuerySearchParam = () => {
     // Remove url param from uri to make it cleaner in history tab
     uRLSearchParams.delete('ui_credentials');
     let cleanUri = window.location.pathname;
-    if ([...uRLSearchParams].length >= 1) {
+    if (uRLSearchParams.keys().next().done === false) { // if the url search param still contains uri parameters
       cleanUri += `?${uRLSearchParams.toString()}`;
     }
     if (window.location.hash) {
@@ -51,7 +51,7 @@ let render = () => {
   ReactDOM.render(<Root store={store} history={history} />, rootEl);
 };
 
-if (module.hot) {
+if ((module as any).hot) {
   // Support hot reloading of components
   // and display an overlay for runtime errors
   const renderApp = render;
@@ -64,7 +64,7 @@ if (module.hot) {
 
   // Whenever the App component file or one of its dependencies
   // is changed, re-import the updated component and re-render it
-  module.hot.accept('./Root', () => {
+  (module as any).hot.accept('./Root', () => {
     setTimeout(render);
   });
 }

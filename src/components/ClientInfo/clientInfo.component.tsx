@@ -10,9 +10,11 @@ import red from '@material-ui/core/colors/red';
 import green from '@material-ui/core/colors/green';
 import filesize from 'filesize';
 import classnames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 
-const styles = theme => ({
+import { Theme } from '@material-ui/core';
+
+const styles = (theme: Theme) => createStyles({
   container: {
     padding: 15
   },
@@ -52,8 +54,8 @@ const styles = theme => ({
   }
 });
 
-type Props = {
-  classes: {},
+type ClientInfoProps = {
+  classes: any,
   className?: string,
   client: string,
   overallUploadSpeed: number,
@@ -63,7 +65,7 @@ type Props = {
   onClickStop: () => void
 };
 
-const ClientInfo = (props: Props) => {
+const ClientInfo: React.FC<ClientInfoProps> = (props) => {
   const {
     className: classNameProps,
     classes, client, overallUploadSpeed, isStarted, onClickStart, onClickStop, numberOfQueuedTorrents

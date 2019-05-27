@@ -5,19 +5,18 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteOutlined';
-import { withStyles } from '@material-ui/core/styles';
-import withWidth from '@material-ui/core/withWidth';
+import { withStyles, createStyles } from '@material-ui/core/styles';
+import withWidth, { WithWidthProps } from '@material-ui/core/withWidth';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Tooltip from '@material-ui/core/Tooltip';
 import filesize from 'filesize';
 import classnames from 'classnames';
 import PeerStats from './Peers';
 import AnnounceProgressBar from './ProgressBar';
-// import UploadIcon from './UploadIcon';
 import UploadSpeed from './UploadSpeed';
-import { Announcer as AnnouncerType } from '../types';
+import { Theme } from '@material-ui/core';
 
-const styles = theme => ({
+const styles = (theme: Theme) => createStyles({
   root: {
     paddingTop: theme.spacing.unit,
     paddingLeft: theme.spacing.unit * 2,
@@ -59,15 +58,14 @@ const styles = theme => ({
   }
 });
 
-type Props = {
-  classes: {},
-  width: 'lg' | 'md' | 'sm' | 'xs',
+interface AnnouncerProps extends WithWidthProps {
+  classes: any,
   className?: string,
-  announcer: AnnouncerType,
+  announcer: any,
   onClickDeleteTorrent: (infoHash: string) => void
 };
 
-const Announcer = (props: Props) => {
+const Announcer: React.FC<AnnouncerProps> = (props) => {
   const {
     width: componentBreakpoint, className: classNameProps, classes, announcer, onClickDeleteTorrent
   } = props;

@@ -4,7 +4,9 @@ import isElectron from 'is-electron';
 import Dashboard from './dashboard.component';
 import { uploadTorrents } from '../../modules/joal-api';
 
-function mapStateToProps(state) {
+import { JoalState } from '../../reducers/types';
+
+function mapStateToProps(state: JoalState) {
   return {
     isStarted: state.api.client.isStarted,
     isConnectedToWebSocket: state.api.stomp.isConnected,
@@ -14,7 +16,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps() {
   return {
-    uploadTorrentFiles: (files) => uploadTorrents(files)
+    uploadTorrentFiles: (files: Array<File>) => uploadTorrents(files)
   };
 }
 

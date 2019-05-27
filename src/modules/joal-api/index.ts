@@ -1,4 +1,3 @@
-// @flow
 import JoalStompClient from './JoalStompClient';
 import { resetAnnouncerState } from './announcers/announcers.actions';
 import { sendStartToServer, sendStopToServer, resetClientState } from './client/client.actions';
@@ -7,10 +6,13 @@ import { resetStompState } from './stomp/stomp.actions';
 import { resetTorrentFilesState } from './torrentFiles/torrentFile.actions';
 import { resetSpeedState } from './speed/speed.actions';
 
-let store;
-let stompClient;
+import { Store } from 'redux';
+import { Config } from './types';
 
-export const connectStomp = (appStore) => {
+let store: Store;
+let stompClient: any;
+
+export const connectStomp = (appStore: Store) => {
   store = appStore;
   stompClient = new JoalStompClient(store, () => {
     // On disconnect
@@ -40,17 +42,11 @@ export const sendStopSession = () => {
   stompClient.send('/joal/global/stop');
 };
 
-export const sendConfigToServer = (config) => {
+export const sendConfigToServer = (config: Config) => {
   store.dispatch(sendConfig(config));
   stompClient.send('/joal/config/save', JSON.stringify(config));
 };
 
-type File = {
-  lastModified: number,
-  name: string,
-  size: number,
-  type: string
-};
 export const uploadTorrents = (files: Array<File>) => {
   const reader = new FileReader();
 
@@ -63,7 +59,10 @@ export const uploadTorrents = (files: Array<File>) => {
 
     ((file) => {
       reader.onload = () => {
-        const b64Encoded = reader.result.replace(/data:.+?,/, '');
+        if (reader.result == null) {
+          return
+        }
+        const b64Encoded = (reader.result as string).replace(/data:.+?,/, '');
         stompClient.send('/joal/torrents/upload', JSON.stringify({
           fileName: file.name,
           b64String: b64Encoded

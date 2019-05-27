@@ -8,7 +8,9 @@ import {
   CONFIG_HAS_BEEN_LOADED as API____CONFIG_HAS_BEEN_LOADED
 } from '../../modules/joal-api/settings/settings.actions';
 
-const initialState = {
+import { LocalConfig } from '../../reducers/types';
+
+const initialState: LocalConfig = {
   localConfig: undefined
 };
 

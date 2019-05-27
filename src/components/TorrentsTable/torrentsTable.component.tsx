@@ -1,12 +1,15 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Announcer from './Announcer';
 import SearchBar from './SearchBar';
 import SortActions from './SortActions';
 
-const styles = theme => ({
+import { Theme } from '@material-ui/core';
+import { Announcer as AnnouncerType } from '../../modules/joal-api/types';
+
+const styles = (theme: Theme) => createStyles({
   announersList: {
     marginTop: theme.spacing.unit,
     [theme.breakpoints.up('md')]: {
@@ -31,9 +34,9 @@ const styles = theme => ({
   }
 });
 
-type Props = {
-  classes: {},
-  announcers: Array<>,
+type AnnouncersProps = {
+  classes: any,
+  announcers: Array<AnnouncerType>,
   searchFilter: string,
   onFilterTextChange: (text: string) => void,
   sortProperty: string,
@@ -42,17 +45,17 @@ type Props = {
   onClickDeleteTorrent: (infoHash: string) => void
 };
 
-const Announcers = ({
+const Announcers: React.FC<AnnouncersProps> = ({
   classes, announcers,
   searchFilter, onFilterTextChange,
   sortProperty, sortDirection, onSortChange,
   onClickDeleteTorrent
-}: Props) => (
+}) => (
   <div>
     <Typography variant="h6">{`Currently seeding (${announcers.length})`}</Typography>
-    <Grid container spacing={8} align="center">
+    <Grid container spacing={8}>
       <Grid item xs>
-        <SearchBar onFilterTextChange={onFilterTextChange} className={classes.searchBar} searchFilter={searchFilter} onSearchTextChange={console.log} />
+        <SearchBar onFilterTextChange={onFilterTextChange} className={classes.searchBar} searchFilter={searchFilter} />
       </Grid>
       <Grid item className={classes.sortingActions}>
         <SortActions onSortChange={onSortChange} sortProperty={sortProperty} sortDirection={sortDirection} />

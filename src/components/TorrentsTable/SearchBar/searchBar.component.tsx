@@ -5,9 +5,9 @@ import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import classnames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 
-const styles = () => ({
+const styles = () => createStyles({
   root: {
     padding: '2px 4px',
     display: 'flex',
@@ -22,16 +22,16 @@ const styles = () => ({
   }
 });
 
-type Props = {
-  classes: {},
-  className?: {},
+type SearchBarProps = {
+  classes: any,
+  className?: any,
   searchFilter?: string,
   onFilterTextChange: (text: string) => void
 };
 
-const SearchBar = ({
+const SearchBar: React.FC<SearchBarProps> = ({
   classes, className, searchFilter, onFilterTextChange
-}: Props) => (
+}) => (
   <Paper className={classnames(classes.root, className)} elevation={1}>
     <InputBase value={searchFilter} onChange={e => onFilterTextChange(e.target.value)} className={classes.input} placeholder="Filter by name" />
     <IconButton className={classes.iconButton} aria-label="Search">

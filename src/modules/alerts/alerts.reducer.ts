@@ -11,14 +11,16 @@ import {
 } from '../joal-api/stomp/stomp.actions';
 import { REMOVE_NOTIFICATION } from './alerts.actions';
 
+import { NotificationState, Notification } from './types';
+
 
 const uuidv4 = () => (
-  ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (// eslint-disable-line
-    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16) // eslint-disable-line
+  ([1e7] as any +-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, (c: number) => (// eslint-disable-line space-infix-ops
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16) // eslint-disable-line implicit-arrow-linebreak, no-bitwise, no-mixed-operators
   ))
 );
 
-const initialState = {
+const initialState: NotificationState = {
   shouldShowDirtyConfNotif: false,
   notifs: []
 };
@@ -31,7 +33,7 @@ export default createReducer(initialState, {
   },
   [HAS_CONNECTED]: (state) => {
     isAppInit = false;
-    const notif = {
+    const notif: Notification = {
       id: uuidv4(),
       text: 'Connected to JOAL',
       timeout: 6000,
@@ -41,7 +43,7 @@ export default createReducer(initialState, {
     state.notifs.push(notif);
   },
   [HAS_DROP_CONNECTION]: (state) => {
-    const notif = {
+    const notif: Notification = {
       id: uuidv4(),
       text: 'Lost connection to JOAL, auto-reconnect in 8 seconds.',
       timeout: 6000,
@@ -51,7 +53,7 @@ export default createReducer(initialState, {
     state.notifs.push(notif);
   },
   [HAS_FAILED_TO_CONNECT]: (state) => {
-    const notif = {
+    const notif: Notification = {
       id: uuidv4(),
       text: 'Failed to connect to JOAL, retry in 8 seconds.',
       timeout: 6000,
@@ -70,7 +72,7 @@ export default createReducer(initialState, {
     state.shouldShowDirtyConfNotif = false;
   },
   [INVALID_CONFIG]: (state, action) => {
-    const notif = {
+    const notif: Notification = {
       id: uuidv4(),
       text: `Invalid config: ${action.payload.error}`,
       timeout: 6000,
@@ -84,7 +86,7 @@ export default createReducer(initialState, {
       // don't show notification if app is not inited
       return state;
     }
-    const notif = {
+    const notif: Notification = {
       id: uuidv4(),
       text: `${action.payload.name} added`,
       timeout: 6000,
@@ -94,7 +96,7 @@ export default createReducer(initialState, {
     state.notifs.push(notif);
   },
   [FAILED_TO_ADD_TORRENT_FILE]: (state, action) => {
-    const notif = {
+    const notif: Notification = {
       id: uuidv4(),
       text: `${action.payload.fileName} was rejected by server: ${action.payload.error}`,
       timeout: 6000,
@@ -104,7 +106,7 @@ export default createReducer(initialState, {
     state.notifs.push(notif);
   },
   [RECEIVED_ERROR_MESSAGE]: (state, action) =>{
-    const notif = {
+    const notif: Notification = {
       id: uuidv4(),
       text: action.message,
       timeout: 8000,

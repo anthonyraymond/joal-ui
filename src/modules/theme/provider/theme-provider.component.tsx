@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import primary from '@material-ui/core/colors/blue';
 import secondary from '@material-ui/core/colors/lightGreen';
@@ -26,7 +26,7 @@ const materialUiThemeCreator = (themeType: 'light' | 'dark') => createMuiTheme({
 });
 
 type Props = {
-  children: {},
+  children: ReactNode,
   themeType: 'light' | 'dark'
 };
 

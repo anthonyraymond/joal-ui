@@ -3,12 +3,12 @@ import React from 'react';
 import filesize from 'filesize';
 import Typography from '@material-ui/core/Typography';
 
-type Props = {
+interface UploadSpeedProps {
   className?: string,
   speedInBytesPerSeconds?: number
 };
 
-const UploadSpeed = (props: Props) => {
+const UploadSpeed: React.FC<UploadSpeedProps> = (props) => {
   const { className: classNameProps, speedInBytesPerSeconds } = props;
 
   return (

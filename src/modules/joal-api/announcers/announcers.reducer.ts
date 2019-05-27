@@ -8,7 +8,9 @@ import {
   RESET_ANNOUNCER_STATE
 } from './announcers.actions';
 
-const initialState = [];
+import { Announcer as AnnouncerType } from '../types';
+
+const initialState: Array<AnnouncerType> = [];
 
 
 export default createReducer(initialState, {

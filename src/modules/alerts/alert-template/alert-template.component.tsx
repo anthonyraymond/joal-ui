@@ -1,11 +1,14 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
+import { AlertComponentPropsWithStyle } from 'react-alert';
 import InfoIcon from './icons/InfoIcon';
 import SuccessIcon from './icons/SuccessIcon';
 import ErrorIcon from './icons/ErrorIcon';
 import CloseIcon from './icons/CloseIcon';
 
-const styles = theme => ({
+import { Theme } from '@material-ui/core';
+
+const styles = (theme: Theme) => createStyles({
   alert: {
     // boxShadow: '0 8px 12px 0 rgba(0,0,0,0.3)',
     backgroundColor: `${theme.palette.type === 'dark' ? '#333' : '#fff'}`,
@@ -52,18 +55,13 @@ const styles = theme => ({
   }
 });
 
-type Props = {
-  classes: {},
-  classNameProps: {},
-  style: {},
-  message: string,
-  options: {},
-  close: () => void
+interface AlertTemplateProps extends AlertComponentPropsWithStyle {
+  classes: any
 }
 
-const AlertTemplate = ({
+const AlertTemplate: React.FC<AlertTemplateProps> = ({
   classes, message, options, style, close
-}: Props) => (
+}) => (
   // the style contains only the margin given as offset
   // options contains all alert given options
   // message is the alert message...

@@ -8,10 +8,12 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import { GuiConfig } from '../../utils/ConfigProvider/types';
 
-const styles = theme => ({
+import { Theme } from '@material-ui/core';
+
+const styles = (theme: Theme) => createStyles({
   changeConfigButton: {
     backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[700] : theme.palette.grey[100],
     boxShadow: theme.shadows[2],
@@ -49,20 +51,32 @@ const styles = theme => ({
   }
 });
 
-class UiConfigChanger extends Component {
-  props: {
-    classes: {},
-    isConnected: boolean,
-    config: GuiConfig,
-    saveNewConf: (config: GuiConfig) => void,
-    style?: {}
-  };
+interface UiConfigChangerProps {
+  classes: any,
+  isConnected: boolean,
+  config: GuiConfig,
+  saveNewConf: (config: GuiConfig) => void,
+  style?: any
+}
 
+interface UiConfigChangerState {
+  isModalVisible: boolean,
+  host: string,
+  port: string,
+  pathPrefix: string,
+  secretToken: string,
+  hostErr: string,
+  portErr: string,
+  pathPrefixErr: string,
+  secretTokenErr: string,
+}
+
+class UiConfigChanger extends Component<UiConfigChangerProps, UiConfigChangerState> {
   static defaultProps = {
     style: {}
   }
 
-  constructor(props) {
+  constructor(props: UiConfigChangerProps) {
     super(props);
     const { config } = props;
 
@@ -86,7 +100,7 @@ class UiConfigChanger extends Component {
 
   handlePortChange(port: string) {
     let portErr = '';
-    const intPort = port - 0;
+    const intPort = parseInt(port) - 0;
     if (isNaN(intPort)) { // eslint-disable-line no-restricted-globals
       portErr = 'You mad bro !';
     } else {
@@ -206,7 +220,6 @@ class UiConfigChanger extends Component {
           </DialogContent>
           <DialogActions>
             <Button
-              label="Cancel"
               onClick={() => this.discardChangesAndClose()}
             >
               Cancel

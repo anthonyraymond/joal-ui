@@ -12,11 +12,12 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
+import { Theme } from '@material-ui/core';
 import classnames from 'classnames';
 import AbsoluteOverlayFetchingIndicator from '../../components/Generics/FetchingIndicator/AbsoluteOverlayFetchingIndicator';
 
-const styles = theme => ({
+const styles = (theme: Theme) => createStyles({
   container: {
     padding: theme.spacing.unit * 2,
     position: 'relative',
@@ -43,14 +44,14 @@ const MenuProps = {
 };
 
 type Props = {
-  classes: {},
+  classes: any,
   isLocalConfigChanged: boolean,
-  config: object,
+  config: any,
   availableClients: Array<string>,
   isConnectedToWebSocket: boolean,
   discardLocalConfigChanges: () => void,
-  onSettingsChange: () => void,
-  onClickSave: () => void
+  onSettingsChange: (config: any) => void,
+  onClickSave: (config: any) => void
 };
 
 const Settings = (props: Props) => {
@@ -61,7 +62,7 @@ const Settings = (props: Props) => {
     availableClients, config, isLocalConfigChanged
   } = props;
 
-  const valueHasChanged = (newValue) => onSettingsChange(Object.assign(
+  const valueHasChanged = (newValue: any) => onSettingsChange(Object.assign(
     {},
     config,
     newValue
@@ -89,7 +90,7 @@ const Settings = (props: Props) => {
                 className={classnames(classes.formInput, classes.rightSpaced)}
                 label="Min upload rate (kB/s)"
                 type="number"
-                min={0}
+                inputProps={{ min:0 }}
                 value={config.minUploadRate}
                 onChange={(event) => {
                   const value = event.target.value === '' ? '' : parseInt(event.target.value, 10);
@@ -100,7 +101,7 @@ const Settings = (props: Props) => {
                 className={classes.formInput}
                 label="Max upload rate (kB/s)"
                 type="number"
-                min={0}
+                inputProps={{ min:0 }}
                 value={config.maxUploadRate}
                 onChange={(event) => {
                   const value = event.target.value === '' ? '' : parseInt(event.target.value, 10);
@@ -133,7 +134,7 @@ const Settings = (props: Props) => {
                 className={classes.formInput}
                 label="Simultaneous seed"
                 type="number"
-                min={1}
+                inputProps={{ min:0 }}
                 value={config.simultaneousSeed}
                 onChange={(event) => {
                   const value = event.target.value === '' ? '' : parseInt(event.target.value, 10);

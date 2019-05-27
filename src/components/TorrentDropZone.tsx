@@ -1,9 +1,9 @@
-import React, { Children } from 'react';
+import React, { ReactNode } from 'react';
 import { useDropzone } from 'react-dropzone'
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
 
-const styles = () => ({
+const styles = () => createStyles({
   dropzone: {
     position: 'absolute',
     top: 0,
@@ -26,13 +26,13 @@ const styles = () => ({
   }
 });
 
-type Props = {
-  classes: {},
-  onDrop: () => void,
-  children: Children
+interface TorrentDropZoneProps {
+  classes: any,
+  onDrop: (acceptedFiles: Array<File>, rejectedFiles:Array<File>) => void,
+  children: ReactNode,
 }
 
-const TorrentDropZone = (props: Props) => {
+const TorrentDropZone: React.FC<TorrentDropZoneProps> = (props) => {
   const { classes, children } = props;
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

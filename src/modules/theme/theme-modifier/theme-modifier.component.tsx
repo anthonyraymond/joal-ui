@@ -5,24 +5,26 @@ import LightModeOnIcon from '@material-ui/icons/Brightness2Outlined';
 import DarkModeOnIcon from '@material-ui/icons/Brightness2';
 import { withStyles } from '@material-ui/core/styles';
 
+import { Palette } from '../types';
+
 const styles = () => ({
   icon: {
     fill: '#FFF'
   }
 });
 
-type Props = {
-  classes: {},
-  palette: {},
+interface ThemeModifierProps {
+  classes: any,
+  palette: Palette,
   onClickChangeThemeType: () => void
 }
 
-const ThemeModifier = ({ classes, palette, onClickChangeThemeType }: Props) => (
+const ThemeModifier: React.FC<ThemeModifierProps> = ({ classes, palette, onClickChangeThemeType }) => (
   <div>
     <IconButton aria-label="Switch theme type" onClick={onClickChangeThemeType}>
       {palette.type === 'light'
-        ? <LightModeOnIcon className={classes.icon} size="medium" />
-        : <DarkModeOnIcon className={classes.icon} size="medium" />
+        ? <LightModeOnIcon className={classes.icon} />
+        : <DarkModeOnIcon className={classes.icon} />
       }
     </IconButton>
   </div>

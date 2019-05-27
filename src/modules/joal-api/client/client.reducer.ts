@@ -8,8 +8,9 @@ import {
 } from './client.actions';
 import { createReducer } from 'redux-starter-kit';
 
+import { Client } from '../types';
 
-const initialState = {
+const initialState: Client = {
   isFetching: true,
   isStarted: false,
   name: ''

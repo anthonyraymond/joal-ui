@@ -3,23 +3,23 @@ import { connect } from 'react-redux';
 import ClientInfoComponent from './clientInfo.component';
 import { sendStartSession, sendStopSession } from '../../modules/joal-api';
 
-const calculateGobalSpeed = (speeds) => {
+import { JoalState } from '../../reducers/types';
+
+const calculateGobalSpeed = (speeds: Array<{ bytesPerSeconds: number }>) => {
   if (speeds.length === 0) {
     return 0;
   }
-  return speeds.reduce((prevVal, speed) => (
+  return speeds.reduce((prevVal: number, speed) => (
     prevVal + speed.bytesPerSeconds
   ), 0);
 };
 
-const mapStateToProps = (state) => {
-  // TODO : performance issue
-  const announcersIds = state.api.announcers.map(an => an.infoHash);
+const mapStateToProps = (state: JoalState) => {
   return {
     client: state.api.client.name,
     overallUploadSpeed: calculateGobalSpeed(state.api.speed),
     isStarted: state.api.client.isStarted,
-    numberOfQueuedTorrents: state.api.torrentFiles.filter(tf => !announcersIds.includes(tf.infoHash)).length,
+    numberOfQueuedTorrents: state.api.torrentFiles.length - state.api.announcers.length,
     onClickStart: () => sendStartSession(),
     onClickStop: () => sendStopSession()
   };

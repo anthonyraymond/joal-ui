@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import DeterminateProgresBar from './DeterminateProgresBar';
 import UndeterminateProgressBar from './UndeterminateProgressBar';
@@ -12,24 +11,24 @@ type SmartAnnounceProps = {
   announceInterval?: number
 };
 
-const SmartAnnounceProgressBar = (props: SmartAnnounceProps) => {
+const SmartAnnounceProgressBar: React.FC<SmartAnnounceProps> = (props) => {
   const {
     className, color, isFetching, nextAnnounceIn, announceInterval, infoHash
   } = props;
 
   if (isFetching) {
-    return (<UndeterminateProgressBar color={color} className={className} />);
+    return (<UndeterminateProgressBar color={color || 'primary'} className={className} />);
   }
 
-  const currentValue = announceInterval - nextAnnounceIn;
+  const currentValue = (announceInterval || 0) - (nextAnnounceIn || 0);
   const maxValue = announceInterval;
   return (
     <DeterminateProgresBar
       className={className}
-      color={color}
+      color={color || 'primary'}
       infoHash={infoHash}
       startAt={currentValue}
-      maxValue={maxValue}
+      maxValue={maxValue || 0}
     />
   );
 };

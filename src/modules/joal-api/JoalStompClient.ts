@@ -1,5 +1,5 @@
-// @flow
-import Webstomp from 'webstomp-client';
+import { Store } from 'redux';
+import Webstomp, { Client as WebStompClient, Subscription, Frame } from 'webstomp-client';
 import { getGUIConfig } from '../../utils/ConfigProvider';
 import {
   isConnecting,
@@ -11,7 +11,7 @@ import {
 } from './stomp/stomp.actions';
 
 const uuidv4 = () => (
-  ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c => (// eslint-disable-line space-infix-ops
+  ([1e7] as any +-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, (c: number) => (// eslint-disable-line space-infix-ops
     (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16) // eslint-disable-line implicit-arrow-linebreak, no-bitwise, no-mixed-operators
   ))
 );
@@ -21,19 +21,20 @@ export type StompMessage = {
   payload: {}
 };
 
-type Frame = {
-  command: string;
-  headers: {};
-  body: {} | string;
-}
-
 export default class JoalStompClient {
-  constructor(reduxStore, onDisconnectCallback: () => void) {
+  reconnectTimeout?: number
+  reduxStore: Store
+  onDisconnectCallback: () => void
+  subscriptions: Array<Subscription>
+  stompClient: WebStompClient
+
+
+  constructor(reduxStore: Store, onDisconnectCallback: () => void) {
     this.reconnectTimeout = undefined;
     this.reduxStore = reduxStore;
     this.onDisconnectCallback = onDisconnectCallback;
     this.subscriptions = [];
-    this.stompClient = {};
+    this.stompClient = {} as WebStompClient;
   }
 
   send(path: string, body: string = '', headers: {} = {}) {
@@ -60,7 +61,7 @@ export default class JoalStompClient {
       this._dispatchHasConnected(); // eslint-disable-line no-underscore-dangle
       /* specific mapping that intentionally include the /joal prefix */
       this.stompClient.subscribe('/joal/initialize-me', (message) => {
-        JSON.parse(message.body).forEach(msg => {
+        JSON.parse(message.body).forEach((msg: StompMessage) => {
           this.onReceiveMessage(msg);
         });
         // We consider that the app is inited when the replayable events has been played.
@@ -91,7 +92,7 @@ export default class JoalStompClient {
         if (this.onDisconnectCallback) this.onDisconnectCallback();
         this._reconnectAfterTimeout(8000); // eslint-disable-line no-underscore-dangle
       } else {
-        this.reduxStore.dispatch(hasReceivedError(error.headers.message));
+        this.reduxStore.dispatch(hasReceivedError(error.headers['message'] || 'Undefined error'));
       }
     });
   }
@@ -126,7 +127,7 @@ export default class JoalStompClient {
     this.subscriptions = [];
     // the reconnectTimeout = undefined will ensure we don't cause memory leak.
     if (this.reconnectTimeout === undefined) {
-      this.reconnectTimeout = setTimeout(() => {
+      this.reconnectTimeout = window.setTimeout(() => {
         this.connect();
         this.reconnectTimeout = undefined;
       }, timeout);

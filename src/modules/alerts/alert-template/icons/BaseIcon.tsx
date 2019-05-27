@@ -1,22 +1,22 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import classnames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 
-const styles = () => ({
+const styles = () => createStyles({
   icon: {
     stroke: 'black'
   }
 });
 
-type Props = {
-  classes: {},
+type BaseIconProps = {
+  classes: any,
   className?: string,
-  children: {}
+  children: ReactNode
 }
 
-const BaseIcon = ({
+const BaseIcon: React.FC<BaseIconProps> = ({
   classes, className: classNameProps, children
-}: Props) => (
+}) => (
   <svg
     className={classnames(classes.icon, classNameProps)}
     xmlns="http://www.w3.org/2000/svg"
