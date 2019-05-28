@@ -34,6 +34,7 @@
     "react-transition-group": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-starter-kit": "^0.5.1",
+    "reselect": "^4.0.0",
     "typeface-roboto": "^0.0.54",
     "typescript": "^3.4.5",
     "webstomp-client": "^1.2.6"
