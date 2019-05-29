@@ -12,7 +12,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import filesize from 'filesize';
 import classnames from 'classnames';
 import PeerStats from './Peers';
-import AnnounceProgressBar from './ProgressBar';
 import UploadSpeed from './UploadSpeed';
 import { Theme } from '@material-ui/core';
 

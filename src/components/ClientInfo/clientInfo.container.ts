@@ -4,14 +4,14 @@ import ClientInfoComponent from './clientInfo.component';
 import { sendStartSession, sendStopSession } from '../../modules/joal-api';
 
 import { JoalState } from '../../reducers/types';
+import { SpeedsArray } from '../../modules/joal-api/types';
 
-const calculateGobalSpeed = (speeds: Array<{ bytesPerSeconds: number }>) => {
-  if (speeds.length === 0) {
-    return 0;
+const calculateGobalSpeed = (speeds: SpeedsArray) => {
+  let totalSpeed = 0
+  for (let speed of Object.values(speeds)) {
+    totalSpeed += speed.bytesPerSeconds;
   }
-  return speeds.reduce((prevVal: number, speed) => (
-    prevVal + speed.bytesPerSeconds
-  ), 0);
+  return totalSpeed;
 };
 
 const mapStateToProps = (state: JoalState) => {

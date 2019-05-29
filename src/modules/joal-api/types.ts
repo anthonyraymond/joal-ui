@@ -3,7 +3,7 @@ export interface ApiState {
   client: Client,
   announcers: Array<Announcer>,
   settings: Settings,
-  speed: Array<Speed>,
+  speed: SpeedsArray,
   stomp: Stomp
 }
 
@@ -47,6 +47,11 @@ export interface Settings {
   errMessage?: string,
   config: Config,
   availableClients: Array<string>
+}
+
+// See https://www.typescriptlang.org/docs/handbook/interfaces.html#indexable-types
+export interface SpeedsArray {
+  [infohash: string]: Speed
 }
 
 export interface Speed {
