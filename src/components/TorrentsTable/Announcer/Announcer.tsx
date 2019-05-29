@@ -69,12 +69,7 @@ const Announcer: React.FC<AnnouncerProps> = (props) => {
   const {
     width: componentBreakpoint, className: classNameProps, classes, announcer, onClickDeleteTorrent
   } = props;
-  let nextAnnounceIn = announcer.lastKnownInterval;
-  if (announcer.lastAnnouncedAt !== undefined) {
-    const lastAnnounceDate = Date.parse(announcer.lastAnnouncedAt);
-    const deltaBetweenLastAnnounce = (Date.now() - lastAnnounceDate) / 1000;
-    nextAnnounceIn = Math.round(announcer.lastKnownInterval - deltaBetweenLastAnnounce);
-  }
+
 
   const maxAllowedTorrentNameLength = (componentBreakpoint === 'xs' || componentBreakpoint === 'sm') ? 70 : 175;
   let trimedTorrentName = announcer.torrentName;
@@ -123,15 +118,6 @@ const Announcer: React.FC<AnnouncerProps> = (props) => {
           </div>
         </Grid>
       </Grid>
-
-      <AnnounceProgressBar
-        color="primary"
-        className={classes.announceProgressBar}
-        infoHash={announcer.infoHash}
-        isFetching={announcer.isFetching}
-        announceInterval={announcer.lastKnownInterval}
-        nextAnnounceIn={nextAnnounceIn}
-      />
     </Paper>
   );
 };
