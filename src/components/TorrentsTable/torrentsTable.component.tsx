@@ -59,31 +59,34 @@ interface EnhancedTableHeadProps {
   onRequestSort: (order: Order, property?: keyof AnnouncerType) => void
 }
 
-const tableHeadUseStyles = makeStyles((theme: Theme) => 
-  createStyles({
-    searchBarPaper: {
-      padding: '2px 4px',
-      display: 'flex',
-      alignItems: 'center',
+const tableHeadUseStyles = makeStyles((theme: Theme) => ({
+  searchBarPaper: {
+    padding: '2px 4px',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  searchBar: {
+    marginLeft: 8,
+    flex: 1,
+  },
+  searchBarIcon: {
+    padding: 10,
+  },
+  sortActionsContainer: {
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
     },
-    searchBar: {
-      marginLeft: 8,
-      flex: 1,
-    },
-    searchBarIcon: {
-      padding: 10,
-    },
-    sortActionsContainer: {
-      [theme.breakpoints.down('xs')]: {
-        width: '100%',
-      },
-      width: 'none'
-    }
-  })
-);
+    width: 'none'
+  },
+  sortButtonGroup: (props: { hasSortSelected: boolean }) => ({
+    backgroundColor: props.hasSortSelected ? '' : 'transparent'
+  }),
+  toogleButtonWhenNoSortSelection: {
+    borderColor: 'transparent'
+  }
+}));
 
 function EnhancedTableHead(props: EnhancedTableHeadProps) {
-  const classes = tableHeadUseStyles();
   const {
     search,
     onRequestSearch,
@@ -91,6 +94,7 @@ function EnhancedTableHead(props: EnhancedTableHeadProps) {
     orderBy,
     onRequestSort
   } = props;
+  const classes = tableHeadUseStyles({ hasSortSelected: orderBy !== undefined });
 
   function onClickSort(event: React.MouseEvent<unknown>, property?: keyof AnnouncerType) {
     // The value is null when the user clic one more time on the same tile
@@ -121,19 +125,19 @@ function EnhancedTableHead(props: EnhancedTableHeadProps) {
         </Paper>
       </Grid>
       <Grid item className={classes.sortActionsContainer}>
-        <ToggleButtonGroup selected={orderBy !== undefined} value={orderBy} exclusive onChange={(e, v) => onClickSort(e, v)}>
+        <ToggleButtonGroup className={`${classes.sortButtonGroup}`} selected={orderBy !== undefined} value={orderBy} exclusive onChange={(e, v) => onClickSort(e, v)}>
           <Tooltip title="Sort by name" placement="top">
-            <ToggleButton selected={orderBy === 'torrentName'} value="torrentName">
+            <ToggleButton classes={orderBy === undefined ? {root: classes.toogleButtonWhenNoSortSelection}: {}} selected={orderBy === 'torrentName'} value="torrentName">
               <NameIcon />
             </ToggleButton>
           </Tooltip>
           <Tooltip title="Sort by leechers" placement="top">
-            <ToggleButton selected={orderBy === 'lastKnownLeechers'} value="lastKnownLeechers">
+            <ToggleButton classes={orderBy === undefined ? {root: classes.toogleButtonWhenNoSortSelection}: {}} selected={orderBy === 'lastKnownLeechers'} value="lastKnownLeechers">
               <LeechersIcon />
             </ToggleButton>
           </Tooltip>
           <Tooltip title="Sort by seeders" placement="top">
-            <ToggleButton selected={orderBy === 'lastKnownSeeders'} value="lastKnownSeeders">
+            <ToggleButton classes={orderBy === undefined ? {root: classes.toogleButtonWhenNoSortSelection}: {}} selected={orderBy === 'lastKnownSeeders'} value="lastKnownSeeders">
               <SeedersIcon />
             </ToggleButton>
           </Tooltip>
@@ -179,7 +183,7 @@ function EnhancedTable(props: AnnouncerTableProps) {
   const classes = useStyles();
   const [search, setSearch] = React.useState<string>('');
   const [order, setOrder] = React.useState<Order>('asc');
-  const [orderBy, setOrderBy] = React.useState<undefined | keyof AnnouncerType>('infoHash');
+  const [orderBy, setOrderBy] = React.useState<undefined | keyof AnnouncerType>(undefined);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const { announcers, onClickDeleteTorrent } = props;
