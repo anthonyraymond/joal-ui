@@ -19,13 +19,17 @@ const useStyles = makeStyles((theme: Theme) =>
     addButton: {
       position: 'fixed',
       bottom: 75,
-      left: theme.spacing(2)
+      right: theme.spacing(2),
+      [theme.breakpoints.down('sm')]: {
+        bottom: 65,
+        right: 6,
+      },
     },
     addButtonInput: {
       display: 'none'
     },
     announcers: {
-      marginBottom: 70
+      marginBottom: 110
     }
   })
 );
