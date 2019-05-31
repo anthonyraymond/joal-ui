@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';

@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -12,27 +11,29 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import { withStyles, createStyles } from '@material-ui/core/styles';
-import { Theme } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import classnames from 'classnames';
 import AbsoluteOverlayFetchingIndicator from '../../components/Generics/FetchingIndicator/AbsoluteOverlayFetchingIndicator';
 
-const styles = (theme: Theme) => createStyles({
-  container: {
-    padding: theme.spacing.unit * 2,
-    position: 'relative',
-  },
-  discardChangesButton: {
-    marginRight: theme.spacing.unit * 2
-  },
-  formInput: {
-    marginBottom: theme.spacing.unit * 3,
-    minWidth: 180
-  },
-  rightSpaced: {
-    marginRight: theme.spacing.unit * 2
-  }
-});
+const useStyles = makeStyles((theme: Theme) => 
+  createStyles({
+    container: {
+      padding: theme.spacing(2),
+      position: 'relative',
+    },
+    discardChangesButton: {
+      marginRight: theme.spacing(2)
+    },
+    formInput: {
+      marginBottom: theme.spacing(3),
+      minWidth: 180
+    },
+    rightSpaced: {
+      marginRight: theme.spacing(2)
+    }
+  })
+);
+
 
 const ITEM_HEIGHT = 48;
 const MenuProps = {
@@ -44,7 +45,6 @@ const MenuProps = {
 };
 
 type Props = {
-  classes: any,
   isLocalConfigChanged: boolean,
   config: any,
   availableClients: Array<string>,
@@ -55,8 +55,8 @@ type Props = {
 };
 
 const Settings = (props: Props) => {
+  const classes = useStyles();
   const {
-    classes,
     isConnectedToWebSocket,
     discardLocalConfigChanges, onSettingsChange, onClickSave,
     availableClients, config, isLocalConfigChanged
@@ -188,4 +188,4 @@ const Settings = (props: Props) => {
   );
 };
 
-export default withStyles(styles)(Settings);
+export default Settings;

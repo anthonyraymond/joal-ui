@@ -1,4 +1,3 @@
-// @flow
 import { connect } from 'react-redux';
 import isElectron from 'is-electron';
 import Dashboard from './dashboard.component';

@@ -1,4 +1,3 @@
-// @flow
 import { createReducer } from 'redux-starter-kit';
 import {
   SEEDING_SPEED_HAS_CHANGED,

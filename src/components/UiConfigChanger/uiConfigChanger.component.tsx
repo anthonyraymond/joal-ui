@@ -8,10 +8,9 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { withStyles, createStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { GuiConfig } from '../../utils/ConfigProvider/types';
 
-import { Theme } from '@material-ui/core';
 
 const styles = (theme: Theme) => createStyles({
   changeConfigButton: {
@@ -47,7 +46,7 @@ const styles = (theme: Theme) => createStyles({
     }
   },
   formControl: {
-    margin: theme.spacing.unit
+    margin: theme.spacing(1)
   }
 });
 

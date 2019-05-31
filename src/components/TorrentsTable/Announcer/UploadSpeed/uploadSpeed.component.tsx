@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import filesize from 'filesize';
 import Typography from '@material-ui/core/Typography';

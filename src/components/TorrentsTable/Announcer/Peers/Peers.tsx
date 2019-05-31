@@ -1,34 +1,33 @@
-// @flow
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 import classnames from 'classnames';
-import { withStyles, createStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
-import { Theme } from '@material-ui/core';
-
-const styles = (theme: Theme) => createStyles({
-  root: {
-  },
-  leechers: {
-    color: theme.palette.primary.light,
-    marginRight: 12
-  },
-  seeders: {
-    color: theme.palette.primary.light
-  }
-});
+const useStyles = makeStyles((theme: Theme) => 
+  createStyles({
+    root: {
+    },
+    leechers: {
+      color: theme.palette.primary.light,
+      marginRight: 12
+    },
+    seeders: {
+      color: theme.palette.primary.light
+    }
+  })
+);
 
 type PeerStatsProps = {
-  classes: any,
   className?: string,
   leechers?: number,
   seeders?: number
 };
 
 const PeerStats: React.FC<PeerStatsProps> = (props) => {
+  const classes = useStyles();
   const {
-    className: classNameProps, classes, leechers, seeders
+    className: classNameProps, leechers, seeders
   } = props;
   const leechersText = (leechers === null || leechers === undefined) ? '?' : leechers;
   const seedersText = (seeders === null || seeders === undefined) ? '?' : seeders;
@@ -58,4 +57,4 @@ PeerStats.defaultProps = {
   seeders: undefined
 };
 
-export default withStyles(styles)(PeerStats);
+export default PeerStats;

@@ -1,4 +1,3 @@
-// @flow
 export const GLOBAL_SEED_STARTED = '@@api/listener/GLOBAL_SEED_STARTED';
 export const GLOBAL_SEED_STOPPED = '@@api/listener/GLOBAL_SEED_STOPPED';
 

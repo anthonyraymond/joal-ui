@@ -1,4 +1,3 @@
-// @flow
 import {
   GLOBAL_SEED_STARTED,
   GLOBAL_SEED_STOPPED,

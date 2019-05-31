@@ -1,4 +1,3 @@
-// @flow
 export const CHANGE_THEME_TYPE = '@@ui/theme/CHANGE_THEME_TYPE';
 
 export function changeThemeType() {

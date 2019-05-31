@@ -11,17 +11,17 @@ import { Announcer as AnnouncerType } from '../../modules/joal-api/types';
 
 const styles = (theme: Theme) => createStyles({
   announersList: {
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing(1),
     [theme.breakpoints.up('md')]: {
-      marginLeft: theme.spacing.unit * 2,
+      marginLeft: theme.spacing(2),
     }
   },
   announcer: {
     [theme.breakpoints.down('md')]: {
-      marginBottom: theme.spacing.unit * 2,
+      marginBottom: theme.spacing(2),
     },
     [theme.breakpoints.up('md')]: {
-      marginBottom: theme.spacing.unit,
+      marginBottom: theme.spacing(1),
     }
   },
   searchBar: {
@@ -53,7 +53,7 @@ const Announcers: React.FC<AnnouncersProps> = ({
 }) => (
   <div>
     <Typography variant="h6">{`Currently seeding (${announcers.length})`}</Typography>
-    <Grid container spacing={8}>
+    <Grid container spacing={1}>
       <Grid item xs>
         <SearchBar onFilterTextChange={onFilterTextChange} className={classes.searchBar} searchFilter={searchFilter} />
       </Grid>

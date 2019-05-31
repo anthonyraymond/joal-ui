@@ -1,4 +1,3 @@
-// @flow
 import { createReducer } from 'redux-starter-kit';
 import {
   CHANGE_THEME_TYPE

@@ -1,4 +1,3 @@
-// @flow
 import { connect } from 'react-redux';
 import UploadSpeed from './uploadSpeed.component';
 

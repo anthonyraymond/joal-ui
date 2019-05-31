@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
@@ -10,52 +9,51 @@ import red from '@material-ui/core/colors/red';
 import green from '@material-ui/core/colors/green';
 import filesize from 'filesize';
 import classnames from 'classnames';
-import { withStyles, createStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
-import { Theme } from '@material-ui/core';
-
-const styles = (theme: Theme) => createStyles({
-  container: {
-    padding: 15
-  },
-  leftIcon: {
-    marginRight: theme.spacing.unit,
-  },
-  playPauseButton: {
-    backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[700] : theme.palette.grey[100],
-    boxShadow: theme.shadows[2],
-    '&:focusVisible': {
-      boxShadow: theme.shadows[6],
+const useStyles = makeStyles((theme: Theme) => 
+  createStyles({
+    container: {
+      padding: 15
     },
-    '&:active': {
-      boxShadow: theme.shadows[8],
+    leftIcon: {
+      marginRight: theme.spacing(1),
     },
-    '&:disabled': {
-      color: theme.palette.action.disabled,
-      boxShadow: theme.shadows[0],
-      backgroundColor: theme.palette.action.disabledBackground,
-    },
-    '&:hover': {
-      backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[800] : theme.palette.grey[300],
-      // Reset on touch devices, it doesn't add specificity
-      '@media (hover: none)': {
-        backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[700] : theme.palette.grey[300],
+    playPauseButton: {
+      backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[700] : theme.palette.grey[100],
+      boxShadow: theme.shadows[2],
+      '&:focusVisible': {
+        boxShadow: theme.shadows[6],
+      },
+      '&:active': {
+        boxShadow: theme.shadows[8],
       },
       '&:disabled': {
+        color: theme.palette.action.disabled,
+        boxShadow: theme.shadows[0],
         backgroundColor: theme.palette.action.disabledBackground,
       },
+      '&:hover': {
+        backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[800] : theme.palette.grey[300],
+        // Reset on touch devices, it doesn't add specificity
+        '@media (hover: none)': {
+          backgroundColor: theme.palette.type === 'dark' ? theme.palette.grey[700] : theme.palette.grey[300],
+        },
+        '&:disabled': {
+          backgroundColor: theme.palette.action.disabledBackground,
+        },
+      },
     },
-  },
-  redTextButton: {
-    color: red[400]
-  },
-  greenTextButton: {
-    color: green[400]
-  }
-});
+    redTextButton: {
+      color: red[400]
+    },
+    greenTextButton: {
+      color: green[400]
+    }
+  })
+);
 
 type ClientInfoProps = {
-  classes: any,
   className?: string,
   client: string,
   overallUploadSpeed: number,
@@ -66,15 +64,16 @@ type ClientInfoProps = {
 };
 
 const ClientInfo: React.FC<ClientInfoProps> = (props) => {
+  const classes = useStyles();
   const {
     className: classNameProps,
-    classes, client, overallUploadSpeed, isStarted, onClickStart, onClickStop, numberOfQueuedTorrents
+    client, overallUploadSpeed, isStarted, onClickStart, onClickStop, numberOfQueuedTorrents
   } = props;
   const stateText = isStarted ? 'Running' : 'Paused';
 
   return (
     <Paper elevation={2} className={classnames(classes.container, classNameProps)}>
-      <Typography className={classes.clientState} align="center" variant="h5" gutterBottom>
+      <Typography align="center" variant="h5" gutterBottom>
         {stateText}
       </Typography>
       <Button
@@ -106,4 +105,4 @@ ClientInfo.defaultProps = {
   className: ''
 };
 
-export default withStyles(styles)(ClientInfo);
+export default ClientInfo;

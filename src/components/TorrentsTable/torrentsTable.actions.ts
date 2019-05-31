@@ -1,4 +1,3 @@
-// @flow
 
 export const TORRENT_SEARCH_FILTER_TEXT_CHANGED = '@@ui/torrents-table/TORRENT_SEARCH_FILTER_TEXT_CHANGED';
 export const TORRENT_SORT_CHANGED = '@@ui/torrents-table/TORRENT_SORT_CHANGED';

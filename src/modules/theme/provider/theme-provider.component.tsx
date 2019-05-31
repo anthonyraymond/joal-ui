@@ -1,4 +1,3 @@
-// @flow
 import React, { ReactNode } from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import primary from '@material-ui/core/colors/blue';
@@ -19,10 +18,7 @@ const materialUiThemeCreator = (themeType: 'light' | 'dark') => createMuiTheme({
       dark: secondary[700],
     },
     type: themeType
-  },
-  typography: {
-    useNextVariants: true,
-  },
+  }
 });
 
 type Props = {

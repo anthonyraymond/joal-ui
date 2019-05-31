@@ -1,4 +1,3 @@
-// @flow
 export const REMOVE_NOTIFICATION = '@@notifications/REMOVE_NOTIFICATION';
 
 export const removeNotification = (id: string) => ({

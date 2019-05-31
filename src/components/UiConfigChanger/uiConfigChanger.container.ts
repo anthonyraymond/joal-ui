@@ -1,4 +1,3 @@
-// @flow
 import { connect } from 'react-redux';
 import UiConfigChanger from './uiConfigChanger.component';
 import { getGUIConfig, saveGUIConfig } from '../../utils/ConfigProvider';

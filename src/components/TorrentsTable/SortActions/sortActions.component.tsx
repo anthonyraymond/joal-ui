@@ -52,7 +52,7 @@ const SortActions: React.FC<SortActionsProps> = (props) => {
   };
 
   return (
-    <Grid container spacing={8}>
+    <Grid container spacing={1}>
       <Grid item xs={12}>
         <div className={classes.toggleContainer}>
           <ToggleButtonGroup selected={sortProperty !== ''} value={sortProperty} exclusive onChange={(e, v) => handleSortChange(v)}>

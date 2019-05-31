@@ -1,24 +1,25 @@
-// @flow
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { withStyles, createStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
-const styles = () => createStyles({
-  container: {
-    position: 'relative',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});
+const useStyles = makeStyles((theme: Theme) => 
+  createStyles({
+    container: {
+      position: 'relative',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+  })
+);
 
 type FetchingIndicatorProps = {
-  classes: any,
   active: boolean
 };
 
 const FetchingIndicator: React.FC<FetchingIndicatorProps> = (props) => {
-  const { classes, active, ...rest } = props;
+  const classes = useStyles();
+  const { active, ...rest } = props;
 
   if (!active) {
     return (<div />);
@@ -30,4 +31,4 @@ const FetchingIndicator: React.FC<FetchingIndicatorProps> = (props) => {
   );
 };
 
-export default withStyles(styles)(FetchingIndicator);
+export default FetchingIndicator;

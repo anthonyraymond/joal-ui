@@ -1,4 +1,3 @@
-// @flow
 import { GuiConfig } from './types';
 
 let cachedConf: GuiConfig;

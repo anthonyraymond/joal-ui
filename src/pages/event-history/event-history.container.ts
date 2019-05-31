@@ -1,4 +1,3 @@
-// @flow
 import { connect } from 'react-redux';
 import EventHistoryComponent from './event-history.component';
 

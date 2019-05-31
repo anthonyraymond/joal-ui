@@ -1,4 +1,3 @@
-// @flow
 import { createReducer } from 'redux-starter-kit';
 import {
   FAILED_TO_ANNOUNCE,

@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { Provider as AlertProvider, positions, transitions } from 'react-alert';
 import withWidth, { isWidthUp, WithWidth } from '@material-ui/core/withWidth';

@@ -1,24 +1,26 @@
-// @flow
 import React from 'react';
 import IconWarning from '@material-ui/icons/Warning';
 import Grid from '@material-ui/core/Grid';
 import orange from '@material-ui/core/colors/orange';
-import { withStyles, createStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
-const styles = () => createStyles({
-  container: {
-    textAlign: 'center',
-    marginTop: 100,
-    height: '100%'
-  }
-});
+const useStyles = makeStyles((theme: Theme) => 
+  createStyles({
+    container: {
+      textAlign: 'center',
+      marginTop: 100,
+      height: '100%'
+    }
+  })
+);
+
 
 type Props = {
-  classes: any,
   events: Array<string>
 };
 
-const EventHistory = ({ classes, events }: Props) => {
+const EventHistory = ({ events }: Props) => {
+  const classes = useStyles();
   if (events) {
     // TODO: implement me. this if is just a placeholder to prevent no-unused-params
   }
@@ -40,4 +42,4 @@ const EventHistory = ({ classes, events }: Props) => {
   );
 };
 
-export default withStyles(styles)(EventHistory);
+export default EventHistory;

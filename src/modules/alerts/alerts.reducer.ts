@@ -1,4 +1,3 @@
-// @flow
 import { createReducer } from 'redux-starter-kit';
 import { CONFIG_IS_IN_DIRTY_STATE, CONFIG_HAS_BEEN_LOADED, INVALID_CONFIG } from '../joal-api/settings/settings.actions';
 import { TORRENT_FILE_ADDED, FAILED_TO_ADD_TORRENT_FILE } from '../joal-api/torrentFiles/torrentFile.actions';

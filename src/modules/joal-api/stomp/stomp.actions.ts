@@ -1,4 +1,3 @@
-// @flow
 export const IS_CONNECTING = '@@api/stompClient/IS_CONNECTING';
 export const HAS_CONNECTED = '@@api/stompClient/HAS_CONNECTED';
 export const HAS_FAILED_TO_CONNECT = '@@api/stompClient/HAS_FAILED_TO_CONNECT';
