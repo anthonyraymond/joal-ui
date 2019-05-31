@@ -31,23 +31,23 @@ function desc<T>(a: T, b: T, orderBy: keyof T) {
   return 0;
 }
 
-function stableSort<T>(array: T[], cmp: (a: T, b: T) => number) {
-  const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-  stabilizedThis.sort((a, b) => {
-    const order = cmp(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map(el => el[0]);
-}
-
 type Order = 'asc' | 'desc';
 
-function getSorting<K extends keyof any>(
+const getSorting = <K extends keyof AnnouncerType>(
   order: Order,
-  orderBy: K,
-): (a: { [key in K]: number | string }, b: { [key in K]: number | string }) => number {
+  orderBy?: K
+): (a: AnnouncerType, b: AnnouncerType) => number => {
+  if (orderBy === '' || orderBy === undefined) {
+    return (a, b) => 0
+  }
   return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
+}
+
+const getFiltering = (searchFilter: string): (a: AnnouncerType) => boolean => {
+  if (searchFilter === '' || searchFilter === undefined) {
+    return a => true
+  }
+  return a => a.torrentName.toLowerCase().includes(searchFilter.toLowerCase())
 }
 
 
@@ -188,6 +188,13 @@ function EnhancedTable(props: AnnouncerTableProps) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const { announcers, onClickDeleteTorrent } = props;
 
+  React.useEffect(() => {
+    // on refresh the number of announcers may have changed, so we may need to reset the page count to prevent page index to be out of bounds
+    if (page > (Math.ceil(announcers.length / rowsPerPage) - 1)) {
+      setPage(0);
+    }
+  }, [page, announcers.length, rowsPerPage]);
+
   function handleRequestSort(order: Order, property?: keyof AnnouncerType) {
     setOrder(order);
     setOrderBy(property);
@@ -200,8 +207,6 @@ function EnhancedTable(props: AnnouncerTableProps) {
   function handleChangeRowsPerPage(event: React.ChangeEvent<HTMLInputElement>) {
     setRowsPerPage(+event.target.value);
   }
-
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, announcers.length - page * rowsPerPage);
 
   return (
     <div>
@@ -216,6 +221,8 @@ function EnhancedTable(props: AnnouncerTableProps) {
       <Grid container spacing={1}>
         <Grid item xs={12} className={classes.announersList}>
           {announcers
+            .filter(getFiltering(search))
+            .sort(getSorting(order, orderBy))
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map(announcer => {
                 return (
@@ -227,10 +234,6 @@ function EnhancedTable(props: AnnouncerTableProps) {
                 )
             })
           }
-          {/*{emptyRows > 0 && (
-            <div style={{ height: 49 * emptyRows }}>
-            </div>
-          )}*/}
         </Grid>
         <Grid item xs={12}>
           <TablePagination
