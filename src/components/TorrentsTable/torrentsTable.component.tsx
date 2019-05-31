@@ -230,20 +230,20 @@ function EnhancedTable(props: AnnouncerTableProps) {
         </Grid>
         <Grid item xs={12}>
           <TablePagination
-          rowsPerPageOptions={[10, 25, 50]}
-          component="div"
-          count={announcers.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          backIconButtonProps={{
-            'aria-label': 'Previous Page',
-          }}
-          nextIconButtonProps={{
-            'aria-label': 'Next Page',
-          }}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        /> 
+            rowsPerPageOptions={[10, 25, 50]}
+            component="div"
+            count={announcers.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            backIconButtonProps={{
+              'aria-label': 'Previous Page',
+            }}
+            nextIconButtonProps={{
+              'aria-label': 'Next Page',
+            }}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          /> 
         </Grid>
       </Grid>
     </div>

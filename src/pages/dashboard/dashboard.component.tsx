@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
     addButton: {
       position: 'fixed',
       bottom: 75,
-      right: theme.spacing(2)
+      left: theme.spacing(2)
     },
     addButtonInput: {
       display: 'none'
