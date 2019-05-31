@@ -20,12 +20,14 @@ const TimeUntilAnnounceProgressBar: React.FC<TimeUntilAnnounceProgressBarProps> 
   const classes = useStyles();
   const { className: classNameProps } = props;
   
-  const [ percent, setPercent ] = React.useState(Math.round((Date.now() - Date.parse(props.lastAnnouncedDate)) / 10 / props.interval));
-
+  const [ percent, setPercent ] = React.useState(() => 
+    Math.round((Date.now() - Date.parse(props.lastAnnouncedDate)) / 10 / props.interval)
+  );
+  
   React.useEffect(() => {
     const intervalId = setInterval(
-        () =>setPercent(p => Math.min(p + 1, 100))
-        , props.interval * 1000
+        () =>setPercent(p => Math.min(p + 1, 100)),
+        props.interval * 10
     );
 
     return () => clearInterval(intervalId)
