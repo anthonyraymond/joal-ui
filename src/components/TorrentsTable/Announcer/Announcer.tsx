@@ -12,6 +12,10 @@ import filesize from 'filesize';
 import classnames from 'classnames';
 import PeerStats from './Peers';
 import UploadSpeed from './UploadSpeed';
+import AnnouncingProgressBar from './ProgressBar/AnnouncingProgressBar.component';
+import TimeUntilAnnounceProgressBar from './ProgressBar/TimeUntilAnnounceProgressBar.component';
+
+import { Announcer as AnnouncerType } from '../../../modules/joal-api/types';
 
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({
@@ -59,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface AnnouncerProps extends WithWidthProps {
   className?: string,
-  announcer: any,
+  announcer: AnnouncerType,
   onClickDeleteTorrent: (infoHash: string) => void
 };
 
@@ -117,6 +121,12 @@ const Announcer: React.FC<AnnouncerProps> = (props) => {
           </div>
         </Grid>
       </Grid>
+
+      {announcer.isFetching || announcer.lastAnnouncedAt === undefined ? (
+        <AnnouncingProgressBar className={classes.announceProgressBar} />
+      ) : (
+        <TimeUntilAnnounceProgressBar className={classes.announceProgressBar} lastAnnouncedDate={announcer.lastAnnouncedAt} interval={announcer.lastKnownInterval} />
+      )}
     </Paper>
   );
 };
