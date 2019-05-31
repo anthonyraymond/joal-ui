@@ -151,7 +151,7 @@ function EnhancedTableHead(props: EnhancedTableHeadProps) {
 const EnhancedTableToolbar = () => {
 
   return (
-    <div>{'Title here'}</div>
+    <div>{''}</div>
   );
 };
 
