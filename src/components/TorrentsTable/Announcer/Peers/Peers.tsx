@@ -41,7 +41,7 @@ const PeerStats: React.FC<PeerStatsProps> = (props) => {
             {` ${leechersText}`}
           </span>
         </Tooltip>
-        <Tooltip title="leechers" aria-label="seeders" placement="top">
+        <Tooltip title="seeders" aria-label="seeders" placement="top">
           <span className={classes.seeders} data-for="seeders" data-tip="Seeders">
             <i className="fa fa-cloud-upload" aria-hidden="true" />
             {` ${seedersText}`}
