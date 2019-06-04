@@ -41,10 +41,15 @@ const TorrentDropZone: React.FC<TorrentDropZoneProps> = (props) => {
     onDrop: (accepted, rejected) => props.onDrop(accepted, rejected),
     noClick: true,
     noKeyboard: true,
+    multiple: true
   })
+  
+  const rootProps = getRootProps({
+    onClick: (e) => { e.stopPropagation(); } // Prevent react dropzone to execute his own handler which contains a "event.preventDefault". Since the dropzone embed the whole page it would prevent other input click
+  });
 
   return (
-    <div {...getRootProps()} className={classes.dropzone}>
+    <div {...rootProps} className={classes.dropzone}>
       <input {...getInputProps()} />
       {children}
       {isDragActive && (
