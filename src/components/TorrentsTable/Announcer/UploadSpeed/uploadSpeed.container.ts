@@ -7,7 +7,7 @@ const mapStateToProps = (state: JoalState, ownProps: { infoHash: string }) => {
   const foundSpeed = state.api.speed[ownProps.infoHash];
 
   return {
-    speedInBytesPerSeconds: foundSpeed === null || foundSpeed === undefined ? undefined : foundSpeed.bytesPerSeconds
+    speedInBytesPerSeconds: foundSpeed === null || foundSpeed === undefined ? undefined : foundSpeed.bytesPerSecond
   };
 }
 

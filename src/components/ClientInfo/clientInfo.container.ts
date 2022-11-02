@@ -8,7 +8,7 @@ import { SpeedsArray } from '../../modules/joal-api/types';
 const calculateGobalSpeed = (speeds: SpeedsArray) => {
   let totalSpeed = 0
   for (let speed of Object.values(speeds)) {
-    totalSpeed += speed.bytesPerSeconds;
+    totalSpeed += speed.bytesPerSecond;
   }
   return totalSpeed;
 };

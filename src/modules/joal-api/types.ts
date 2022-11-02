@@ -56,5 +56,5 @@ export interface SpeedsArray {
 
 export interface Speed {
   infoHash: string,
-  bytesPerSeconds: number
+  bytesPerSecond: number
 }
