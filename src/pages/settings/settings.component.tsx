@@ -143,6 +143,20 @@ const Settings = (props: Props) => {
               />
             </Grid>
             <Grid item xs={12}>
+              <TextField
+                className={classes.formInput}
+                label="Upload ratio target"
+                type="number"
+                inputProps={{ min:-1 }}
+                helperText="Set to -1.0 for indefinite seeding. Note: Uploaded amount resets to 0 upon Joal restart."
+                value={config.uploadRatioTarget}
+                onChange={(event) => {
+                  const value = event.target.value === '' ? '' : event.target.value;
+                  valueHasChanged({ uploadRatioTarget: value });
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
               <div className={classes.formInput}>
                 <FormControlLabel
                   control={(

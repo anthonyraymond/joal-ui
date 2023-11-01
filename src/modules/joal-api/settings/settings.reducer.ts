@@ -17,7 +17,8 @@ const initialState: Settings = {
     maxUploadRate: 0,
     simultaneousSeed: 0,
     client: '',
-    keepTorrentWithZeroLeechers: false
+    keepTorrentWithZeroLeechers: false,
+    uploadRatioTarget: -1
   },
   availableClients: []
 };

@@ -39,7 +39,8 @@ export interface Config {
   maxUploadRate: number,
   simultaneousSeed: number,
   client: string,
-  keepTorrentWithZeroLeechers: boolean
+  keepTorrentWithZeroLeechers: boolean,
+  uploadRatioTarget: number
 }
 
 export interface Settings {
