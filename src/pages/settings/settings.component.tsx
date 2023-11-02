@@ -147,7 +147,7 @@ const Settings = (props: Props) => {
                 className={classes.formInput}
                 label="Upload ratio target"
                 type="number"
-                inputProps={{ min:-1 }}
+                inputProps={{ min:-1, step: config.uploadRatioTarget > 0 ? 0.1 : 1 }}
                 helperText="Set to -1.0 for indefinite seeding. Note: Uploaded amount resets to 0 upon Joal restart."
                 value={config.uploadRatioTarget}
                 onChange={(event) => {
